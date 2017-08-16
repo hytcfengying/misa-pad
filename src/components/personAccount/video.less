@@ -1,0 +1,85 @@
+.video{
+  width: 100%;
+  height: 240px;
+  background-color: #ffffff;
+  padding: 50px 120px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  font-size: 26px;
+
+  .content:after{
+    clear: both;
+    content: '';
+  }
+
+  .label{
+    float: left;
+    margin-right: 38px;
+    line-height: 50px;
+  }
+
+  .ul{
+    float: left;
+    color: #333333;
+
+    .hidden{
+      display: none;
+    }
+
+    li{
+      display: inline-block;
+      margin-right: 45px;
+    }
+
+    .radio{
+      width: 35px;
+      height: 33px;
+      display: inline-block;
+      background: url("../../../static/img/icon_radio_n.png") no-repeat 2px 0;
+      background-size: 32px 32px;
+      position: relative;
+      top: 7px;
+      margin-right: 10px;
+
+      &.checked{
+        background-image: url("../../../static/img/icon_radio_y.png");
+      }
+    }
+  }
+
+
+
+}
+.videoBtn{
+  width: 280px;
+  height: 70px;
+  -webkit-border-radius: 35px;
+  -moz-border-radius: 35px;
+  border-radius: 35px;
+  background-color: #c5342a;
+  border: 0;
+  color: #ffffff;
+  line-height: 70px;
+  display: block;
+  margin: 88px auto;
+
+  .videoBtnIcon{
+    width: 51px;
+    height: 30px;
+    background-image: url("../../../static/img/icon_video_btn.png");
+    background-size: 51px 30px;
+    display: inline-block;
+    position: relative;
+    top: 7px;
+    margin-right: 18px;
+
+    &.site{
+      width: 40px;
+      height: 36px;
+      top: 9px;
+      background-size: 40px 36px;
+      background-image: url("../../../static/img/icon_video_uesr.png");
+    }
+  }
+
+}

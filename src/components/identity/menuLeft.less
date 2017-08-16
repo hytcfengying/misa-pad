@@ -1,0 +1,114 @@
+.menuLeft {
+	background:#fff;
+	min-height:1060px;
+	span {
+		text-indent:-999em;
+	}
+	.iconYes {
+		position:absolute;
+		display:none;
+		top:0;
+		right:0;
+		width:26px;
+		height:26px;
+		background: url(../../../static/img/icon_kh_yk.png) no-repeat 0 0;
+		background-size:100%;
+		&.on {
+			display:block;
+		}
+	}
+	.triangle {
+		position:absolute;
+		display:block;
+		bottom:-20px;
+		left:50%;
+		transform:translateX(-50%) rotate(-45deg);
+		-ms-transform:translateX(-50%) rotate(-45deg); 	/* IE 9 */
+		-moz-transform:translateX(-50%) rotate(-45deg); 	/* Firefox */
+		-webkit-transform:translateX(-50%)  rotate(-45deg); /* Safari 和 Chrome */
+		-o-transform:translateX(-50%) rotate(-45deg); 	/* Opera */
+		width:15px;
+		height:15px;
+		border-left:2PX solid #ddd;
+		border-bottom:2PX solid #ddd;
+		background: #fff;
+		z-index:9;
+		.triangleN {
+			margin-left:2PX;
+			margin-top:-1PX;
+			display:block;
+			width:11px;
+			height:11px;
+			border-left:2PX solid #ebebeb;
+			border-bottom:2PX solid #ebebeb;
+		}
+	}
+	:global {
+		.ant-menu {
+		    border-right: none;
+			.ant-menu-item {
+				padding:0!important;
+				text-align:center;
+				height:100px;
+				line-height:100px;
+				font-size:26px;
+				color:#000;
+				border-bottom:1PX solid #ddd;
+				border-right:1PX solid #ddd;
+				overflow:inherit;
+				z-index:inherit;
+				&:last-child {
+					border-bottom:none;
+					&>p {
+						display:none;
+					}
+				}
+				&:after {
+					border-right:none;
+				}
+			}
+			.ant-menu-item-selected {
+				color:#c5342a;
+				background:#eee;
+				border-right:1PX solid #ddd;
+				&:after{
+					content: "";
+					border-right:none;
+				}
+				&>span{
+					color:#c5342a!important;
+				}
+				&>a{
+					color:#c5342a;
+				}
+				&>p{
+					background-color:#eee;
+				}
+			}
+		}
+	}
+	ul {
+		li {
+			.itemText {
+				color:#666;
+			}
+		}
+		li.offState {
+			pointer-events: none!important;
+			.itemText {
+				color:#aaa;
+			}
+		}
+		li.showClass {
+			&:last-child {
+				border-bottom:none!important;
+				&>p {
+					display:none;
+				}
+			}
+		}
+		li.hideClass {
+			display: none;
+		}
+	}	
+}

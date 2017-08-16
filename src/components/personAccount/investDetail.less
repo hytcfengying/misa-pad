@@ -1,0 +1,95 @@
+.investDetail{
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+
+  .article{
+    padding: 50px;
+    font-size: 24px;
+    color: #666666;
+    height: 860px;
+    overflow: auto;
+
+    p{
+      margin-bottom: 40px;
+      line-height: 40px;
+    }
+
+    .title{
+      color: #333333;
+    }
+
+    .part{
+      text-indent: 2em;
+    }
+
+    .import{
+      color: #c5342a;
+    }
+  }
+
+  .investDetailTitle{
+    height: 88px;
+    line-height: 88px;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    color: #333333;
+    position: relative;
+    border-bottom: 2PX solid #cccccc;
+
+    .spanCountdown{
+      position: absolute;
+      right: 30px;
+      font-size: 24px;
+      color: #666666;
+      font-weight: normal;
+
+      b{
+        color: #c5342a;
+        font-weight: normal;
+      }
+    }
+
+    .iconClose{
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      background-image: url("../../../static/img/invest-close.png");
+      background-size: 24px;
+      right: 30px;
+      top: 32px;
+      position: absolute;
+    }
+  }
+
+  .checkBut {
+    clear: both;
+    display: block;
+    margin:0 auto;
+    width:240px;
+    height:70px;
+    border-radius:35px;
+    border:none;
+    background:#c5342a;
+    margin-top: 40px;
+    .read{
+      width: 31px;
+      height: 33px;
+      display: inline-block;
+      background-image: url("../../../static/img/icon_read.png");
+      background-size: 31px 33px;
+      position: relative;
+      top:6px;
+      margin-right: 10px;
+    }
+    span {
+      font-size:28px;
+      color:#fff;
+      font-weight: normal;
+    }
+    &.activited {
+      background-color:#ddd;
+    }
+  }
+}

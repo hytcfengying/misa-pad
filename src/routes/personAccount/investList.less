@@ -1,0 +1,55 @@
+@import "./homeGlobal";
+.invest{
+  .investSection{
+    padding-bottom: 12px;
+  }
+
+  .investAccess{
+    margin-top: 30px;
+    text-align: center;
+    color: #666666;
+    font-size: 24px;
+
+    .iconRadio{
+      width: 32px;
+      height: 32px;
+      display: inline-block;
+      background-image: url("../../../static/img/invest_choice_n.png");
+      background-size: 32px;
+      position: relative;
+      top:8px;
+      margin-right: 20px;
+    }
+
+    .iconRed{
+      color: #c5342a;
+      font-size: 26px;
+      margin-left: 14px;
+      position: relative;
+      top: 4px;
+    }
+
+  }
+  .investAccessDisabled{
+    color: #bbbbbb;
+
+    .iconRadio{
+      background-image: url("../../../static/img/invest_choice_disable.png");
+    }
+
+    .iconRed{
+      color: #bbbbbb;
+      font-size: 26px;
+      position: relative;
+      top: 4px;
+    }
+
+  }
+  .investAccessChecked{
+
+    .iconRadio{
+      background-image: url("../../../static/img/invest_choice_y.png");
+    }
+
+  }
+}

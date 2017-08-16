@@ -1,0 +1,116 @@
+.identity{
+  position: relative;
+
+  .formArea{
+    padding: 30px 0 20px 0;
+    background-color: #ffffff;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
+
+  .tip{
+    margin: 20px 30px;
+    height: 70px;
+    p{
+      line-height: 70px;
+      display: inline-block;
+      width: 100%;
+      border: 1PX solid #ffdba2;
+      background-color: #fffcf8;
+      box-sizing: border-box;
+      color: #c5342a;
+      font-size: 24px;
+      text-align: center;
+      margin: 0;
+      border-radius: 8px;
+      span{
+        background:url(../../../static/img/icon_tips_a.png) no-repeat;
+        width:24px;
+        height:24px;
+        background-size:24px;
+        display: inline-block;
+        position: relative;
+        margin-right: 16px;
+        top: 4px;
+      }
+    }
+  }
+
+  .selectDepart{
+    width: 50%;
+    height: 90px;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .searchBar {
+    box-sizing: border-box;
+    height:90px;
+    background:#fafafa;
+    padding:15px 0px;
+    .searchForm {
+      margin:0 auto;
+      width:550px;
+    }
+    input{
+      box-sizing: border-box;
+      width:550px;
+      height:60px;
+      line-height:60px;
+      color:#333;
+      background:#fff;
+      border-radius:30px;
+      padding-left:80px !important;
+      padding-right:55px;
+      font-size:26px;
+      background:#efefef;
+      border:none;
+      &::-webkit-input-placeholder {
+        text-align:center;
+        color:#bbb;
+      }
+    }
+    .searchIcon{
+      background:url(../../../static/img/icon_search.png) no-repeat;
+      background-size:32px 31px;
+      width:32px;
+      height:31px;
+      display:block;
+      position:relative;
+      left:23px;
+    }
+    .searchIconP {
+      background:url(../../../static/img/icon_search.png) no-repeat;
+      background-size:32px 31px;
+      width:32px;
+      height:31px;
+      display:block;
+      position:relative;
+      left:110px;
+    }
+    .searchClear{
+      background:url(../../../static/img/icon_close.png) no-repeat;
+      background-size:32px 32px;
+      width:32px;
+      height:32px;
+      display:block;
+      position:relative;
+      right:10px;
+    }
+    :global {
+      .ant-input-affix-wrapper {
+        .ant-input {
+          &:hover {
+            border:none;
+            background:#fff;
+          }
+          &:select {
+            border:none;
+            background:#fff;
+          }
+        }
+      }
+    }
+  }
+}

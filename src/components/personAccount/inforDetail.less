@@ -1,0 +1,251 @@
+.tableBox {
+	background-color:#fff;
+	border-radius:10px;
+	padding-bottom: 50px;
+	.boxTop {
+		padding-left:28px;
+		height:88px;
+		line-height:88px;
+		border-bottom:2PX solid #ddd;
+		span {
+			padding-left:20px;
+			font-size:28px;
+			color:#333;
+			font-weight:600;
+			border-left:12px solid #c5342a;
+		}
+	}
+	.none {
+		display:none;
+	}
+	.tableDeta {
+		padding:18px 30px 0;
+		h5 {
+			position:relative;
+			padding-left:38px;
+			height:90px;
+			line-height:90px;
+			font-size:28px;
+			color:#333;
+			&:before {
+				content: "";
+				position:absolute;
+				left:0;
+				top:36px;
+				display:block;
+				width:18px;
+				height:18px;
+				background-color:#999;
+				border-radius:50%;
+			}
+		}
+		.tableDetaBox {
+			table {
+				border-collapse: collapse;
+	    	border-spacing: 0;
+	    	width:100%;
+	    	background:#fff;
+	    	tr {
+	    		th {
+	    			padding-right:20px;
+	    			border: 1PX solid #ddd;
+	    			height: 85px;
+	    			line-height: 85px;
+	    			width:220px;
+	    			font-size:26px;
+	    			font-weight:normal;
+	    			color:#666;
+	    			text-align:right;
+	    			background-color:#f8f8f8;
+		    	}
+		    	td {
+		    		position: relative;
+				    line-height: 40px;
+				    font-size: 26px;
+				    text-align: left;
+				    padding-left: 20px;
+				    color: #333;
+				    /*text-overflow: ellipsis;
+				    white-space: nowrap;*/
+				    overflow: hidden;
+				    border: 1PX solid #ddd;
+				    word-break: break-all;
+				    &:nth-child(2),
+				    &:nth-child(4){
+				    	width:560px;
+				    }
+		    	}
+	    	}
+	    	.imgBox {
+	    		width:220px;
+	    		padding-left:0;
+	    		&>span {
+	    			display:block;
+	    			padding:5px;
+	    			width:100%;
+	    			height:260px;
+	    			&>img {
+	    				display:block;
+		    			width:100%;
+		    			height:100%;
+	    			}
+	    		}
+	    		.iconDefault{
+            background: url("../../../static/img/icon_user_m2.png") no-repeat center;
+            background-size: 220px 260px;
+          }
+	    	}
+	    }
+	    .userInfor {
+    		td {
+    			&:nth-child(2) {
+			    	width:340px;
+			    }
+			    &:nth-child(4) {
+			    	width:560px;
+			    }
+    		}
+    	}
+	    .imgTable {
+	    	td {
+	    		width:33.33%;
+					text-align:center;
+					color:#c5342a;
+	    	}
+	    }
+	    .sdxTable {
+	    	tr {
+	    		th {
+		    	 	width: 300px;
+		    	}
+	    	}
+	    }
+		}
+		.imgDetailBox {
+  		border-left: 1PX solid #ddd;
+  		.box {
+		    // display: box;
+		    display: -webkit-box;
+		    display: -moz-box;
+		    width: 100%;
+		    box-sizing: border-box;
+		    -webkit-box-align: center;
+		    -webkit-box-pack: center;
+		    .box_flex1 {
+			    box-flex: 1;
+			    -webkit-box-flex: 1;
+			    -moz-box-flex: 1;
+			    display: block;
+			    width: 0;
+			    height: 85px;
+			    line-height: 85px;
+			    font-size: 26px;
+			    text-align: left;
+			    text-indent:20px;
+			    color:#c5342a;
+			    border-bottom: 1PX solid #ddd;
+  				border-right: 1PX solid #ddd;
+  				overflow: hide;
+				}
+			}
+			.imgLi {
+				display: block;
+				float: left;
+				width: 33.33%;
+				height: 85px;
+		    line-height: 85px;
+		    font-size: 26px;
+		    text-align: center;
+		    color:#c5342a;
+		    border-bottom: 1PX solid #ddd;
+				border-right: 1PX solid #ddd;
+				overflow: hide;
+				&:nth-child(1),
+				&:nth-child(2),
+				&:nth-child(3) {
+					border-top: 1PX solid #ddd;
+				}
+				&.noPath {
+					color: #aaa;
+					pointer-events: none!important;
+				}
+			}
+			&:after {
+				visibility: hidden;
+		    display: block;
+		    font-size: 0;
+		    content: " ";
+		    clear: both;
+		    height: 0;
+			}
+   	}
+	}
+}
+.imgBoxClass {
+	display:none;
+	position:fixed;
+	width:100%;
+	height:100%;
+	top:0;
+	left:0;
+	background:rgba(0,0,0,0.5);
+	z-index:9999;
+	.top {
+		height:90px;
+		line-height:90px;
+		background-color:#000;
+		.returnBut {
+			position:relative;
+			width:100px;
+			height:90px;
+			background:#000 url(../../../static/img/icon_back.png) no-repeat center;
+			background-size: 42px 34px;
+			border:none;
+			z-index:999;
+			text-indent:-9999em;
+		}
+	}
+}
+.isShow {
+	display:block;
+}
+.imgDetaBox {
+	position:relative;
+	.title {
+		position:absolute;
+		top:-90px;
+		height:90px;
+		line-height:90px;
+		width:100%;
+		text-align:center;
+		font-size:36px;
+		color:#fff;
+	}
+	.viewport {
+		width:1920px;
+		box-sizing:border-box;
+		overflow-x:hidden;
+		overflow-y:auto;
+		.cardBox {
+			width:1000%;
+			&:after {
+				clear: both;
+			    content: "";
+			    display: block;
+			    height: 0;
+			}
+			.imgBox {
+				float:left;
+				padding:0 45px;
+				width:1920px;
+				height:auto;
+				img {
+					width:100%;
+				}
+			}
+		}
+	}
+}
+
+
+

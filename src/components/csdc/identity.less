@@ -1,0 +1,52 @@
+.identity{
+  margin-bottom: 30px;
+
+  .boxFlex {
+    display: -webkit-box;
+    display: -moz-box;
+    width: 100%;
+    box-sizing: border-box;
+    -webkit-box-align: center;
+    -webkit-box-pack: center;
+
+    .boxFlex1 {
+      display: block;
+      box-flex: 1;
+      -webkit-box-flex: 1;
+      -moz-box-flex: 1;
+    }
+  }
+
+  .select{
+    height: 32px;
+    display: inline-block;
+    background: url("../../../static/img/icon_select.png") no-repeat;
+    background-size: 34px 32px;
+    position: relative;
+    top:7px;
+    padding-right: 50px;
+  }
+
+  .titleArea{
+    height: 90px;
+    line-height: 90px;
+    text-align: center;
+    font-size: 26px;
+    color: #333333;
+    background-color: #efefef;
+    font-weight: bold;
+
+    span{
+      height: 90px;
+      box-sizing: border-box;
+      display: inline-block;
+      padding: 0 28px;
+
+      &.active{
+        border-bottom: 5px solid #c5342a;
+        color: #c5342a;
+      }
+
+    }
+  }
+}

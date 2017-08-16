@@ -1,0 +1,63 @@
+.selDeaprtBox {
+	position:relative;
+	text-align:right;
+	margin-right:30px;
+	.text {
+		padding-right:40px;
+		font-size:24px;
+		color:#c5342a;
+	}
+	.triangle {
+		position:absolute;
+		display:block;
+		bottom:40px;
+		right:0;
+		transform:rotate(-45deg);
+		-ms-transform:rotate(-45deg); 	/* IE 9 */
+		-moz-transform:rotate(-45deg); 	/* Firefox */
+		-webkit-transform: rotate(-45deg); /* Safari 和 Chrome */
+		-o-transform:rotate(-45deg); 	/* Opera */
+		width:15px;
+		height:15px;
+		border-left:2PX solid #999;
+		border-bottom:2PX solid #999;
+		text-indent:999em;
+	}
+	:global {
+		.ant-select {
+			.ant-select-selection{
+				margin-left:30px;
+				width:auto;
+				height:40px;
+				font-size:24px;
+				text-indent:20px;
+				color:#c5342a;
+				border:none;
+				box-shadow:none;
+				.ant-select-selection__rendered {
+					line-height: 40px;
+				}
+				.ant-select-arrow {
+					line-height: 40px;
+				    font-size: 33px;
+				    color: #a7a7a7;
+				    top: 3PX;
+				    right: 0;
+				}
+				.ant-select-selection-selected-value {
+					float:right;
+					margin-right:18px;
+					color: #c5342a;
+				}			
+			}
+		}
+		.ant-select-open {
+			.ant-select-arrow {
+			    &:before {
+			    	    -webkit-transform: rotate(180deg) translateX(-15px);
+						transform: rotate(180deg) translateX(-15px);
+			    }
+			}
+		}
+	}
+}

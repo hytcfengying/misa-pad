@@ -1,0 +1,30 @@
+.addressWrapper{
+  display:-webkit-box;
+  .formSelect{
+    width:280px;
+  }
+  .formInput{
+    -webkit-box-flex: 1.0;
+    display:block;
+    border:none;
+    border-bottom: 2PX solid #dde1e6;
+    height:60px;
+    line-height:60px;
+    font-size:26px;
+    color:#333;
+    padding-left:60px;
+  }
+  &.addressWarning{
+    .formInput{
+      border-bottom: 2PX solid #ffbf00;
+    }
+    :global{
+      .ant-select-selection{
+        border-bottom: 2PX solid #ffbf00;
+      }
+      .ant-select{
+        color:#ffbf00;
+      }
+    }
+  }
+}

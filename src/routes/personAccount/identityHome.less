@@ -1,0 +1,159 @@
+@import "./homeGlobal";
+.pageIdentityHome {
+	background:#efefef;
+	.contentBox {
+		background:#fff;
+		border-radius:10px;
+	}
+	.box {
+	    // display: box;
+	    display: -webkit-box;
+	    display: -moz-box;
+	    width: 100%;
+	    box-sizing: border-box;
+	    -webkit-box-align: center;
+	    -webkit-box-pack: center;
+	    .box_flex1 {
+		    box-flex: 1;
+		    -webkit-box-flex: 1;
+		    -moz-box-flex: 1;
+		    display: block;
+		    width: 0;
+		}
+		.box_flex2 {
+		    box-flex: 2;
+		    -webkit-box-flex: 2;
+		    -moz-box-flex: 2;
+		    display: block;
+		}
+		.title {
+			span {
+				margin-left:30px;
+				padding-left:30px;
+				font-size:28px;
+				color:#000;
+				border-left:10px solid #c5342a;
+			}
+		}
+	}
+	.butBox {
+		padding:40px 0;
+		border-bottom-left-radius:10px;
+		border-bottom-right-radius:10px;
+		background-color:#fff;
+	}
+	.readyCardBut {
+		margin:0 auto;
+		width:244px;
+		height:70px;
+		border-radius:35px;
+		border:none;
+		text-indent:48px;
+		background-image:url(../../../static/img/icon_kh_sm.png);
+		background-repeat:no-repeat;
+		background-size:32px 30px;
+		background-position: 65px 20px;
+		background-color:#c5342a;
+		span {
+			font-size:28px;
+			color:#fff;
+			font-weight: normal;
+		}
+		&.activited {
+			background-color:#ddd;
+			pointer-events: none!important;
+		}
+	}
+	.nexPopBox {
+		padding-top: 28px;
+		background: #efefef;
+		button.nextBut {
+			display: none;
+			margin:0 auto;
+			width:384px;
+			height:90px;
+			background:#c5342a;
+			border:none;
+			border-radius:10px;
+			&>span{
+				font-size:30px;
+				color:#fff;
+			}
+			&:hover{
+				background-color:#c5342a;
+			}
+			&.activited {
+				display:block;
+			}
+		}
+	}
+	:global {
+		.ant-layout-has-sider {
+			height:100%;
+		}
+		.ant-layout-content {
+			padding:30px;
+			overflow-x: hidden;
+			.ant-layout-header {
+				height:88px;
+				line-height:88px;
+				padding: 0;
+				background:#fff;
+				border-bottom:1PX solid #efefef;
+				border-top-left-radius:10px;
+				border-top-right-radius:10px;
+			}
+			.ant-tabs {
+				.ant-tabs-bar {
+					margin-bottom:0;
+					border-bottom-color: #efefef;
+					background:#fcfcfc;
+					.ant-tabs-nav {
+						margin-left:150px;
+						.ant-tabs-tab {
+							padding:25px 85px;
+							margin-right:285px;
+							line-height:1;
+							font-size:26px;
+							color:#333;
+						}
+						.ant-tabs-tab-disabled {
+							color: rgba(0, 0, 0, 0.25);
+						}
+						.ant-tabs-tab-active {
+							color:#c5342a;
+						}
+						.ant-tabs-ink-bar {
+							height:6px;
+							background-color:#c5342a;
+						}
+					}
+					.ant-tabs-tab-next,
+					.ant-tabs-tab-prev {
+							display:none;
+					}
+				}
+				.ant-tabs-content {
+					.ant-tabs-tabpane {
+						background-color:#efefef;
+					}
+				}
+			}
+		}
+		.ant-btn {
+			display:block;
+		}
+	}
+}
+.modalBut{
+	margin:0;
+	padding:0;
+	height:90px;
+	width:100%;
+	background:none;
+	border:none;
+	span {
+		font-size:30px;
+		color:#c5342a;
+	}
+}
