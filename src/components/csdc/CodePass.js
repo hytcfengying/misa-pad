@@ -159,10 +159,14 @@ export default class codePass extends PureComponent {
     const { getFieldDecorator } = this.props.form;
     const { showState } = this.state;
     const { pathname, identityArr, accountArr, searchObj } = this.props;
-    const identityDefault = identityArr.length > 0 ?
-                              _.toString(identityArr[0].ibm) : '';
-    const accountDefault = accountArr.length > 0 ?
-                              _.toString(accountArr[0].ibm) : '';
+    let identityDefault = '';
+    let accountDefault = '';
+    if (identityArr && identityArr.length > 0) {
+      identityDefault = _.toString(identityArr[0].ibm);
+    }
+    if (accountArr && accountArr.length > 0) {
+      accountDefault = _.toString(identityArr[0].ibm);
+    }
     let identityShow = true;
     let codeShow = true;
     let shareholderShow = true;

@@ -378,7 +378,7 @@ export default class SearchHome extends PureComponent {
       const promise = new Promise((resolve, reject) => {
         try {
           const { location: { query }, getStepCacheFunc } = props;
-          const load = false;
+          const load = true;
           const nowBdid = load ? '1196879' : (query.bdid || '');
           getStepCacheFunc({
             ...query,

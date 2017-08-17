@@ -6,6 +6,7 @@
 import React, { PureComponent, PropTypes } from 'react';
 import { connect } from 'dva';
 import { withRouter, routerRedux } from 'dva/router';
+import { setNavigatePageTitle } from '../../utils/cordova';
 
 import styles from './codePass.less';
 import Code from '../../components/csdc/CodePass';
@@ -91,11 +92,36 @@ export default class codePass extends PureComponent {
       getDictionaryQuery,
       clearQuery,
     } = this.props;
+    let title = '';
+    switch (location.pathname) {
+      case '/codeSearch':
+        title = '一码通查询';
+        break;
+      case '/stockSearch':
+        title = '证券账户查询';
+        break;
+      case '/relationSearch':
+        title = '关联关系查询';
+        break;
+      case '/infoSearch':
+        title = '使用信息查询';
+        break;
+      case '/partnerSearch':
+        title = '合伙人信息查询';
+        break;
+      default:
+        break;
+    }
+    setNavigatePageTitle(
+      [title, false],
+      result => console.log(result),
+      err => console.log(err),
+    );
     const arr = [];
-    if (identityArr.length === 0) {
+    if (identityArr && identityArr.length === 0) {
       arr.push({ fldm: 'ZDZH_ZJLB' });
     }
-    if (accountArr.length === 0 && location.pathname !== '/codeSearch') {
+    if (accountArr && accountArr.length === 0 && location.pathname !== '/codeSearch') {
       arr.push({ fldm: 'ZDZH_ZHLB' });
     }
     if (arr.length > 0) {
@@ -107,6 +133,11 @@ export default class codePass extends PureComponent {
   }
 
   componentWillUnmount() {
+    setNavigatePageTitle(
+      ['', false],
+      result => console.log(result),
+      err => console.log(err),
+    );
   }
 
   render() {
