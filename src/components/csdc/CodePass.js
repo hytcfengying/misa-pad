@@ -5,8 +5,8 @@
 import React, { PureComponent, PropTypes } from 'react';
 import { autobind } from 'core-decorators';
 import { Input, Form, Button, Select } from 'antd';
-import { getIDCard } from '../../utils/cordova';
 import _ from 'lodash';
+import { getIDCard } from '../../utils/cordova';
 
 import styles from './identity.less';
 import formStyles from '../personAccount/form.less';
@@ -81,28 +81,30 @@ export default class codePass extends PureComponent {
     form.validateFieldsAndScroll({ force: true }, (err, values) => {
       if (_.isEmpty(err)) {
         console.log(values);
+        const resultObj = _.cloneDeep(values);
         let typeId = 0;
         let searchShowObj = {};
         switch (showState) {
           case 'identity':
             typeId = 1;
             searchShowObj = {
-              khxm: values.khxm || '',
-              zjlb: values.zjlb || '',
-              zjbh: values.zjbh || '',
+              khxm: resultObj.khxm || '',
+              zjlb: resultObj.zjlb || '',
+              zjbh: resultObj.zjbh || '',
+              szjbh: resultObj.szjbh || '',
             };
             break;
           case 'code':
             typeId = 2;
             searchShowObj = {
-              ymth: values.ymth || '',
+              ymth: resultObj.ymth || '',
             };
             break;
           case 'shareholder':
             typeId = 3;
             searchShowObj = {
-              zhlb: values.zhlb || '',
-              gdh: values.gdh || '',
+              zhlb: resultObj.zhlb || '',
+              gdh: resultObj.gdh || '',
             };
             break;
           default:
@@ -116,17 +118,18 @@ export default class codePass extends PureComponent {
             cxfs: showState,
           },
         });
+        resultObj.zjbh = resultObj.szjbh || resultObj.zjbh;
         // 中登查询
         getCodePassFunc({
           query: {
             sqgy: query.empId,
             cxfs: typeId,
-            khxm: values.khxm || '',
-            zjlb: values.zjlb || '',
-            zjbh: values.zjbh || '',
-            ymth: values.ymth || '',
-            zhlb: values.zhlb || '',
-            gdh: values.gdh || '',
+            khxm: resultObj.khxm || '',
+            zjlb: resultObj.zjlb || '',
+            zjbh: resultObj.zjbh || '',
+            ymth: resultObj.ymth || '',
+            zhlb: resultObj.zhlb || '',
+            gdh: resultObj.gdh || '',
           },
           path: pathname,
           type: showState,
@@ -139,7 +142,11 @@ export default class codePass extends PureComponent {
     const { showState, scanIconShow } = this.state;
     switch (showState) {
       case 'identity':
-        this.props.form.setFieldsValue({ zjbh: '', khxm: '' });
+        if (scanIconShow) {
+          this.props.form.setFieldsValue({ szjbh: '', khxm: '' });
+        } else {
+          this.props.form.setFieldsValue({ zjbh: '', khxm: '' });
+        }
         if (value === '1') {
           this.setState({
             scanIconShow: true,
@@ -166,11 +173,12 @@ export default class codePass extends PureComponent {
   }
   @autobind
   handleClick() {
+    const { form } = this.props.form;
     getIDCard(
       (result) => {
         const resultObjct = JSON.parse(result);
-        this.props.form.setFieldsValue({ 
-          zjbh: resultObjct.ID, 
+        form.setFieldsValue({
+          zjbh: resultObjct.ID,
           khxm: resultObjct.Name,
         });
       },
@@ -210,7 +218,6 @@ export default class codePass extends PureComponent {
     if (pathname === 'codeSearch' || pathname === 'partnerSearch') {
       shareholderShow = false;
     }
-    debugger;
     return (
       <div className={`${styles.identity} ${formStyles.form}`}>
         <div className={`${styles.boxFlex} ${styles.titleArea}`}>
@@ -274,15 +281,15 @@ export default class codePass extends PureComponent {
                       )}
                     </FormItem>
                     {
-                      scanIconShow ?
-                        <div className={formStyles.identityArea}> 
+                      checkScanState ?
+                        <div className={formStyles.identityArea}>
                           <FormItem
                             {...FORM_ITEM_LAYOUT}
                             label="证件号码"
                             colon={false}
                           >
                             {getFieldDecorator(
-                              'zjbh',
+                              'szjbh',
                               {
                                 initialValue: searchObj.zjbh,
                                 rules: [
@@ -301,27 +308,27 @@ export default class codePass extends PureComponent {
                           <div onClick={this.handleClick} className={formStyles.scanIcon} />
                         </div> :
                         <FormItem
-                            {...FORM_ITEM_LAYOUT}
-                            label="证件号码"
-                            colon={false}
-                          >
-                            {getFieldDecorator(
-                              'zjbh',
-                              {
-                                initialValue: searchObj.zjbh,
-                                rules: [
-                                  { required: true, message: '证件号码不能为空!', whitespace: true },
-                                  { max: 40, message: '证件号码不能超过40个字符！' },
-                                ],
-                              },
-                            )(
-                              <Input
-                                placeholder="请输入证件号码"
-                                onFocus={this.textChange}
-                                autoComplete="off"
-                              />,
-                            )}
-                          </FormItem>
+                          {...FORM_ITEM_LAYOUT}
+                          label="证件号码"
+                          colon={false}
+                        >
+                          {getFieldDecorator(
+                            'zjbh',
+                            {
+                              initialValue: searchObj.zjbh,
+                              rules: [
+                                { required: true, message: '证件号码不能为空!', whitespace: true },
+                                { max: 40, message: '证件号码不能超过40个字符！' },
+                              ],
+                            },
+                          )(
+                            <Input
+                              placeholder="请输入证件号码"
+                              onFocus={this.textChange}
+                              autoComplete="off"
+                            />,
+                          )}
+                        </FormItem>
                     }
                     <FormItem
                       {...FORM_ITEM_LAYOUT}
@@ -334,7 +341,7 @@ export default class codePass extends PureComponent {
                           initialValue: searchObj.khxm,
                           rules: [
                             { required: true, message: '客户姓名不能为空!', whitespace: true },
-                            { max: 30, message: '客户姓名不能超过30个字符！' },
+                            { max: 120, message: '客户姓名不能超过120个字符！' },
                           ],
                         },
                       )(
@@ -394,7 +401,7 @@ export default class codePass extends PureComponent {
                     </FormItem>
                     <FormItem
                       {...FORM_ITEM_LAYOUT}
-                      label="股东号"
+                      label="证券账号"
                       colon={false}
                     >
                       {getFieldDecorator(
@@ -402,13 +409,13 @@ export default class codePass extends PureComponent {
                         {
                           initialValue: searchObj.gdh,
                           rules: [
-                            { required: true, message: '股东号不能为空!', whitespace: true },
-                            { max: 20, message: '股东号不能超过20个字符！' },
+                            { required: true, message: '证券账号不能为空!', whitespace: true },
+                            { max: 20, message: '证券账号不能超过20个字符！' },
                           ],
                         },
                       )(
                         <Input
-                          placeholder="请输入股东号"
+                          placeholder="请输入证券账号"
                           onFocus={this.textChange}
                           autoComplete="off"
                         />,

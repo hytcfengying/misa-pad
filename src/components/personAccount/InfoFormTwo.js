@@ -833,6 +833,7 @@ export default class InfoFormTwo extends PureComponent {
                 maxLength="20"
                 autoComplete="off"
                 disabled={this.returnChangeState('LXXX')}
+                placeholder="例如025-88888888"
               />,
             )}
           </FormItem>

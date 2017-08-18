@@ -27,6 +27,7 @@ export default {
         codeQuery: null,
         shareholderQuery: null,
         searchObj: {},
+        showState: 'identity',
       };
     },
     setShowState(state, action) {

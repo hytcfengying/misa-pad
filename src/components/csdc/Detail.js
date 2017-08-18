@@ -105,8 +105,8 @@ export default class identity extends PureComponent {
                   <td>{detail.hbjgsm}</td>
                 </tr>
                 <tr>
-                  <td>回报结果说明</td>
-                  <td>{detail.hbjgsm}</td>
+                  <td>结果说明</td>
+                  <td>{detail.jgsm}</td>
                   <td>证件号码</td>
                   <td>{detail.zjbh}</td>
                 </tr>

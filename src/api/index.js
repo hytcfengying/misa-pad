@@ -62,16 +62,16 @@ export default {
   getNumQuery: query => api.post('/groovynoauth/cif/CSDC/cifAddQueryCSDCAcodeAcc', query),
 
   // 证券账户查询
-  getStockQuery: query => api.post('/groovy/cif/CSDC/cifAddQueryCSDCStockAcc', query),
+  getStockQuery: query => api.post('/groovynoauth/cif/CSDC/cifAddQueryCSDCStockAcc', query),
 
   // 关联关系查询
-  getRelationQuery: query => api.post('/groovy/cif/CSDC/cifAddQueryCSDCRelation', query),
+  getRelationQuery: query => api.post('/groovynoauth/cif/CSDC/cifAddQueryCSDCRelation', query),
 
   // 使用信息查询
-  getInfoQuery: query => api.post('/groovy/cif/CSDC/cifAddQueryCSDCUseInfo', query),
+  getInfoQuery: query => api.post('/groovynoauth/cif/CSDC/cifAddQueryCSDCUseInfo', query),
 
   // 使用信息查询
-  getPartnerQuery: query => api.post('/groovy/cif/CSDC/cifAddQueryCSDCPartner', query),
+  getPartnerQuery: query => api.post('/groovynoauth/cif/CSDC/cifAddQueryCSDCPartner', query),
 
   // 一码通号码查询 中登回报
   getNumQueryReturn: query => api.post('/groovynoauth/cif/CSDC/cifQueryCSDCReturn', query),

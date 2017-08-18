@@ -97,7 +97,10 @@ const helper = {
         case '57':
           return this.checkIdentification(value);
         default:
-          return true;
+          if (this.asciilen(value) <= 30) {
+            return true;
+          }
+          return false;
       }
     } else {
       switch (type) {
@@ -117,7 +120,10 @@ const helper = {
           }
           return false;
         default:
-          return true;
+          if (this.asciilen(value) <= 30) {
+            return true;
+          }
+          return false;
       }
     }
   },
@@ -160,6 +166,22 @@ const helper = {
       }
     }
     return true;
+  },
+
+  asciilen(src) {
+    let byteLen = 0;
+    const len = src.length;
+    if (src) {
+      for (let i = 0; i < len; i++) {
+        if (src.charCodeAt(i) > 255) {
+          byteLen += 2;
+        } else {
+          byteLen++;
+        }
+      }
+      return byteLen;
+    }
+    return 0;
   },
 
 };

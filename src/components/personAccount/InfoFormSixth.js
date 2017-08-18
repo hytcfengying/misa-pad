@@ -300,8 +300,32 @@ export default class InfoFormForth extends PureComponent {
     this.setState({
       idType: value,
     }, () => {
-      this.props.form.validateFields(['benefiterId'], { force: true });
+      this.props.form.setFieldsValue({
+        benefiterId: '',
+      });
     });
+  }
+
+  // 证件地址校验
+  @autobind
+  benefiterNameCheck(rule, value, callback) {
+    const length = helper.asciilen(value);
+    if (length > 120) {
+      callback('受益人姓名长度必须小于120个字符');
+    }
+    callback();
+  }
+
+  // 受益人姓名初始化
+  @autobind
+  benefiterInit(stepFormData, key) {
+    const benefiterVal = this.props.form.getFieldValue('benefiter') || '';
+    if (stepFormData.JYSYRGX === '4') {
+      return '';
+    } else if (stepFormData.JYSYRGX === benefiterVal || benefiterVal === '') {
+      return stepFormData[key];
+    }
+    return '';
   }
 
   render() {
@@ -351,15 +375,15 @@ export default class InfoFormForth extends PureComponent {
           {getFieldDecorator('benefiterName', {
             rules: [
               { required: true, message: '请填写受益人姓名' },
+              { validator: this.benefiterNameCheck },
             ],
-            initialValue: stepFormData.JYSYRGX === '4' ? '' : stepFormData.JYSYRXM || '',
+            initialValue: this.benefiterInit(stepFormData, 'JYSYRXM'),
           })(
             <Input
               id="benefiterName"
               className={FormStyle.formInput}
               autoComplete="off"
               disabled={this.returnChangeState('JYSYRGX')}
-              maxLength="120"
             />,
           )}
         </FormItem>
@@ -375,7 +399,7 @@ export default class InfoFormForth extends PureComponent {
             rules: [
               { required: true, message: '请选择受益人证件类别' },
             ],
-            initialValue: stepFormData.JYSYRGX === '4' ? '' : stepFormData.JYSYRZJLB || '',
+            initialValue: this.benefiterInit(stepFormData, 'JYSYRZJLB'),
           })(
             <Select
               className={FormStyle.formSelect}
@@ -399,7 +423,7 @@ export default class InfoFormForth extends PureComponent {
               { required: true, message: '请填写受益人证件编号' },
               { validator: this.checkBenefiterId },
             ],
-            initialValue: stepFormData.JYSYRGX === '4' ? '' : stepFormData.JYSYRZJBH || '',
+            initialValue: this.benefiterInit(stepFormData, 'JYSYRZJBH'),
           })(
             <Input
               id="benefiterId"

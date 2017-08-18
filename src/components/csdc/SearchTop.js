@@ -4,7 +4,7 @@
  */
 import React, { PropTypes, PureComponent } from 'react';
 import { autobind } from 'core-decorators';
-import { Menu, Input, DatePicker, Button } from 'antd';
+import { Menu, Input, DatePicker, Button, Form } from 'antd';
 import moment from 'moment';
 import _ from 'lodash';
 import 'moment/locale/zh-cn';
@@ -12,8 +12,18 @@ import 'moment/locale/zh-cn';
 import styles from './searchRecord.less';
 
 moment.locale('zh-cn');
+const FormItem = Form.Item;
+const FORM_ITEM_LAYOUT = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 2 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 16 },
+  },
+};
 const dateFormat = 'YYYYMMDD';
-
 const nowday = new Date();
 const year = nowday.getFullYear();
 let month = nowday.getMonth() + 1;
@@ -26,12 +36,14 @@ if (strDate >= 0 && strDate <= 9) {
 }
 const currentdate = `${year}${month}${strDate}`;
 
+@Form.create()
 export default class SearchTop extends PureComponent {
 
   static propTypes = {
     replace: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
     location: PropTypes.object.isRequired,
+    form: PropTypes.object.isRequired,
     empInforData: PropTypes.object,
     dicData: PropTypes.object,
     getRecordListFunc: PropTypes.func.isRequired,
@@ -72,6 +84,7 @@ export default class SearchTop extends PureComponent {
   componentWillUnmount() {
     document.documentElement.style.overflow = 'initial';
   }
+
   // componentWillReceiveProps(nextProps) {}
 
   // 日期改变处理
@@ -141,7 +154,7 @@ export default class SearchTop extends PureComponent {
   disabledEndDate(endValue) {
     const startValue = this.state.startValue;
     if (!endValue || !startValue) {
-      return endValue && endValue.valueOf() < Date.now();
+      return endValue && endValue.valueOf() > Date.now();
     }
     const end = Date.parse(startValue) + 2592000000;
     return endValue.valueOf() < startValue.valueOf() ||
@@ -174,6 +187,7 @@ export default class SearchTop extends PureComponent {
     this.setState({
       filterShow: true,
     });
+    document.getElementById('filterId').scrollTop = 0;
     document.documentElement.style.overflow = 'hidden';
   }
 
@@ -195,39 +209,63 @@ export default class SearchTop extends PureComponent {
         sureClick: true,
       },
     });
+    this.props.form.setFieldsValue({ ksrq: query.ksrq ? moment(query.ksrq) : moment(currentdate) });
+    this.props.form.setFieldsValue({ jsrq: query.jsrq ? moment(query.jsrq) : moment(currentdate) });
     document.documentElement.style.overflow = 'initial';
   }
 
   @autobind
-  sureBut() { // 确定
-    const { location: { query }, replace, empInforData } = this.props;
-    const { value, startValue, endValue } = this.state;
-    this.props.clearListDataState();
-    this.props.getRecordListFunc({
-      searchKey: value || '',
-      empId: empInforData.id,
-      step: this.state.step || '',
-      jgbz: this.state.jgbz || '',
-      ksrq: startValue.format(dateFormat) || currentdate,
-      jsrq: endValue.format(dateFormat) || currentdate,
-    });
+  resetlBut() { // 重置
     this.setState({
-      filterShow: false,
-      filterButSelect: true,
+      value: '',
+      step: '',
+      jgbz: '',
+      startValue: moment(currentdate),
+      endValue: moment(currentdate),
     });
-    replace({
-      pathname: '/histRecord/histRecordList',
-      query: {
-        ...query,
-        step: this.state.step ? this.state.step : '',
-        searchKey: value || '',
-        jgbz: this.state.jgbz ? this.state.jgbz : '',
-        ksrq: startValue.format(dateFormat),
-        jsrq: endValue.format(dateFormat),
-        sureClick: true,
-      },
+    this.props.form.setFieldsValue({ ksrq: moment(currentdate) });
+    this.props.form.setFieldsValue({ jsrq: moment(currentdate) });
+  }
+
+  @autobind
+  sureBut(e) { // 确定
+    e.preventDefault();
+    const { location: { query }, replace, empInforData, form } = this.props;
+    const { value, startValue, endValue } = this.state;
+    form.validateFieldsAndScroll((err, values) => {
+      console.log(err);
+      if (!err) {
+        this.setState({
+          filterShow: false,
+          filterButSelect: true,
+        });
+        console.log('Received values of form: ', values);
+        setTimeout(() => {
+          this.props.clearListDataState();
+          this.props.getRecordListFunc({
+            searchKey: value || '',
+            empId: empInforData.id,
+            step: this.state.step || '',
+            jgbz: this.state.jgbz || '',
+            ksrq: startValue.format(dateFormat) || currentdate,
+            jsrq: endValue.format(dateFormat) || currentdate,
+          });
+        }, 0);
+        replace({
+          pathname: '/histRecord/histRecordList',
+          query: {
+            ...query,
+            step: this.state.step ? this.state.step : '',
+            searchKey: value || '',
+            jgbz: this.state.jgbz ? this.state.jgbz : '',
+            ksrq: startValue.format(dateFormat),
+            jsrq: endValue.format(dateFormat),
+            sureClick: true,
+          },
+        });
+        document.documentElement.style.overflow = 'initial';
+      }
     });
-    document.documentElement.style.overflow = 'initial';
   }
 
   render() {
@@ -240,7 +278,8 @@ export default class SearchTop extends PureComponent {
       endValue,
       filterShow,
     } = this.state;
-    const { dicData } = this.props;
+    const { dicData, form } = this.props;
+    const { getFieldDecorator } = form;
     const filterShowClass = filterShow ? styles.showClass : '';
     const buttSelectClass = this.state.filterButSelect ? styles.on : '';
     const suffix = value ?
@@ -254,12 +293,20 @@ export default class SearchTop extends PureComponent {
           <i className={styles.stepYes}>yes</i>
         </Menu.Item>,
       );
+    const jgbzList = _.isEmpty(dicData) ?
+      null :
+      dicData.GT_KHJGBZ.map(item =>
+        <Menu.Item key={item.ibm} className={styles.stepLi}>
+          <span>{item.note}</span>
+          <i className={styles.stepYes}>yes</i>
+        </Menu.Item>,
+      );
     return (
       <div className={styles.searchBar}>
         <div className={styles.menuSelect}>
           <Menu
             onClick={this.handleClick}
-            selectedKeys={[current]}
+            selectedKeys={[current || 'KHYW']}
             mode="horizontal"
             className={styles.selectUl}
           >
@@ -274,10 +321,10 @@ export default class SearchTop extends PureComponent {
         <div className={`${styles.filterButt} ${buttSelectClass}`} onClick={this.showFilter}>
           筛选
         </div>
-        <div className={`${styles.filterBox} ${filterShowClass}`}>
-          <div className={styles.mask}>x</div>
-          <div className={styles.rightBox}>
-            <div className={styles.filterSearchBox}>
+        <div className={styles.filterBox}>
+          <div className={`${styles.mask} ${filterShowClass}`} onClick={this.cancelBut}>x</div>
+          <div className={`${styles.rightBox} ${filterShowClass}`} id="filterId">
+            <Form className={styles.filterSearchBox}>
               <div className={styles.searchBox}>
                 <p>客户号/证件编号</p>
                 <Input
@@ -293,24 +340,49 @@ export default class SearchTop extends PureComponent {
               </div>
               <div className={styles.searchBox}>
                 <p>受理日期</p>
-                <DatePicker
-                  disabledDate={this.disabledStartDate}
-                  format="YYYYMMDD"
-                  placeholder="开始时间"
-                  onChange={this.onStartChange}
-                  showTime={false}
-                  showToday
-                  value={startValue}
-                /><span className={styles.dataLink}>-</span>
-                <DatePicker
-                  disabledDate={this.disabledEndDate}
-                  format="YYYYMMDD"
-                  placeholder="结束时间"
-                  onChange={this.onEndChange}
-                  showTime={false}
-                  showToday
-                  value={endValue}
-                />
+                <FormItem
+                  {...FORM_ITEM_LAYOUT}
+                  label=""
+                  colon={false}
+                >
+                  {getFieldDecorator(
+                    'ksrq',
+                    {
+                      initialValue: startValue,
+                      rules: [{ type: 'object', required: true, message: '开始日期不能为空!', whitespace: true }],
+                    },
+                  )(
+                    <DatePicker
+                      disabledDate={this.disabledStartDate}
+                      format="YYYYMMDD"
+                      placeholder="开始时间"
+                      onChange={this.onStartChange}
+                      showTime={false}
+                    />,
+                  )}
+                </FormItem>
+                <span className={styles.dataLink}>-</span>
+                <FormItem
+                  {...FORM_ITEM_LAYOUT}
+                  label=""
+                  colon={false}
+                >
+                  {getFieldDecorator(
+                    'jsrq',
+                    {
+                      initialValue: endValue,
+                      rules: [{ type: 'object', required: true, message: '结束日期不能为空!', whitespace: true }],
+                    },
+                  )(
+                    <DatePicker
+                      disabledDate={this.disabledEndDate}
+                      format="YYYYMMDD"
+                      placeholder="结束时间"
+                      onChange={this.onEndChange}
+                      showTime={false}
+                    />,
+                  )}
+                </FormItem>
               </div>
               <div className={`${styles.searchBox} ${styles.stepUlBox}`}>
                 <p>机构标志</p>
@@ -321,17 +393,10 @@ export default class SearchTop extends PureComponent {
                   className={styles.stepUl}
                 >
                   <Menu.Item key="-99999" className={styles.stepLi}>
-                    <span>全部状态</span>
+                    <span>全部</span>
                     <i className={styles.stepYes}>yes</i>
                   </Menu.Item>
-                  <Menu.Item key="0" className={styles.stepLi}>
-                    <span>个人开户</span>
-                    <i className={styles.stepYes}>yes</i>
-                  </Menu.Item>
-                  <Menu.Item key="1" className={styles.stepLi}>
-                    <span>机构开户</span>
-                    <i className={styles.stepYes}>yes</i>
-                  </Menu.Item>
+                  {jgbzList}
                 </Menu>
               </div>
               <div className={`${styles.searchBox} ${styles.stepUlBox}`}>
@@ -343,18 +408,18 @@ export default class SearchTop extends PureComponent {
                   className={styles.stepUl}
                 >
                   <Menu.Item key="-99999" className={styles.stepLi}>
-                    <span>全部状态</span>
+                    <span>全部</span>
                     <i className={styles.stepYes}>yes</i>
                   </Menu.Item>
                   {stepList}
                 </Menu>
               </div>
-            </div>
+            </Form>
           </div>
-        </div>
-        <div className={`${styles.buttBox} ${filterShowClass}`}>
-          <Button type="primary" className={styles.butt} onClick={this.cancelBut}>取消</Button>
-          <Button type="primary" className={styles.butt} onClick={this.sureBut}>确认</Button>
+          <div className={`${styles.buttBox} ${filterShowClass}`}>
+            <Button type="primary" className={styles.butt} onClick={this.resetlBut}>重置</Button>
+            <Button type="primary" className={styles.butt} onClick={this.sureBut}>确认</Button>
+          </div>
         </div>
       </div>
     );

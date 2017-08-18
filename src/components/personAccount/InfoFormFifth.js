@@ -544,7 +544,11 @@ export default class InfoFormFifth extends PureComponent {
               className={FormStyle.formSwitch}
               onChange={this.handleSwitchChange}
               disabled={this.returnChangeState('JJKH')}
-              defaultChecked={this.initFundChange(this.handleCompanyCode(stepFormData.SQJJZH))}
+              defaultChecked={this.initFundChange(
+                stepFormData.SQJJZH ?
+                this.handleCompanyCode(stepFormData.SQJJZH) :
+                [],
+              )}
             />
           </div>
           <div className={FormStyle.returnWrapper}>

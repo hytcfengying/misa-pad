@@ -70,41 +70,53 @@
     }
   }
   .filterBox {
-    position: fixed;
-    display: none;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow-y: auto;
     .mask {
       position: fixed;
+      display: none;
       width: 100%;
       height: 100%;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
       text-indent: -9999em;
+      background-color: rgba(55, 55, 55, 0.6);
+      transition: 0.5s;
+      -moz-transition: 0.5s; /* Firefox 4 */
+      -webkit-transition: 0.5s; /* Safari and Chrome */
+      -o-transition: 0.5s; /* Opera */
+      &.showClass {
+        display: block;
+      }
     }
     .rightBox {
-      position: relative;
-      width: 100%;
-      background-color: rgba(55, 55, 55, 0.6);
+      position: fixed;
+      top: 0;
+      right: -640px;
+      bottom: 0;
+      height: 100%;
+      overflow-y: auto;
+      background-color: #fff;
+      transition: 0.5s;
+      -moz-transition: 0.5s; /* Firefox 4 */
+      -webkit-transition: 0.5s; /* Safari and Chrome */
+      -o-transition: 0.5s; /* Opera */
+      z-index: 99;
       &:after {
         content: '';
         display: block;
         height: 0;
         clear: both;
       }
+      &.showClass {
+        right: 0;
+      }
     }
     .filterSearchBox {
       position: relative;
       float: right;
-      right: -640px;
       width: 640px;
       background-color: #fff;
-      z-index: 10001;
-      transition: 2s;
-      -moz-transition: 2s; /* Firefox 4 */
-      -webkit-transition: 2s; /* Safari and Chrome */
-      -o-transition: 2s; /* Opera */
       p {
         margin: 0;
         line-height: 94px;
@@ -197,6 +209,23 @@
           }
         }
         :global {
+          .ant-form-item {
+            margin: 0;
+            padding-bottom: 10px;
+            width: 1.3rem;
+            display: inline-block;
+            &:last-child {
+              float: right;
+            }
+            .ant-form-item-control-wrapper {
+              width: 100%;
+            }
+            .ant-form-explain {
+              position: absolute;
+              color:#c5342a;
+              font-size:22px;
+            }
+          }
           .ant-input-affix-wrapper {
             &>input {
               font-size: 24px;
@@ -253,23 +282,20 @@
         }
       }
     }
-    &.showClass {
-      display: block;
-      .filterSearchBox {
-        right: 0;
-      }
-    }
   }
   .buttBox {
     position: fixed;
-    display: none;
-    right: 0;
+    right: -640px;
     bottom: 0;
     width: 640px;
     border-top: 1PX solid #e1e1e1;
-    z-index: 99999;
+    z-index: 100;
+    transition: 0.5s;
+    -moz-transition: 0.5s; /* Firefox 4 */
+    -webkit-transition: 0.5s; /* Safari and Chrome */
+    -o-transition: 0.5s; /* Opera */
     &.showClass {
-      display: block;
+      right: 0;
     }
     .butt {
       width: 50%;
