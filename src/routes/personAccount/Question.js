@@ -70,6 +70,10 @@ const mapDispatchToProps = {
     type: 'personAccount/setQuestionState',
     payload: query || null,
   }),
+  clearQuestion: query => ({
+    type: 'personAccount/clearQuestion',
+    payload: query || null,
+  }),
 };
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -94,6 +98,7 @@ export default class questionRoutes extends PureComponent {
     getQuestionResultFunc: PropTypes.func.isRequired,
     questionResult: PropTypes.object.isRequired,
     customerNumber: PropTypes.string.isRequired,
+    clearQuestion: PropTypes.func.isRequired,
     // accountPersonAge: PropTypes.number.isRequired,
   }
 
@@ -114,7 +119,10 @@ export default class questionRoutes extends PureComponent {
   }
 
   componentWillMount() {
-    const { getQuestionFunc, bdid } = this.props;
+    const { getQuestionFunc, bdid, stepCacheData, clearQuestion } = this.props;
+    if (!_.isEmpty(_.find(stepCacheData, { key: 'FXCP' }))) {
+      clearQuestion();
+    }
     getQuestionFunc({
       param: {
         wjbm: 'FXCSNL',
