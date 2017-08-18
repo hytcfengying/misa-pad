@@ -177,7 +177,7 @@ export default class questionRoutes extends PureComponent {
         const answerValue = item[`${item.choice}_obj`].crmdabm;
         crmtmbm.push(crmtmbmValue);
         tmdac.push(`${item.qid}|${item.choice}`);
-        xmlArr.push(`<ActionAssessmentValue><Attrib_id>${crmtmbmValue}</Attrib_id><Value_Id>${answerValue}</Value_Id><Comment></Comment></ActionAssessmentValue>`);
+        xmlArr.push(`<ActionAssessmentValue><Attrib_id>${crmtmbmValue}</Attrib_id><Value_Id>${answerValue}</Value_Id><Comment>1</Comment></ActionAssessmentValue>`);
       });
       // 保存步骤缓存所需数据
       const value = {
@@ -195,7 +195,7 @@ export default class questionRoutes extends PureComponent {
         WJID: question[0].A_obj.wjid,
       };
       // 最后提交
-      const xml = `<web_modification action='insert_assessment' source='102260'><customer><customer_num>${customerNumber}</customer_num><customer_num_type>102010</customer_num_type><ActionAssessment_Type>风险评估</ActionAssessment_Type><ActionAssessment><Template_Id>${question[0].A_obj.crmwjbm}</Template_Id><Description></Description>${xmlArr.join('')}</ActionAssessment></customer></web_modification>`;
+      const xml = `<?xml version='1.0' encoding='UTF-8'?><web_modification action='calculate_assessment' source='102260'><customer><customer_num>${customerNumber}</customer_num><customer_num_type>102010</customer_num_type><ActionAssessment_Type>风险评估</ActionAssessment_Type><ActionAssessment><Template_Id>${question[0].A_obj.crmwjbm}</Template_Id><Description>1</Description>${xmlArr.join('')}</ActionAssessment></customer></web_modification>`;
       console.log(xml);
       result = JSON.stringify({
         stepValue: value,

@@ -5,6 +5,7 @@
 import React, { PureComponent, PropTypes } from 'react';
 import { autobind } from 'core-decorators';
 import { Input, Form, Button, Select } from 'antd';
+import { getIDCard } from '../../utils/cordova';
 import _ from 'lodash';
 
 import styles from './identity.less';
@@ -47,6 +48,7 @@ export default class codePass extends PureComponent {
 
     this.state = {
       showState: this.getShowState(), // identity or code or shareholder
+      scanIconShow: true,
     };
   }
 
@@ -133,11 +135,20 @@ export default class codePass extends PureComponent {
     });
   }
   @autobind
-  handleChangeID() {
-    const { showState } = this.state;
+  handleChangeID(value) {
+    const { showState, scanIconShow } = this.state;
     switch (showState) {
       case 'identity':
         this.props.form.setFieldsValue({ zjbh: '', khxm: '' });
+        if (value === '1') {
+          this.setState({
+            scanIconShow: true,
+          });
+        } else {
+          this.setState({
+            scanIconShow: false,
+          });
+        }
         break;
       case 'shareholder':
         this.props.form.setFieldsValue({ gdh: '' });
@@ -153,19 +164,39 @@ export default class codePass extends PureComponent {
     });
     setShowState({ show: obj.item });
   }
+  @autobind
+  handleClick() {
+    getIDCard(
+      (result) => {
+        const resultObjct = JSON.parse(result);
+        this.props.form.setFieldsValue({ 
+          zjbh: resultObjct.ID, 
+          khxm: resultObjct.Name,
+        });
+      },
+      err => console.log(err),
+    );
+  }
 
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { showState } = this.state;
+    const { showState, scanIconShow } = this.state;
     const { pathname, identityArr, accountArr, searchObj } = this.props;
     let identityDefault = '';
     let accountDefault = '';
+    let checkScanState = false;
     if (identityArr && identityArr.length > 0) {
       identityDefault = _.toString(identityArr[0].ibm);
     }
+    if (identityArr &&
+      identityArr.length > 0 &&
+      identityArr[0].ibm === 1 &&
+      scanIconShow) {
+      checkScanState = true;
+    }
     if (accountArr && accountArr.length > 0) {
-      accountDefault = _.toString(identityArr[0].ibm);
+      accountDefault = _.toString(accountArr[0].ibm);
     }
     let identityShow = true;
     let codeShow = true;
@@ -179,6 +210,7 @@ export default class codePass extends PureComponent {
     if (pathname === 'codeSearch' || pathname === 'partnerSearch') {
       shareholderShow = false;
     }
+    debugger;
     return (
       <div className={`${styles.identity} ${formStyles.form}`}>
         <div className={`${styles.boxFlex} ${styles.titleArea}`}>
@@ -241,28 +273,56 @@ export default class codePass extends PureComponent {
                         </Select>,
                       )}
                     </FormItem>
-                    <FormItem
-                      {...FORM_ITEM_LAYOUT}
-                      label="证件号码"
-                      colon={false}
-                    >
-                      {getFieldDecorator(
-                        'zjbh',
-                        {
-                          initialValue: searchObj.zjbh,
-                          rules: [
-                            { required: true, message: '证件号码不能为空!', whitespace: true },
-                            { max: 40, message: '证件号码不能超过40个字符！' },
-                          ],
-                        },
-                      )(
-                        <Input
-                          placeholder="请输入证件号码"
-                          onFocus={this.textChange}
-                          autoComplete="off"
-                        />,
-                      )}
-                    </FormItem>
+                    {
+                      scanIconShow ?
+                        <div className={formStyles.identityArea}> 
+                          <FormItem
+                            {...FORM_ITEM_LAYOUT}
+                            label="证件号码"
+                            colon={false}
+                          >
+                            {getFieldDecorator(
+                              'zjbh',
+                              {
+                                initialValue: searchObj.zjbh,
+                                rules: [
+                                  { required: true, message: '证件号码不能为空!', whitespace: true },
+                                  { max: 40, message: '证件号码不能超过40个字符！' },
+                                ],
+                              },
+                            )(
+                              <Input
+                                placeholder="请输入证件号码"
+                                onFocus={this.textChange}
+                                autoComplete="off"
+                              />,
+                            )}
+                          </FormItem>
+                          <div onClick={this.handleClick} className={formStyles.scanIcon} />
+                        </div> :
+                        <FormItem
+                            {...FORM_ITEM_LAYOUT}
+                            label="证件号码"
+                            colon={false}
+                          >
+                            {getFieldDecorator(
+                              'zjbh',
+                              {
+                                initialValue: searchObj.zjbh,
+                                rules: [
+                                  { required: true, message: '证件号码不能为空!', whitespace: true },
+                                  { max: 40, message: '证件号码不能超过40个字符！' },
+                                ],
+                              },
+                            )(
+                              <Input
+                                placeholder="请输入证件号码"
+                                onFocus={this.textChange}
+                                autoComplete="off"
+                              />,
+                            )}
+                          </FormItem>
+                    }
                     <FormItem
                       {...FORM_ITEM_LAYOUT}
                       label="客户姓名"
@@ -274,7 +334,7 @@ export default class codePass extends PureComponent {
                           initialValue: searchObj.khxm,
                           rules: [
                             { required: true, message: '客户姓名不能为空!', whitespace: true },
-                            { max: 120, message: '客户姓名不能超过120个字符！' },
+                            { max: 30, message: '客户姓名不能超过30个字符！' },
                           ],
                         },
                       )(

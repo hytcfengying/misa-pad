@@ -48,23 +48,23 @@ export default class identity extends PureComponent {
             pathname === 'codeSearch' ?
               <tbody>
                 <tr>
-                  <td>处理标志</td>
-                  <td>
+                  <td width="12%">处理标志</td>
+                  <td width="38%">
                     {detail.clbz_note || detail.clbz}
                   </td>
-                  <td>一码通号</td>
-                  <td colSpan="3" >{detail.ymth}</td>
+                  <td width="12%">回报结果说明</td>
+                  <td>{detail.hbjgsm}</td>
                 </tr>
                 <tr>
                   <td>结果说明</td>
                   <td>{detail.jgsm}</td>
-                  <td>回报结果说明</td>
-                  <td>{detail.hbjgsm}</td>
+                  <td>一码通号</td>
+                  <td colSpan="3" >{detail.ymth}</td>
                 </tr>
                 <tr>
-                  <td width="10%">回报时间</td>
-                  <td width="40%">{detail.hbsj}</td>
-                  <td width="10%">账户状态</td>
+                  <td>回报时间</td>
+                  <td>{`${detail.hbrq} ${detail.hbsj}`}</td>
+                  <td>账户状态</td>
                   <td>{detail.ymtzt}</td>
                 </tr>
                 <tr>
@@ -97,12 +97,12 @@ export default class identity extends PureComponent {
             pathname === 'stockSearch' ?
               <tbody>
                 <tr>
-                  <td>处理标志</td>
-                  <td>
+                  <td width="12%">处理标志</td>
+                  <td width="38%">
                     {detail.clbz_note || detail.clbz}
                   </td>
-                  <td>结果说明</td>
-                  <td>{detail.jgsm}</td>
+                  <td width="12%">回报结果说明</td>
+                  <td>{detail.hbjgsm}</td>
                 </tr>
                 <tr>
                   <td>回报结果说明</td>
@@ -111,21 +111,21 @@ export default class identity extends PureComponent {
                   <td>{detail.zjbh}</td>
                 </tr>
                 <tr>
-                  <td width="10%">回报时间</td>
-                  <td width="40%">{detail.hbsj}</td>
-                  <td width="10%">账户类别</td>
+                  <td>回报时间</td>
+                  <td>{`${detail.hbrq} ${detail.hbsj}`}</td>
+                  <td>账户类别</td>
                   <td>{detail.zhlb_note || detail.zhlb}</td>
                 </tr>
                 <tr>
-                  <td width="10%">证券账号</td>
-                  <td width="40%">{detail.zqzh}</td>
-                  <td width="10%">账户状态</td>
+                  <td>证券账号</td>
+                  <td>{detail.zqzh}</td>
+                  <td>账户状态</td>
                   <td>{detail.zqzhzt_note || detail.zqzhzt}</td>
                 </tr>
                 <tr>
-                  <td width="10%">一码通号</td>
-                  <td width="40%">{detail.ymth}</td>
-                  <td width="10%">一码通状态</td>
+                  <td>一码通号</td>
+                  <td>{detail.ymth}</td>
+                  <td>一码通状态</td>
                   <td>{detail.ymtzt_note || detail.ymtzt}</td>
                 </tr>
                 <tr>
@@ -170,22 +170,22 @@ export default class identity extends PureComponent {
             pathname === 'relationSearch' ?
               <tbody>
                 <tr>
-                  <td>处理标志</td>
-                  <td>
+                  <td width="12%">处理标志</td>
+                  <td width="38%">
                     {detail.clbz_note || detail.clbz}
                   </td>
-                  <td>结果说明</td>
-                  <td>{detail.jgsm}</td>
+                  <td width="12%">回报结果说明</td>
+                  <td>{detail.hbjgsm}</td>
                 </tr>
                 <tr>
-                  <td>回报结果说明</td>
-                  <td>{detail.hbjgsm}</td>
+                  <td>结果说明</td>
+                  <td>{detail.jgsm}</td>
                   <td>回报时间</td>
-                  <td>{detail.hbsj}</td>
+                  <td>{`${detail.hbrq} ${detail.hbsj}`}</td>
                 </tr>
                 <tr>
                   <td>证券账号</td>
-                  <td>{detail.zjzh}</td>
+                  <td>{detail.zqzh}</td>
                   <td width="10%">账户类别</td>
                   <td>{detail.zhlb_note || detail.zhlb}</td>
                 </tr>
@@ -199,21 +199,21 @@ export default class identity extends PureComponent {
             pathname === 'infoSearch' ?
               <tbody>
                 <tr>
-                  <td>处理标志</td>
-                  <td>
+                  <td width="12%">处理标志</td>
+                  <td width="38%">
                     {detail.clbz_note || detail.clbz}
                   </td>
+                  <td width="12%">回报结果说明</td>
+                  <td>{detail.hbjgsm}</td>
+                </tr>
+                <tr>
                   <td>结果说明</td>
                   <td>{detail.jgsm}</td>
+                  <td>回报时间</td>
+                  <td>{`${detail.hbrq} ${detail.hbsj}`}</td>
                 </tr>
                 <tr>
-                  <td>回报结果说明</td>
-                  <td>{detail.hbjgsm}</td>
-                  <td width="10%">回报时间</td>
-                  <td width="40%">{detail.hbsj}</td>
-                </tr>
-                <tr>
-                  <td width="10%">账户类别</td>
+                  <td>账户类别</td>
                   <td>{detail.zhlb_note || detail.zhlb}</td>
                   <td>证券账号</td>
                   <td>{detail.zqzh}</td>
@@ -264,18 +264,18 @@ export default class identity extends PureComponent {
             pathname === 'partnerSearch' ?
               <tbody>
                 <tr>
-                  <td width="10%">处理标志</td>
-                  <td width="40%">
+                  <td width="12%">处理标志</td>
+                  <td width="38%">
                     {detail.clbz_note || detail.clbz}
                   </td>
-                  <td width="10%">结果说明</td>
-                  <td width="40%">{detail.jgsm}</td>
+                  <td width="12%">回报结果说明</td>
+                  <td>{detail.hbjgsm}</td>
                 </tr>
                 <tr>
-                  <td>回报结果说明</td>
-                  <td>{detail.hbjgsm}</td>
+                  <td>结果说明</td>
+                  <td>{detail.jgsm}</td>
                   <td>回报时间</td>
-                  <td>{detail.hbsj}</td>
+                  <td>{`${detail.hbrq} ${detail.hbsj}`}</td>
                 </tr>
                 <tr>
                   <td width="10%">一码通号</td>

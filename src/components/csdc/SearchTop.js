@@ -7,10 +7,13 @@ import { autobind } from 'core-decorators';
 import { Menu, Input, DatePicker, Button } from 'antd';
 import moment from 'moment';
 import _ from 'lodash';
+import 'moment/locale/zh-cn';
 
 import styles from './searchRecord.less';
 
+moment.locale('zh-cn');
 const dateFormat = 'YYYYMMDD';
+
 const nowday = new Date();
 const year = nowday.getFullYear();
 let month = nowday.getMonth() + 1;
@@ -24,6 +27,7 @@ if (strDate >= 0 && strDate <= 9) {
 const currentdate = `${year}${month}${strDate}`;
 
 export default class SearchTop extends PureComponent {
+
   static propTypes = {
     replace: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
@@ -47,6 +51,7 @@ export default class SearchTop extends PureComponent {
       current: query.current ? query.current : 'KHYW',
       value: query.searchKey ? query.searchKey : '',
       step: query.step ? query.step : '',
+      jgbz: query.jgbz ? query.jgbz : '',
       startValue: query.ksrq ? moment(query.ksrq) : moment(currentdate),
       endValue: query.jsrq ? moment(query.jsrq) : moment(currentdate),
       filterShow: false,
@@ -64,6 +69,9 @@ export default class SearchTop extends PureComponent {
   componentDidMount() {
   }
 
+  componentWillUnmount() {
+    document.documentElement.style.overflow = 'initial';
+  }
   // componentWillReceiveProps(nextProps) {}
 
   // 日期改变处理
@@ -108,6 +116,14 @@ export default class SearchTop extends PureComponent {
     });
   }
 
+  // step
+  @autobind
+  checkjgbz(e) {
+    this.setState({
+      jgbz: e.key === '-99999' ? '' : e.key,
+    });
+  }
+
   // 限制日期选择范围
   @autobind
   disabledStartDate(startValue) {
@@ -128,7 +144,7 @@ export default class SearchTop extends PureComponent {
       return endValue && endValue.valueOf() < Date.now();
     }
     const end = Date.parse(startValue) + 2592000000;
-    return endValue.valueOf() <= startValue.valueOf() ||
+    return endValue.valueOf() < startValue.valueOf() ||
       endValue.valueOf() > Date.now() ||
       endValue.valueOf() > end.valueOf();
   }
@@ -137,6 +153,12 @@ export default class SearchTop extends PureComponent {
   @autobind
   handleChange(e) {
     this.setState({ value: e.target.value });
+  }
+
+  @autobind
+  emitEmpty() {
+    this.searchInput.focus();
+    this.setState({ value: '' });
   }
 
   @autobind
@@ -162,6 +184,7 @@ export default class SearchTop extends PureComponent {
       filterShow: false,
       value: query.searchKey ? query.searchKey : '',
       step: query.step ? query.step : '',
+      jgbz: query.jgbz ? query.jgbz : '',
       startValue: query.ksrq ? moment(query.ksrq) : moment(currentdate),
       endValue: query.jsrq ? moment(query.jsrq) : moment(currentdate),
     });
@@ -184,6 +207,7 @@ export default class SearchTop extends PureComponent {
       searchKey: value || '',
       empId: empInforData.id,
       step: this.state.step || '',
+      jgbz: this.state.jgbz || '',
       ksrq: startValue.format(dateFormat) || currentdate,
       jsrq: endValue.format(dateFormat) || currentdate,
     });
@@ -197,6 +221,7 @@ export default class SearchTop extends PureComponent {
         ...query,
         step: this.state.step ? this.state.step : '',
         searchKey: value || '',
+        jgbz: this.state.jgbz ? this.state.jgbz : '',
         ksrq: startValue.format(dateFormat),
         jsrq: endValue.format(dateFormat),
         sureClick: true,
@@ -210,6 +235,7 @@ export default class SearchTop extends PureComponent {
       current,
       value,
       step,
+      jgbz,
       startValue,
       endValue,
       filterShow,
@@ -217,6 +243,9 @@ export default class SearchTop extends PureComponent {
     const { dicData } = this.props;
     const filterShowClass = filterShow ? styles.showClass : '';
     const buttSelectClass = this.state.filterButSelect ? styles.on : '';
+    const suffix = value ?
+      <span className={styles.searchClear} onClick={this.emitEmpty} /> :
+      null;
     const stepList = _.isEmpty(dicData) ?
       null :
       dicData.KH_STEP.map(item =>
@@ -247,59 +276,85 @@ export default class SearchTop extends PureComponent {
         </div>
         <div className={`${styles.filterBox} ${filterShowClass}`}>
           <div className={styles.mask}>x</div>
-          <div className={styles.filterSearchBox}>
-            <div className={styles.searchBox}>
-              <p>客户号/证件编号</p>
-              <Input
-                className={styles.seaInput}
-                placeholder="请输入客户号或证件编号"
-                value={value}
-                onChange={this.handleChange}
-                onPressEnter={this.sureBut}
-                ref={(node) => { (this.searchInput = node); }}
-                maxLength={30}
-              />
-            </div>
-            <div className={styles.searchBox}>
-              <p>受理时间</p>
-              <DatePicker
-                disabledDate={this.disabledStartDate}
-                format="YYYYMMDD"
-                placeholder="开始时间"
-                onChange={this.onStartChange}
-                showToday={false}
-                value={startValue}
-              /><span className={styles.dataLink}>-</span>
-              <DatePicker
-                disabledDate={this.disabledEndDate}
-                format="YYYYMMDD"
-                placeholder="结束时间"
-                onChange={this.onEndChange}
-                showTime={false}
-                showToday={false}
-                value={endValue}
-              />
-            </div>
-            <div className={`${styles.searchBox} ${styles.stepUlBox}`}>
-              <p>业务状态</p>
-              <Menu
-                onClick={this.checkStep}
-                selectedKeys={[step || '-99999']}
-                mode="horizontal"
-                className={styles.stepUl}
-              >
-                <Menu.Item key="-99999" className={styles.stepLi}>
-                  <span>状态</span>
-                  <i className={styles.stepYes}>yes</i>
-                </Menu.Item>
-                {stepList}
-              </Menu>
-            </div>
-            <div className={styles.buttBox}>
-              <Button type="primary" className={styles.butt} onClick={this.cancelBut}>取消</Button>
-              <Button type="primary" className={styles.butt} onClick={this.sureBut}>确认</Button>
+          <div className={styles.rightBox}>
+            <div className={styles.filterSearchBox}>
+              <div className={styles.searchBox}>
+                <p>客户号/证件编号</p>
+                <Input
+                  className={styles.seaInput}
+                  placeholder="请输入客户号或证件编号"
+                  suffix={suffix}
+                  value={value}
+                  onChange={this.handleChange}
+                  onPressEnter={this.sureBut}
+                  ref={(node) => { (this.searchInput = node); }}
+                  maxLength={30}
+                />
+              </div>
+              <div className={styles.searchBox}>
+                <p>受理日期</p>
+                <DatePicker
+                  disabledDate={this.disabledStartDate}
+                  format="YYYYMMDD"
+                  placeholder="开始时间"
+                  onChange={this.onStartChange}
+                  showTime={false}
+                  showToday
+                  value={startValue}
+                /><span className={styles.dataLink}>-</span>
+                <DatePicker
+                  disabledDate={this.disabledEndDate}
+                  format="YYYYMMDD"
+                  placeholder="结束时间"
+                  onChange={this.onEndChange}
+                  showTime={false}
+                  showToday
+                  value={endValue}
+                />
+              </div>
+              <div className={`${styles.searchBox} ${styles.stepUlBox}`}>
+                <p>机构标志</p>
+                <Menu
+                  onClick={this.checkjgbz}
+                  selectedKeys={[jgbz || '-99999']}
+                  mode="horizontal"
+                  className={styles.stepUl}
+                >
+                  <Menu.Item key="-99999" className={styles.stepLi}>
+                    <span>全部状态</span>
+                    <i className={styles.stepYes}>yes</i>
+                  </Menu.Item>
+                  <Menu.Item key="0" className={styles.stepLi}>
+                    <span>个人开户</span>
+                    <i className={styles.stepYes}>yes</i>
+                  </Menu.Item>
+                  <Menu.Item key="1" className={styles.stepLi}>
+                    <span>机构开户</span>
+                    <i className={styles.stepYes}>yes</i>
+                  </Menu.Item>
+                </Menu>
+              </div>
+              <div className={`${styles.searchBox} ${styles.stepUlBox}`}>
+                <p>业务状态</p>
+                <Menu
+                  onClick={this.checkStep}
+                  selectedKeys={[step || '-99999']}
+                  mode="horizontal"
+                  className={styles.stepUl}
+                >
+                  <Menu.Item key="-99999" className={styles.stepLi}>
+                    <span>全部状态</span>
+                    <i className={styles.stepYes}>yes</i>
+                  </Menu.Item>
+                  {stepList}
+                </Menu>
+              </div>
             </div>
           </div>
+        </div>
+        <div className={`${styles.buttBox} ${filterShowClass}`}>
+          <Button type="primary" className={styles.butt} onClick={this.cancelBut}>取消</Button>
+          <Button type="primary" className={styles.butt} onClick={this.sureBut}>确认</Button>
         </div>
       </div>
     );

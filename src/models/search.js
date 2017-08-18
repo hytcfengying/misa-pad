@@ -141,7 +141,7 @@ export default {
         zjbh: null,
         zjlb: null,
         step: query.step,
-        jgbz: null,
+        jgbz: query.jgbz,
         ksrq: query.ksrq,
         jsrq: query.jsrq,
         khfs: 4,

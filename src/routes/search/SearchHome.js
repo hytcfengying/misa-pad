@@ -7,7 +7,9 @@ import React, { PureComponent, PropTypes } from 'react';
 import { connect } from 'dva';
 import { withRouter, routerRedux } from 'dva/router';
 // import { autobind } from 'core-decorators';
-// import _ from 'lodash';
+import _ from 'lodash';
+
+import { setNavigatePageTitle } from '../../utils/cordova';
 
 import SearchBar from '../../components/search/SearchBar';
 import homeStyle from './searchHome.less';
@@ -65,14 +67,22 @@ export default class SearchHome extends PureComponent {
   }
 
   componentWillMount() {
-    const { location: { query } } = this.props;
+    const { location: { query }, empInforData } = this.props;
+    setNavigatePageTitle(
+      ['', false],
+      result => console.log(result),
+      err => console.log(err),
+    );
     this.props.clearStateFunc();
     if (query.empId) {
-      this.props.clearGlobalStateFunc();
-      this.props.getGloabInfoFunc({
-        id: null,
-        userid: query.empId,
-      });
+      if (_.isEmpty(empInforData) ||
+        (!_.isEmpty(empInforData) && empInforData.userId !== query.empId)) {
+        this.props.clearGlobalStateFunc();
+        this.props.getGloabInfoFunc({
+          id: null,
+          userid: query.empId,
+        });
+      }
     }
   }
 

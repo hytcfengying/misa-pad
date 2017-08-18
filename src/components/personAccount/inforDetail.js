@@ -233,7 +233,7 @@ export default class infor extends PureComponent {
                 </tr>
                 <tr>
                   <th>交易受益人关系</th>
-                  <td>{inforData.jysyrgx}</td>
+                  <td>{inforData.jysyrgx_note}</td>
                   <th>交易受益人姓名</th>
                   <td>{inforData.jysyrxm}</td>
                 </tr>

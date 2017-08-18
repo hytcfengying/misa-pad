@@ -62,72 +62,79 @@ export default class identity extends PureComponent {
                 {
                   codeSearchType === 'codeSearch_identity' ?
                     <tr>
+                      <td width="2%" />
                       <td>处理标志</td>
                       <td width="30%">结果说明</td>
                       <td>回报时间</td>
                       <td>一码通号</td>
                       <td>账户状态</td>
-                      <td width="5%" />
+                      <td colSpan="2" width="5%" />
                     </tr> : ''
                 }
                 {
                   codeSearchType === 'codeSearch_code' ?
                     <tr>
+                      <td width="2%" />
                       <td>处理标志</td>
                       <td width="30%">结果说明</td>
                       <td>回报时间</td>
                       <td>客户名称</td>
                       <td>证件类别</td>
                       <td>证件号码</td>
-                      <td width="5%" />
+                      <td colSpan="2" width="5%" />
                     </tr> : ''
                 }
                 {
                   pathname === 'stockSearch' ?
                     <tr>
+                      <td width="2%" />
                       <td>处理标志</td>
                       <td width="30%">结果说明</td>
                       <td>回报时间</td>
                       <td>账户类别</td>
                       <td>证券账号</td>
                       <td>账户状态</td>
-                      <td width="5%" />
+                      <td colSpan="2" width="5%" />
                     </tr> : ''
                 }
                 {
                   pathname === 'relationSearch' ?
                     <tr>
+                      <td width="2%" />
                       <td>处理标志</td>
                       <td width="30%">结果说明</td>
                       <td>回报时间</td>
-                      <td>客户名称</td>
-                      <td>证件类别</td>
-                      <td>证件号码</td>
-                      <td width="5%" />
+                      <td>账户类别</td>
+                      <td>证券账号</td>
+                      <td>一码通号</td>
+                      <td colSpan="2" width="5%" />
                     </tr> : ''
                 }
                 {
                   pathname === 'infoSearch' ?
                     <tr>
+                      <td width="2%" />
                       <td>处理标志</td>
                       <td width="30%">结果说明</td>
                       <td>回报时间</td>
-                      <td>客户名称</td>
-                      <td>证件类别</td>
-                      <td>证件号码</td>
-                      <td width="5%" />
+                      <td>账户类别</td>
+                      <td>证券账号</td>
+                      <td>一码通号</td>
+                      <td colSpan="2" width="5%" />
                     </tr> : ''
                 }
                 {
                   pathname === 'partnerSearch' ?
                     <tr>
+                      <td width="2%" />
+                      <td>处理标志</td>
                       <td width="30%">结果说明</td>
                       <td>回报时间</td>
                       <td>一码通号</td>
                       <td>合伙人全称</td>
                       <td>合伙人证件类别</td>
                       <td>合伙人证件编号</td>
-                      <td width="5%" />
+                      <td colSpan="2" width="5%" />
                     </tr> : ''
                 }
               </thead>
@@ -136,6 +143,7 @@ export default class identity extends PureComponent {
                   codeSearchType === 'codeSearch_identity' ?
                     csdcList.map(item =>
                       <tr>
+                        <td width="2%" />
                         <td>{item.clbz_note || item.clbz}</td>
                         <td>
                           <div>{item.hbjgsm || item.jgsm}</div>
@@ -146,6 +154,7 @@ export default class identity extends PureComponent {
                         <td onClick={this.handleItemClick({ item })}>
                           <span className={styles.iconRight} />
                         </td>
+                        <td width="2%" />
                       </tr>,
                     ) : ''
                 }
@@ -153,6 +162,7 @@ export default class identity extends PureComponent {
                   codeSearchType === 'codeSearch_code' ?
                     csdcList.map(item =>
                       <tr>
+                        <td width="2%" />
                         <td>{item.clbz_note || item.clbz}</td>
                         <td>
                           <div>{item.hbjgsm || item.jgsm}</div>
@@ -164,6 +174,7 @@ export default class identity extends PureComponent {
                         <td onClick={this.handleItemClick({ item })}>
                           <span className={styles.iconRight} />
                         </td>
+                        <td width="2%" />
                       </tr>,
                     ) : ''
                 }
@@ -171,17 +182,19 @@ export default class identity extends PureComponent {
                   pathname === 'stockSearch' ?
                     csdcList.map(item =>
                       <tr>
+                        <td width="2%" />
                         <td>{item.clbz_note || item.clbz}</td>
                         <td>
                           <div>{item.hbjgsm || item.jgsm}</div>
                         </td>
                         <td>{`${item.hbrq} ${item.hbsj}`}</td>
                         <td>{item.zhlb_note || item.zhlb}</td>
-                        <td>{item.zhzh}</td>
+                        <td>{item.zqzh}</td>
                         <td>{item.zqzhzt_note || item.zqzhzt}</td>
                         <td onClick={this.handleItemClick({ item })}>
                           <span className={styles.iconRight} />
                         </td>
+                        <td width="2%" />
                       </tr>,
                     ) : ''
                 }
@@ -189,17 +202,19 @@ export default class identity extends PureComponent {
                   pathname === 'relationSearch' ?
                     csdcList.map(item =>
                       <tr>
+                        <td width="2%" />
                         <td>{item.clbz_note || item.clbz}</td>
                         <td>
                           <div>{item.hbjgsm || item.jgsm}</div>
                         </td>
                         <td>{`${item.hbrq} ${item.hbsj}`}</td>
-                        <td>{item.khmc}</td>
                         <td>{item.zhlb_note || item.zhlb}</td>
-                        <td>{item.zhbh}</td>
+                        <td>{item.zqzh}</td>
+                        <td>{item.ymth}</td>
                         <td onClick={this.handleItemClick({ item })}>
                           <span className={styles.iconRight} />
                         </td>
+                        <td width="2%" />
                       </tr>,
                     ) : ''
                 }
@@ -207,17 +222,19 @@ export default class identity extends PureComponent {
                   pathname === 'infoSearch' ?
                     csdcList.map(item =>
                       <tr>
+                        <td width="2%" />
                         <td>{item.clbz_note || item.clbz}</td>
                         <td>
                           <div>{item.hbjgsm || item.jgsm}</div>
                         </td>
                         <td>{`${item.hbrq} ${item.hbsj}`}</td>
-                        <td>{item.hbmc}</td>
                         <td>{item.zhlb_note || item.zhlb}</td>
-                        <td>{item.zhbh}</td>
+                        <td>{item.zqzh}</td>
+                        <td>{item.ymth}</td>
                         <td onClick={this.handleItemClick({ item })}>
                           <span className={styles.iconRight} />
                         </td>
+                        <td width="2%" />
                       </tr>,
                     ) : ''
                 }
@@ -225,6 +242,8 @@ export default class identity extends PureComponent {
                   pathname === 'partnerSearch' ?
                     csdcList.map(item =>
                       <tr>
+                        <td width="2%" />
+                        <td>{item.clbz_note || item.clbz}</td>
                         <td>
                           <div>{item.hbjgsm || item.jgsm}</div>
                         </td>
@@ -236,6 +255,7 @@ export default class identity extends PureComponent {
                         <td onClick={this.handleItemClick({ item })}>
                           <span className={styles.iconRight} />
                         </td>
+                        <td width="2%" />
                       </tr>,
                     ) : ''
                 }

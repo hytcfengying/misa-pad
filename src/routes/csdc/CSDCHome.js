@@ -113,7 +113,7 @@ export default class codePass extends PureComponent {
         break;
     }
     setNavigatePageTitle(
-      [title, false],
+      [title, true],
       result => console.log(result),
       err => console.log(err),
     );

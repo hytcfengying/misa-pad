@@ -77,6 +77,10 @@ export default {
         returnOpinion: [],
         inforData: {},
         returnInfo: [],
+        question: [],
+        questionResult: {},
+        customerNumber: '',
+        questionState: '',
       };
     },
     saveBdid(state, action) {
@@ -693,8 +697,8 @@ export default {
         if (query.key === 'FXCP') { // 风险测评提交
           const fxcpValue = JSON.parse(query.value);
           const fxcpQuery = _.assign(query, { value: JSON.stringify(fxcpValue.stepValue) });
-          response = yield call(api.saveStepCache, fxcpQuery);  // 风险测评保存步骤缓存
           response = yield call(api.saveQuestionResult, { queryxml: fxcpValue.xmlValue }); // 提交
+          response = yield call(api.saveStepCache, fxcpQuery);  // 风险测评保存步骤缓存
         } else { // 其他页面保存步骤缓存
           response = yield call(api.saveStepCache, query);
         }

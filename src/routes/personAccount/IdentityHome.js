@@ -230,7 +230,7 @@ export default class SearchHome extends PureComponent {
     if (query.bdid) {
       let url = `/search/result?deviceId=${query.deviceId}&empId=${query.empId}&searchKey=${query.searchKey}&token=${query.token}&userId={query.userId}`;
       if (query.source && query.source === 'record') {
-        url = `histRecord?current=${query.current}&deviceId=${query.deviceId}&empId=${query.empId}&jsrq=${query.jsrq}&ksrq=${query.ksrq}&searchKey=${query.searchKey}&step=${query.step}&token=${query.token}`;
+        url = `histRecord?current=${query.current}&deviceId=${query.deviceId}&empId=${query.empId}&jsrq=${query.jsrq}&ksrq=${query.ksrq}&searchKey=${query.searchKey}&step=${query.step}&jgbz=${query.jgbz}&token=${query.token}`;
       }
       setNavigatePageTitle( // 返回
         ['', true, url],
@@ -378,7 +378,7 @@ export default class SearchHome extends PureComponent {
       const promise = new Promise((resolve, reject) => {
         try {
           const { location: { query }, getStepCacheFunc } = props;
-          const load = true;
+          const load = false;
           const nowBdid = load ? '1196879' : (query.bdid || '');
           getStepCacheFunc({
             ...query,

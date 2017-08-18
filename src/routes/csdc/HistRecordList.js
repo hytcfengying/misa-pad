@@ -124,6 +124,7 @@ export default class SearchResult extends PureComponent {
       searchKey: query.searchKey || '',
       empId: this.props.empInforData.id,
       step: query.step || '',
+      jgbz: query.jgbz || '',
       ksrq: query.ksrq || currentdate,
       jsrq: query.jsrq || currentdate,
     });

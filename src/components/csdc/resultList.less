@@ -1,4 +1,5 @@
 .result{
+  border-bottom: 1PX solid #dddddd;
   .tableArea{
     width: 100%;
 
@@ -6,6 +7,15 @@
       td{
         height: 90px;
         text-align: center;
+        border-bottom: 1PX solid #dddddd;
+
+        &:first-child{
+          border-bottom: 0;
+        }
+
+        &:last-child{
+          border-bottom: 0;
+        }
 
         div{
           width: 600px;
@@ -14,6 +24,12 @@
           white-space: nowrap;
         }
 
+      }
+
+      &:last-child{
+        td{
+          border-bottom: 0;
+        }
       }
     }
 

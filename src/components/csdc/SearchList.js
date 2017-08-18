@@ -119,9 +119,9 @@ export default class SearchList extends PureComponent {
     const { empInforData, location: { query } } = this.props;
     nextBtnClick(this.props, id).then(() => {
       this.props.getRecordListFunc({
-        ...query,
         searchKey: query.searchKey,
         empId: empInforData.id || query.userId,
+        jgbz: query.jgbz || '',
         step: query.step || '',
         ksrq: query.ksrq || '',
         jsrq: query.jsrq || '',
@@ -166,7 +166,7 @@ export default class SearchList extends PureComponent {
             <div className={ListStyle.emptyIcon} />
             <div className={ListStyle.emptyInfo}>
               <div className={ListStyle.emptyTitle}>
-                暂无记录
+                没有筛选到结果
               </div>
             </div>
           </div>

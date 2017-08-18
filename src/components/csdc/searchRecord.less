@@ -76,23 +76,29 @@
     left: 0;
     width: 100%;
     height: 100%;
+    overflow-y: auto;
     .mask {
       position: fixed;
-      top: 0;
-      right: 0;
-      left: 0;
-      bottom: 0;
-      text-indent: -9999em;
-      background-color: rgba(55, 55, 55, 0.6);
+      width: 100%;
       height: 100%;
-      z-index: 1000;
+      text-indent: -9999em;
+    }
+    .rightBox {
+      position: relative;
+      width: 100%;
+      background-color: rgba(55, 55, 55, 0.6);
+      &:after {
+        content: '';
+        display: block;
+        height: 0;
+        clear: both;
+      }
     }
     .filterSearchBox {
       position: relative;
       float: right;
       right: -640px;
       width: 640px;
-      height: 100%;
       background-color: #fff;
       z-index: 10001;
       transition: 2s;
@@ -109,18 +115,30 @@
         position: relative;
         padding: 0 30px 28px 30px;
         border-bottom: 1PX solid #e1e1e1;
+        background-color: #fff;
         &:last-child {
           padding-bottom: 0;
         }
         .seaInput {
           height: 70px;
           line-height: 70px;
-          font-size: 24px;
-          color: #666;
-          text-indent: 20px;
-          border: none;
-          border-radius: 6px;
-          background-color: #efefef;
+          &>input {
+            font-size: 24px;
+            color: #666;
+            text-indent: 20px;
+            border: none;
+            border-radius: 6px;
+            background-color: #efefef;
+          }
+        }
+        .searchClear{
+          background:url(../../../static/img/icon_close.png) no-repeat;
+          width:32px;
+          background-size: 32px;
+          height:32px;
+          display:block;
+          position:relative;
+          right:10px;
         }
         .dataLink {
           position: absolute;
@@ -138,8 +156,6 @@
         }
         .stepUl {
           border: none;
-          max-height: 500px;
-          overflow-y: auto;
           .stepLi {
             position: relative;
             display: table;
@@ -181,6 +197,16 @@
           }
         }
         :global {
+          .ant-input-affix-wrapper {
+            &>input {
+              font-size: 24px;
+              color: #666;
+              text-indent: 20px;
+              border: none;
+              border-radius: 6px;
+              background-color: #efefef;
+            }
+          }
           .ant-calendar-picker {
             height: 0.3646rem;
             width: 1.3rem;
@@ -221,28 +247,9 @@
       }
       .stepUlBox {
         padding-right: 0;
-      }
-      .buttBox {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        width: 100%;
-        border-top: 1PX solid #e1e1e1;
-        .butt {
-          width: 50%;
-          height: 90px;
-          line-height: 90px;
-          font-size: 28px;
-          color: #333;
-          border: none;
-          background-color: #fff;
-          &:active {
-            border: none;
-          }
-          &:last-child {
-            color: #fff;
-            background-color: #c5342a;
-          }
+        padding-bottom: 0;
+        &:last-child {
+          padding-bottom: 90px!important;
         }
       }
     }
@@ -250,6 +257,34 @@
       display: block;
       .filterSearchBox {
         right: 0;
+      }
+    }
+  }
+  .buttBox {
+    position: fixed;
+    display: none;
+    right: 0;
+    bottom: 0;
+    width: 640px;
+    border-top: 1PX solid #e1e1e1;
+    z-index: 99999;
+    &.showClass {
+      display: block;
+    }
+    .butt {
+      width: 50%;
+      height: 90px;
+      line-height: 90px;
+      font-size: 28px;
+      color: #333;
+      border: none;
+      background-color: #fff;
+      &:active {
+        border: none;
+      }
+      &:last-child {
+        color: #fff;
+        background-color: #c5342a;
       }
     }
   }

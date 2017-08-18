@@ -100,7 +100,8 @@ export default class SearchResult extends PureComponent {
           query: {
             ...query,
             step: query.step ? query.step : '',
-            current: query.current ? query.current : '',
+            jgbz: query.jgbz ? query.jgbz : '',
+            current: query.current ? query.current : 'KHYW',
             searchKey: query.searchKey ? query.searchKey : '',
             ksrq: query.ksrq ? query.ksrq : currentdate,
             jsrq: query.jsrq ? query.jsrq : currentdate,
@@ -113,7 +114,8 @@ export default class SearchResult extends PureComponent {
         query: {
           ...query,
           step: query.step ? query.step : '',
-          current: query.current ? query.current : '',
+          jgbz: query.jgbz ? query.jgbz : '',
+          current: query.current ? query.current : 'KHYW',
           searchKey: query.searchKey ? query.searchKey : '',
           ksrq: query.ksrq ? query.ksrq : currentdate,
           jsrq: query.jsrq ? query.jsrq : currentdate,

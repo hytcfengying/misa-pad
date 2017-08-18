@@ -27,7 +27,7 @@ import infoWrite from './routes/personAccount/InfoWrite';
 import videoSite from './routes/personAccount/VideoSite';
 import complete from './routes/personAccount/Complete';
 
-import orgIdentityHome from './routes/organizationAccount/IdentityHome';
+import openIndex from './routes/organizationAccount/openIndexHome';
 
 import csdcHome from './routes/csdc/CSDCHome';
 import csdcDetail from './routes/csdc/CSDCDetail';
@@ -62,8 +62,8 @@ const routes = ({ history }) => (// eslint-disable-line
         <Route path="complete" component={complete} />
       </Route>
       <Route path="organizationAccount">
-        <IndexRoute component={orgIdentityHome} />
-        <Route path="identity" component={orgIdentityHome} />
+        <IndexRoute component={openIndex} />
+        <Route path="openIndex" component={openIndex} />
       </Route>
       <Route path="histRecord">
         <IndexRoute component={histRecord} />
