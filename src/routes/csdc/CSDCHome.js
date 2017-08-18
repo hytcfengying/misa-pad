@@ -117,15 +117,27 @@ export default class codePass extends PureComponent {
       result => console.log(result),
       err => console.log(err),
     );
-    const arr = [];
+    // const arr = [];
+    // if (identityArr && identityArr.length === 0) {
+    //   arr.push({ fldm: 'ZDZH_ZJLB' });
+    // }
+    // if (accountArr && accountArr.length === 0 && location.pathname !== '/codeSearch') {
+    //   arr.push({ fldm: 'ZDZH_ZHLB' });
+    // }
+    // if (arr.length > 0) {
+    //   getDictionaryQuery(arr);
+    // }
     if (identityArr && identityArr.length === 0) {
-      arr.push({ fldm: 'ZDZH_ZJLB' });
+      getDictionaryQuery({
+        type: 'identity',
+        query: { fldm: 'ZDZH_ZJLB' },
+      });
     }
-    if (accountArr && accountArr.length === 0 && location.pathname !== '/codeSearch') {
-      arr.push({ fldm: 'ZDZH_ZHLB' });
-    }
-    if (arr.length > 0) {
-      getDictionaryQuery(arr);
+    if (accountArr && accountArr.length === 0) {
+      getDictionaryQuery({
+        type: 'account',
+        query: { fldm: 'ZDZH_ZHLB' },
+      });
     }
     if (!query.searchState) {
       clearQuery();

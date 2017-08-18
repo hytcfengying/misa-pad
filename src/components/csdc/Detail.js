@@ -154,7 +154,7 @@ export default class identity extends PureComponent {
                 </tr>
                 <tr>
                   <td>不合格交易限制</td>
-                  <td>{detail.qrjgmc}</td>
+                  <td>{detail.bhgjyxz}</td>
                   <td>不合格原因类别</td>
                   <td>{detail.bhgyylb}</td>
                 </tr>

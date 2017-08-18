@@ -88,14 +88,14 @@ export default {
     },
     getDictionaryQuerySuccess(state, action) {
       const { payload: {
-        identityArray,
-        accountArray,
+        query,
+        listArray: { resultData: arr },
       } } = action;
-      const { accountArr } = state;
+      const { identityArr, accountArr } = state;
       return {
         ...state,
-        identityArr: identityArray.resultData.ZDZH_ZJLB,
-        accountArr: accountArray.resultData ? accountArray.resultData.ZDZH_ZHLB : accountArr,
+        identityArr: query.type === 'identity' ? arr : identityArr,
+        accountArr: query.type === 'account' ? arr : accountArr,
       };
     },
   },
@@ -147,16 +147,12 @@ export default {
     * 数字字典 查询
     */
     * getDictionaryQuery({ payload: query }, { call, put }) {
-      const identityArray = yield call(api.getDicData, query[0]);
-      let accountArray = {};
-      if (query[1]) {
-        accountArray = yield call(api.getDicData, query[1]);
-      }
+      const listArray = yield call(api.getDicData, query.query);
       yield put({
         type: 'getDictionaryQuerySuccess',
         payload: {
-          identityArray,
-          accountArray,
+          query,
+          listArray,
         },
       });
     },
