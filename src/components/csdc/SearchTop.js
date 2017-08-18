@@ -240,17 +240,6 @@ export default class SearchTop extends PureComponent {
           filterButSelect: true,
         });
         console.log('Received values of form: ', values);
-        setTimeout(() => {
-          this.props.clearListDataState();
-          this.props.getRecordListFunc({
-            searchKey: value || '',
-            empId: empInforData.id,
-            step: this.state.step || '',
-            jgbz: this.state.jgbz || '',
-            ksrq: startValue.format(dateFormat) || currentdate,
-            jsrq: endValue.format(dateFormat) || currentdate,
-          });
-        }, 0);
         replace({
           pathname: '/histRecord/histRecordList',
           query: {
@@ -264,6 +253,17 @@ export default class SearchTop extends PureComponent {
           },
         });
         document.documentElement.style.overflow = 'initial';
+        setTimeout(() => {
+          this.props.clearListDataState();
+          this.props.getRecordListFunc({
+            searchKey: value || '',
+            empId: empInforData.id,
+            step: this.state.step || '',
+            jgbz: this.state.jgbz || '',
+            ksrq: startValue.format(dateFormat) || currentdate,
+            jsrq: endValue.format(dateFormat) || currentdate,
+          });
+        }, 0);
       }
     });
   }

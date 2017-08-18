@@ -94,8 +94,8 @@ export default {
       const { identityArr, accountArr } = state;
       return {
         ...state,
-        identityArr: query.type === 'identity' ? arr : identityArr,
-        accountArr: query.type === 'account' ? arr : accountArr,
+        identityArr: query.type === 'identity' ? arr.ZDZH_ZJLB : identityArr,
+        accountArr: query.type === 'account' ? arr.ZDZH_ZHLB : accountArr,
       };
     },
   },

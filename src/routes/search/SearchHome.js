@@ -9,7 +9,7 @@ import { withRouter, routerRedux } from 'dva/router';
 // import { autobind } from 'core-decorators';
 import _ from 'lodash';
 
-import { setNavigatePageTitle } from '../../utils/cordova';
+import { setNavigatePageTitle, setmTabMainVisual } from '../../utils/cordova';
 
 import SearchBar from '../../components/search/SearchBar';
 import homeStyle from './searchHome.less';
@@ -37,6 +37,10 @@ const mapDispatchToProps = {
     type: 'search/clearState',
     payload: query || null,
   }),
+  clearQueryFunc: query => ({// 清空state
+    type: 'csdc/clearQuery',
+    payload: query || null,
+  }),
 };
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -51,6 +55,7 @@ export default class SearchHome extends PureComponent {
     clearGlobalStateFunc: PropTypes.func.isRequired,
     clearStateFunc: PropTypes.func.isRequired,
     empInforData: PropTypes.object,
+    clearQueryFunc: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -67,12 +72,18 @@ export default class SearchHome extends PureComponent {
   }
 
   componentWillMount() {
-    const { location: { query }, empInforData } = this.props;
+    const { location: { query }, empInforData, clearQueryFunc } = this.props;
     setNavigatePageTitle(
       ['', false],
       result => console.log(result),
       err => console.log(err),
     );
+    setmTabMainVisual(
+      [true],
+      result => console.log(result),
+      err => console.log(err),
+    );
+    clearQueryFunc();
     this.props.clearStateFunc();
     if (query.empId) {
       if (_.isEmpty(empInforData) ||
