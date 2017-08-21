@@ -266,7 +266,10 @@ export default class codePass extends PureComponent {
                         ],
                         initialValue: searchObj.zjlb || identityDefault,
                       })(
-                        <Select onChange={this.handleChangeID}>
+                        <Select
+                          onChange={this.handleChangeID}
+                          dropdownClassName="angle"
+                        >
                           {
                             identityArr.map(item =>
                               <Option
@@ -385,7 +388,10 @@ export default class codePass extends PureComponent {
                         ],
                         initialValue: searchObj.zhlb || accountDefault,
                       })(
-                        <Select onChange={this.handleChangeID}>
+                        <Select
+                          onChange={this.handleChangeID}
+                          dropdownClassName="angle"
+                        >
                           {
                             accountArr.map(item =>
                               <Option

@@ -63,13 +63,15 @@ export default class Question extends PureComponent {
                     >
                       {
                         item.sanswer.split(';').map((item1, index) =>
-                          <Radio
-                            key={item.answerArr[index]}
-                            value={`${item.qid}|${item.answerArr[index]}`}
-                            disabled={item.qid === 226}
-                          >
-                            {item1.split('|')[1]}
-                          </Radio>,
+                          <div className={styles.radioArea}>
+                            <Radio
+                              key={item.answerArr[index]}
+                              value={`${item.qid}|${item.answerArr[index]}`}
+                              disabled={item.qid === 226}
+                            >
+                              {item1.split('|')[1]}
+                            </Radio>
+                          </div>,
                         )
                       }
                     </RadioGroup>
