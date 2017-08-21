@@ -8,7 +8,7 @@ import { connect } from 'dva';
 import { withRouter, routerRedux } from 'dva/router';
 import { setNavigatePageTitle } from '../../utils/cordova';
 
-import styles from './codePass.less';
+import styles from './csdcHome.less';
 import Detail from '../../components/csdc/Detail';
 
 const mapStateToProps = state => ({

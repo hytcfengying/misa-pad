@@ -155,14 +155,6 @@ export default {
         stepCacheData: resultData,
       };
     },
-    clearQuestion(state) {
-      return {
-        ...state,
-        question: [],
-        questionResult: {},
-        questionState: '',
-      };
-    },
     getQuestionSuccess(state, action) {
       const { payload: {
         question: { resultData },
