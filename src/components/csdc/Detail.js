@@ -52,44 +52,44 @@ export default class identity extends PureComponent {
                   <td width="38%">
                     {detail.clbz_note || detail.clbz}
                   </td>
-                  <td width="12%">回报结果说明</td>
-                  <td>{detail.hbjgsm}</td>
-                </tr>
-                <tr>
-                  <td>结果说明</td>
+                  <td width="12%">结果说明</td>
                   <td>{detail.jgsm}</td>
-                  <td>一码通号</td>
-                  <td colSpan="3" >{detail.ymth}</td>
                 </tr>
                 <tr>
                   <td>回报时间</td>
                   <td>{`${detail.hbrq} ${detail.hbsj}`}</td>
-                  <td>账户状态</td>
+                  <td>回报结果说明</td>
+                  <td>{detail.hbjgsm}</td>
+                </tr>
+                <tr>
+                  <td>一码通号</td>
+                  <td>{detail.ymth}</td>
+                  <td>一码通状态</td>
                   <td>{detail.ymtzt}</td>
-                </tr>
-                <tr>
-                  <td>开户方式</td>
-                  <td>{detail.khfs_note || detail.khfs}</td>
-                  <td>开户日期</td>
-                  <td>{detail.khrq}</td>
-                </tr>
-                <tr>
-                  <td>开户机构名称</td>
-                  <td>{detail.khjgmc}</td>
-                  <td>销户日期</td>
-                  <td>{detail.xhrq}</td>
-                </tr>
-                <tr>
-                  <td>销户机构名称</td>
-                  <td>{detail.xhjgmc}</td>
-                  <td>客户名称</td>
-                  <td>{detail.khmc}</td>
                 </tr>
                 <tr>
                   <td>证件类别</td>
                   <td>{detail.zjlb_note || detail.zjlb}</td>
                   <td>证件号码</td>
                   <td>{detail.zjbh}</td>
+                </tr>
+                <tr>
+                  <td>客户名称</td>
+                  <td>{detail.khmc}</td>
+                  <td>开户方式</td>
+                  <td>{detail.khfs_note || detail.khfs}</td>
+                </tr>
+                <tr>
+                  <td>开户日期</td>
+                  <td>{detail.khrq}</td>
+                  <td>开户机构名称</td>
+                  <td>{detail.khjgmc}</td>
+                </tr>
+                <tr>
+                  <td>销户日期</td>
+                  <td>{detail.xhrq}</td>
+                  <td>销户机构名称</td>
+                  <td>{detail.xhjgmc}</td>
                 </tr>
               </tbody> : ''
           }
@@ -101,18 +101,24 @@ export default class identity extends PureComponent {
                   <td width="38%">
                     {detail.clbz_note || detail.clbz}
                   </td>
-                  <td width="12%">回报结果说明</td>
-                  <td>{detail.hbjgsm}</td>
-                </tr>
-                <tr>
-                  <td>结果说明</td>
+                  <td width="12%">结果说明</td>
                   <td>{detail.jgsm}</td>
-                  <td>证件号码</td>
-                  <td>{detail.zjbh}</td>
                 </tr>
                 <tr>
                   <td>回报时间</td>
                   <td>{`${detail.hbrq} ${detail.hbsj}`}</td>
+                  <td>回报结果说明</td>
+                  <td>{detail.hbjgsm}</td>
+                </tr>
+                <tr>
+                  <td>证件类别</td>
+                  <td>{detail.zjlb_note || detail.zjlb}</td>
+                  <td>证件号码</td>
+                  <td>{detail.zjbh}</td>
+                </tr>
+                <tr>
+                  <td>客户名称</td>
+                  <td>{detail.khmc}</td>
                   <td>账户类别</td>
                   <td>{detail.zhlb_note || detail.zhlb}</td>
                 </tr>
@@ -129,40 +135,34 @@ export default class identity extends PureComponent {
                   <td>{detail.ymtzt_note || detail.ymtzt}</td>
                 </tr>
                 <tr>
-                  <td>开户方式</td>
-                  <td>{detail.khfs_note || detail.khfs}</td>
                   <td>开户日期</td>
                   <td>{detail.khrq}</td>
-                </tr>
-                <tr>
                   <td>开户机构名称</td>
                   <td>{detail.khjgmc}</td>
+                </tr>
+                <tr>
                   <td>销户日期</td>
                   <td>{detail.xhrq}</td>
-                </tr>
-                <tr>
                   <td>销户机构名称</td>
                   <td>{detail.xhjgmc}</td>
+                </tr>
+                <tr>
                   <td>关联关系确认标识</td>
                   <td>{detail.glgxbs}</td>
-                </tr>
-                <tr>
                   <td>确认机构名称</td>
                   <td>{detail.qrjgmc}</td>
+                </tr>
+                <tr>
                   <td>不合格标识</td>
                   <td>{detail.bhgbs}</td>
-                </tr>
-                <tr>
                   <td>不合格交易限制</td>
                   <td>{detail.bhgjyxz}</td>
-                  <td>不合格原因类别</td>
-                  <td>{detail.bhgyylb}</td>
                 </tr>
                 <tr>
-                  <td>客户名称</td>
-                  <td>{detail.khmc}</td>
-                  <td>证件类别</td>
-                  <td>{detail.zjlb_note || detail.zjlb}</td>
+                  <td>不合格原因类别</td>
+                  <td>{detail.bhgyylb}</td>
+                  <td>开户方式</td>
+                  <td>{detail.khfs_note || detail.khfs}</td>
                 </tr>
               </tbody> : ''
           }
@@ -174,20 +174,20 @@ export default class identity extends PureComponent {
                   <td width="38%">
                     {detail.clbz_note || detail.clbz}
                   </td>
-                  <td width="12%">回报结果说明</td>
+                  <td width="12%">结果说明</td>
+                  <td>{detail.jgsm}</td>
+                </tr>
+                <tr>
+                  <td>回报时间</td>
+                  <td>{`${detail.hbrq} ${detail.hbsj}`}</td>
+                  <td>回报结果说明</td>
                   <td>{detail.hbjgsm}</td>
                 </tr>
                 <tr>
-                  <td>结果说明</td>
-                  <td>{detail.jgsm}</td>
-                  <td>回报时间</td>
-                  <td>{`${detail.hbrq} ${detail.hbsj}`}</td>
-                </tr>
-                <tr>
-                  <td>证券账号</td>
-                  <td>{detail.zqzh}</td>
                   <td width="10%">账户类别</td>
                   <td>{detail.zhlb_note || detail.zhlb}</td>
+                  <td>证券账号</td>
+                  <td>{detail.zqzh}</td>
                 </tr>
                 <tr>
                   <td>一码通号</td>
@@ -203,14 +203,20 @@ export default class identity extends PureComponent {
                   <td width="38%">
                     {detail.clbz_note || detail.clbz}
                   </td>
-                  <td width="12%">回报结果说明</td>
+                  <td width="12%">结果说明</td>
+                  <td>{detail.jgsm}</td>
+                </tr>
+                <tr>
+                  <td>回报时间</td>
+                  <td>{`${detail.hbrq} ${detail.hbsj}`}</td>
+                  <td>回报结果说明</td>
                   <td>{detail.hbjgsm}</td>
                 </tr>
                 <tr>
-                  <td>结果说明</td>
-                  <td>{detail.jgsm}</td>
-                  <td>回报时间</td>
-                  <td>{`${detail.hbrq} ${detail.hbsj}`}</td>
+                  <td>证件类别</td>
+                  <td>{detail.zjlb_note || detail.zjlb}</td>
+                  <td>证件编号</td>
+                  <td>{detail.zjbh}</td>
                 </tr>
                 <tr>
                   <td>账户类别</td>
@@ -219,44 +225,38 @@ export default class identity extends PureComponent {
                   <td>{detail.zqzh}</td>
                 </tr>
                 <tr>
-                  <td>证件编号</td>
-                  <td>{detail.zjbh}</td>
                   <td>一码通号</td>
                   <td>{detail.ymth}</td>
+                  <td>使用信息报送标识</td>
+                  <td>{detail.ywpzbs}</td>
                 </tr>
                 <tr>
-                  <td>证件类别</td>
-                  <td>{detail.zjlb_note || detail.zjlb}</td>
                   <td>交易单元</td>
                   <td>{detail.jydy}</td>
-                </tr>
-                <tr>
-                  <td>代理机构</td>
-                  <td>{detail.khjgdm_note || detail.khjgdm}</td>
                   <td>营业部编码</td>
                   <td>{detail.yybbm}</td>
                 </tr>
                 <tr>
-                  <td>申报券商</td>
-                  <td>{detail.khjgmc}</td>
+                  <td>代理机构</td>
+                  <td>{detail.khjgdm_note || detail.khjgdm}</td>
                   <td>代理网点</td>
                   <td>{detail.khwddm}</td>
                 </tr>
                 <tr>
-                  <td>指定交易券商</td>
-                  <td>{detail.zdjgmc}</td>
+                  <td>申报券商</td>
+                  <td>{detail.khjgmc}</td>
                   <td>申报营业部</td>
                   <td>{detail.khwdmc}</td>
                 </tr>
                 <tr>
-                  <td>业务日期</td>
-                  <td>{detail.ywrq}</td>
+                  <td>指定交易券商</td>
+                  <td>{detail.zdjgmc}</td>
                   <td>申报日期</td>
                   <td>{detail.sysbrq}</td>
                 </tr>
                 <tr>
-                  <td>使用信息报送标识</td>
-                  <td colSpan="3" >{detail.ywpzbs}</td>
+                  <td>业务日期</td>
+                  <td colSpan="3">{detail.ywrq}</td>
                 </tr>
               </tbody> : ''
           }
@@ -268,14 +268,14 @@ export default class identity extends PureComponent {
                   <td width="38%">
                     {detail.clbz_note || detail.clbz}
                   </td>
-                  <td width="12%">回报结果说明</td>
-                  <td>{detail.hbjgsm}</td>
+                  <td width="12%">结果说明</td>
+                  <td>{detail.jgsm}</td>
                 </tr>
                 <tr>
-                  <td>结果说明</td>
-                  <td>{detail.jgsm}</td>
                   <td>回报时间</td>
                   <td>{`${detail.hbrq} ${detail.hbsj}`}</td>
+                  <td>回报结果说明</td>
+                  <td>{detail.hbjgsm}</td>
                 </tr>
                 <tr>
                   <td width="10%">一码通号</td>

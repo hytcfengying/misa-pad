@@ -12,6 +12,7 @@ export default class InvestList extends PureComponent {
     item: PropTypes.object,
     push: PropTypes.func.isRequired,
     index: PropTypes.number.isRequired,
+    type: PropTypes.string.isRequired,
   }
 
   static defaultProps = {
@@ -30,8 +31,8 @@ export default class InvestList extends PureComponent {
 
   @autobind
   handleDetail() {
-    const { push, index } = this.props;
-    push(`/personAccount/invest/detail?investKey=${index}`);
+    const { push, index, type } = this.props;
+    push(`/${type}/invest/detail?investKey=${index}`);
   }
 
   render() {

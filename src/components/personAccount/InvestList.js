@@ -13,10 +13,12 @@ export default class InvestList extends PureComponent {
   static propTypes = {
     list: PropTypes.array,
     push: PropTypes.func.isRequired,
+    type: PropTypes.string,
   }
 
   static defaultProps = {
     list: [],
+    type: 'personAccount',
   }
 
   constructor(props) {
@@ -43,7 +45,7 @@ export default class InvestList extends PureComponent {
   }
 
   render() {
-    const { list, push } = this.props;
+    const { list, push, type } = this.props;
     this.filterList();
     return (
       <section className={styles.investList}>
@@ -59,6 +61,7 @@ export default class InvestList extends PureComponent {
                 push={push}
                 item={item}
                 index={item.indexId}
+                type={type}
               />,
             )
           }

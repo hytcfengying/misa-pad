@@ -64,7 +64,7 @@ export default class identity extends PureComponent {
                     <tr>
                       <td width="2%" />
                       <td>处理标志</td>
-                      <td width="30%">结果说明</td>
+                      <td>结果说明</td>
                       <td>回报时间</td>
                       <td>一码通号</td>
                       <td>账户状态</td>
@@ -76,7 +76,7 @@ export default class identity extends PureComponent {
                     <tr>
                       <td width="2%" />
                       <td>处理标志</td>
-                      <td width="30%">结果说明</td>
+                      <td>结果说明</td>
                       <td>回报时间</td>
                       <td>客户名称</td>
                       <td>证件类别</td>
@@ -89,7 +89,7 @@ export default class identity extends PureComponent {
                     <tr>
                       <td width="2%" />
                       <td>处理标志</td>
-                      <td width="30%">结果说明</td>
+                      <td>结果说明</td>
                       <td>回报时间</td>
                       <td>账户类别</td>
                       <td>证券账号</td>
@@ -102,7 +102,7 @@ export default class identity extends PureComponent {
                     <tr>
                       <td width="2%" />
                       <td>处理标志</td>
-                      <td width="30%">结果说明</td>
+                      <td>结果说明</td>
                       <td>回报时间</td>
                       <td>账户类别</td>
                       <td>证券账号</td>
@@ -115,7 +115,7 @@ export default class identity extends PureComponent {
                     <tr>
                       <td width="2%" />
                       <td>处理标志</td>
-                      <td width="30%">结果说明</td>
+                      <td>结果说明</td>
                       <td>回报时间</td>
                       <td>账户类别</td>
                       <td>证券账号</td>
@@ -128,7 +128,7 @@ export default class identity extends PureComponent {
                     <tr>
                       <td width="2%" />
                       <td>处理标志</td>
-                      <td width="30%">结果说明</td>
+                      <td>结果说明</td>
                       <td>回报时间</td>
                       <td>一码通号</td>
                       <td>合伙人全称</td>

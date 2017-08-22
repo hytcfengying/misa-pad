@@ -42,7 +42,7 @@ export default class CSDCDetail extends PureComponent {
   }
   componentWillMount() {
     setNavigatePageTitle(
-      ['账户详情', true],
+      ['详情', true],
       result => console.log(result),
       err => console.log(err),
     );

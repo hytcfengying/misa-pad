@@ -6,16 +6,16 @@
 import _ from 'lodash';
 // import { routerRedux } from 'dva/router';
 import api from '../api';
-import { menus } from '../config';
+import { menusTwo } from '../config';
 
 const EMPTY_OBJECT = {};
 const EMPTY_ARRAY = [];
 const LOOP_NUM = 8;
 
 export default {
-  namespace: 'personAccount',
+  namespace: 'organizationAccount',
   state: {
-    menuState: menus,
+    menuState: menusTwo,
     investList: EMPTY_ARRAY, // 投资者教育列表
     investDetail: EMPTY_OBJECT, // 投资者教育详情
     investListFlag: [false, false, false, false, false, false, false, false], // 投资者教育列表已读未读状态
@@ -94,9 +94,9 @@ export default {
       const { payload: { index } } = action;
       const { menuState } = state;
       if (index < 0) {
-        _.find(menus, { cacheKey: 'TZZJY' }).show = false;
-        _.find(menus, { cacheKey: 'FXCP' }).show = false;
-        _.find(menus, { cacheKey: 'KHJZ_LAST' }).show = false;
+        _.find(menusTwo, { cacheKey: 'TZZJY' }).show = false;
+        _.find(menusTwo, { cacheKey: 'FXCP' }).show = false;
+        _.find(menusTwo, { cacheKey: 'KHJZ_LAST' }).show = false;
         const nIndex = (Math.abs(index)) === 1 ?
           0 : Math.abs(index);
         for (let i = 0; i < nIndex; i++) {
@@ -153,14 +153,6 @@ export default {
       return {
         ...state,
         stepCacheData: resultData,
-      };
-    },
-    clearQuestion(state) {
-      return {
-        ...state,
-        question: [],
-        questionResult: {},
-        questionState: '',
       };
     },
     getQuestionSuccess(state, action) {
@@ -327,11 +319,10 @@ export default {
     * */
     getImageListSuccess(state, action) {
       const { payload: {
-        imageList: { resultData = EMPTY_ARRAY }, // 接口里面影像列表
-        imageArr, // 步骤缓存里影像
-        returnObject, // 步骤缓存里退回整改的
+        imageList: { resultData = EMPTY_ARRAY },
+        imageArr,
+        returnOpinion,
       } } = action;
-      const { returnOpinion } = state;
       // 已保存步骤缓存的数据处理
       if (imageArr) {
         imageArr.forEach((item) => {
@@ -341,36 +332,23 @@ export default {
           }
         });
       }
-      // 退回整改
-      if (returnOpinion.length > 0) {
+      // 退回整改数据的处理
+      if (returnOpinion &&
+        returnOpinion.value &&
+        JSON.parse(returnOpinion.value).key === 'YXSM') {
+        const returnArr = JSON.parse(returnOpinion.value).imageList;
         _.map(resultData, (item) => {
           _.assign(item, { returnChange: true, defaultFilepath: item.filepath });
         });
-        // 二次退回整改影像
-        if (returnObject &&
-          returnObject.value
-          && JSON.parse(returnObject.value).key === 'YXSM') {
-          const returnArr = JSON.parse(returnObject.value).imageList;
-          returnArr.forEach((item) => {
-            if (item.zd === 'YX') {
-              const index = _.findIndex(resultData, { yxlx: item.yxlx });
-              if (index > -1) {
-                resultData[index].filepath = '';
-                resultData[index] = _.assign(resultData[index], item);
-              }
+        returnArr.forEach((item) => {
+          if (item.zd === 'YX') {
+            const index = _.findIndex(resultData, { yxlx: item.yxlx });
+            if (index > -1) {
+              resultData[index].filepath = '';
+              resultData[index] = _.assign(resultData[index], item);
             }
-          });
-        } else {
-          returnOpinion.forEach((item) => {
-            if (item.zd === 'YX') {
-              const index = _.findIndex(resultData, { yxlx: item.yxlx });
-              if (index > -1) {
-                resultData[index].filepath = '';
-                resultData[index] = _.assign(resultData[index], item);
-              }
-            }
-          });
-        }
+          }
+        });
       }
       return {
         ...state,
@@ -648,9 +626,9 @@ export default {
     * getStepCache({ payload: query }, { call, put }) {
       const { bdid, key } = query;
       const stepCacheData = yield call(api.getStepCacheQuery, { bdid, key });
-      let sLength = (stepCacheData.resultData.length < menus.length) ?
+      let sLength = (stepCacheData.resultData.length < menusTwo.length) ?
         stepCacheData.resultData.length :
-        (menus.length - 1);
+        (menusTwo.length - 1);
       const obj = _.find(stepCacheData.resultData, { key: 'ZLTX' });
       if (obj && obj.value) {
         const valueObj = JSON.parse(obj.value);
@@ -658,7 +636,7 @@ export default {
           sLength = stepCacheData.resultData.length - 1;
         }
       }
-      let step = menus[sLength].key;
+      let step = menusTwo[sLength].key;
       if (query.returnChange) {
         sLength = -1;
         step = 'identity';
@@ -713,8 +691,8 @@ export default {
           jsonstr: query.value,
         });
       } else { // 其他的步骤缓存
-        const menuObj = _.find(menus, { cacheKey: query.key });
-        const thisIndex = _.findIndex(menus, menuObj);
+        const menuObj = _.find(menusTwo, { cacheKey: query.key });
+        const thisIndex = _.findIndex(menusTwo, menuObj);
         let response = {};
         if (query.key === 'FXCP') { // 风险测评提交
           const fxcpValue = JSON.parse(query.value);
@@ -794,7 +772,7 @@ export default {
         payload: {
           imageList,
           imageArr: query.valueInfo, // 步骤缓存里影像扫描的arr
-          returnObject: returnObj, // 步骤缓存里退回整改的obj
+          returnOpinion: returnObj, // 步骤缓存里退回整改的obj
         },
       });
     },
@@ -897,7 +875,7 @@ export default {
       });
     },
     /*
-    * 是否开户 身份证 人工核查
+    * 是否开户
     * */
     * openAccCheck({ payload: query }, { call, put }) {
       const openAccCheckQuery = yield call(api.openAccCheck, query);

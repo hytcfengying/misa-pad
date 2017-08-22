@@ -1,15 +1,53 @@
 .identity{
   position: relative;
-
+  background-color: #efefef;
   .formArea{
-    padding: 30px 0 20px 0;
+    padding-top: 40px;
     background-color: #ffffff;
     border-bottom-right-radius: 8px;
     border-bottom-left-radius: 8px;
+    overflow: hidden;
+    :global {
+      .ant-form {
+        padding: 0;
+      }
+      .ant-form-item {
+        margin-bottom: 40px;
+        .ant-input {
+          text-indent: 15px;
+        }
+      }
+    }
+    .buttBox {
+      width: 100%;
+      padding-bottom: 40px;
+    }
+    .checkBut {
+      margin:0 auto;
+      width:240px;
+      height:70px;
+      border-radius:35px;
+      border:none;
+      text-indent:48px;
+      background-image:url(../../../static/img/icon_kh_sfhc.png);
+      background-size:32px 32px;
+      background-position: 40px 20px;
+      background-repeat:no-repeat;
+      background-color:#c5342a;
+      span {
+        font-size:28px;
+        color:#fff;
+        font-weight: normal;
+      }
+      &.activited {
+        background-color:#ddd;
+        pointer-events: none!important;
+      }
+    }
   }
 
   .tip{
-    margin: 20px 30px;
+    margin: 0 30px 30px 30px;
     height: 70px;
     p{
       line-height: 70px;
@@ -99,6 +137,9 @@
       right:10px;
     }
     :global {
+      .ant-form-item-with-help {
+        margin-bottom: inherit;
+      }
       .ant-input-affix-wrapper {
         .ant-input {
           &:hover {

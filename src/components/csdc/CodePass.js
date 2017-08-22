@@ -185,6 +185,35 @@ export default class codePass extends PureComponent {
       err => console.log(err),
     );
   }
+  // 姓名校验
+  @autobind
+  nameCheck(rule, value, callback) {
+    if (value) {
+      const length = this.asciilen(value);
+      if (length > 120 && length !== 0) {
+        callback('必须小于120个字符（汉字长度计为2）');
+      }
+      callback();
+    } else {
+      callback();
+    }
+  }
+
+  asciilen(src) {
+    let byteLen = 0;
+    const len = src.length;
+    if (src) {
+      for (let i = 0; i < len; i++) {
+        if (src.charCodeAt(i) > 255) {
+          byteLen += 2;
+        } else {
+          byteLen++;
+        }
+      }
+      return byteLen;
+    }
+    return 0;
+  }
 
 
   render() {
@@ -344,7 +373,7 @@ export default class codePass extends PureComponent {
                           initialValue: searchObj.khxm,
                           rules: [
                             { required: true, message: '客户姓名不能为空!', whitespace: true },
-                            { max: 120, message: '客户姓名不能超过120个字符！' },
+                            { validator: this.nameCheck },
                           ],
                         },
                       )(

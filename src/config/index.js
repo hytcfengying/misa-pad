@@ -5,7 +5,8 @@ import persist from './persist';
 import request from './request';
 
 import menus from './menuL';
+import menusTwo from './menuTwo';
 
 import SFYZ from './SFYZData';
 
-export default { constants, log, menu, persist, request, menus, SFYZ };
+export default { constants, log, menu, persist, request, menus, SFYZ, menusTwo };

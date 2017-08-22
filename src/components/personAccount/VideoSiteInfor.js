@@ -22,9 +22,20 @@ export default class VideoSiteInfor extends PureComponent {
     };
   }
 
+  filterDate(date) {
+    let str = '';
+    if (date) {
+      str = `${date.toString().substring(0, 4)}-${date.toString().substring(4, 6)}-${date.toString().substring(6, 8)}`;
+    }
+    return str;
+  }
+
   render() {
     const { title, infor } = this.props;
     console.log(infor);
+    const qdrq = this.filterDate(infor.zsqdrq);
+    const zsyxrq = infor.zsyxq || infor.zsyxrq;
+    const yxrq = this.filterDate(zsyxrq);
     return (
       <div className={styles.videoSiteInfor}>
         <div className={styles.title}>
@@ -62,9 +73,9 @@ export default class VideoSiteInfor extends PureComponent {
             </tr>
             <tr>
               <td className="label">证书取得日期</td>
-              <td colSpan="2">{infor.zsqdrq}</td>
+              <td colSpan="2">{qdrq}</td>
               <td className="label">证件有效日期</td>
-              <td>{infor.zsyxq || infor.zsyxrq}</td>
+              <td>{yxrq}</td>
             </tr>
           </tbody>
         </table>

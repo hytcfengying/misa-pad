@@ -1,18 +1,21 @@
 /**
  * @file
- * @author fengying
+ * @author fengying zzc
  */
 import React, { PureComponent, PropTypes } from 'react';
 import { autobind } from 'core-decorators';
-import { Input, Select, Form } from 'antd';
-// import _ from 'lodash';
+import { Input, Select, Form, Button } from 'antd';
+import _ from 'lodash';
+
+import NextPop from './nextPop';
 
 import formStyles from '../personAccount/form.less';
 import styles from './identity.less';
 
-import BoxTitle from '../personAccount/BoxTitle';
+// import BoxTitle from '../personAccount/BoxTitle';
 // import SelectDepart from '../identity/selectDepart';
 
+const Option = Select.Option;
 const FormItem = Form.Item;
 const formItemLayout = {
   labelCol: {
@@ -29,12 +32,27 @@ const formItemLayout = {
 export default class boxTitle extends PureComponent {
 
   static propTypes = {
+    replace: PropTypes.func.isRequired,
+    push: PropTypes.func.isRequired,
+    location: PropTypes.object,
     form: PropTypes.object.isRequired,
-    value: PropTypes.string,
+    dicData: PropTypes.object,
+    empInforData: PropTypes.object,
+    tapDisabled: PropTypes.bool.isRequired,
+    openAccCheckFunc: PropTypes.func.isRequired,
+    openAccCheckData: PropTypes.object,
+    saveStepFunc: PropTypes.func.isRequired,
+    getBdidFunc: PropTypes.func.isRequired,
+    bdid: PropTypes.string.isRequired,
+    popState: PropTypes.object.isRequired,
+    changePopState: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
-    value: '',
+    location: {},
+    dicData: {},
+    empInforData: {},
+    openAccCheckData: {},
   }
 
   constructor(props) {
@@ -42,11 +60,68 @@ export default class boxTitle extends PureComponent {
 
     this.state = {
       isActive: false,
+      accessState: false,
+      // 下一步
+      stepValue: '',
+      cacheKey: 'SFYZ',
       value: '',
     };
   }
 
   componentWillMount() {
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { openAccCheckData } = nextProps;
+    if (!_.isEqual(openAccCheckData, this.props.openAccCheckData) &&
+      !_.isEmpty(openAccCheckData)) {
+      const sfyxkh = openAccCheckData.o_sfyxkh;
+      const msg = openAccCheckData.o_msg;
+      if (sfyxkh === 1) {
+        setTimeout(() => {
+          this.setState({
+            isActive: true,
+            accessState: true,
+          });
+        }, 200);
+      } else {
+        this.setState({
+          isActive: false,
+          accessState: false,
+        });
+        this.props.changePopState({
+          popShow: true,
+          popType: 'errPop',
+          popTest: msg,
+        });
+      }
+    }
+  }
+
+  // 粘贴禁止
+  handlePaste(e) {
+    e.preventDefault();
+    return false;
+  }
+
+  // 数据字典选择项初始化
+  @autobind
+  dicOptsCreate(key) {
+    const { dicData = {} } = this.props;
+    if (_.isEmpty(dicData)) {
+      return <Option key="noData" />;
+    }
+    const disOpts = [];
+    dicData[key].map(item =>
+      disOpts.push(<Option key={item.ibm}>{item.note}</Option>),
+    );
+    return disOpts;
+  }
+
+  @autobind
+  emitEmpty() {
+    this.searchInput.focus();
+    this.setState({ value: '' });
   }
 
   @autobind
@@ -58,9 +133,63 @@ export default class boxTitle extends PureComponent {
   handleSearch() {
   }
 
+  @autobind
+  handleSubmit(e) {
+    e.preventDefault();
+    const {
+      form,
+      openAccCheckFunc,
+      empInforData,
+      location: { query },
+    } = this.props;
+    form.validateFieldsAndScroll({ force: true }, (err, values) => {
+      if (!err) {
+        console.log('Received values of form: ', values);
+        openAccCheckFunc({
+          ...query,
+          khqc: values.khqc,
+          zjbh: values.zjbh,
+          yyb: empInforData.yyb,
+          zjlb: values.zjlb,
+          tabIndex: 4,
+        });
+        const SFYZData = {
+          YYB: empInforData.yyb ? empInforData.yyb.toString() : '',
+          KHXM: values.khqc,
+          XB: '',
+          ZJLB: values.zjlb,
+          ZJBH: values.zjbh,
+          KHXZR: empInforData.id ? empInforData.id.toString() : '',
+          JGBZ: '1',
+          KHFS: '2',
+          KHZD: '2',
+          KHLY: '8',
+          ZJYZLY: '3',
+          CZZD: '',
+        };
+        this.setState({
+          stepValue: JSON.stringify(SFYZData),
+        });
+      }
+    });
+  }
+
   render() {
+    const {
+      push,
+      tapDisabled,
+      getBdidFunc,
+      saveStepFunc,
+      bdid,
+    } = this.props;
     const { getFieldDecorator } = this.props.form;
-    const { value } = this.props;
+    const {
+      value,
+      accessState,
+      cacheKey,
+      stepValue,
+    } = this.state;
+    const isCheck = this.state.isActive ? styles.activited : '';
     const suffix = value ?
       <span className={styles.searchClear} onClick={this.emitEmpty} /> : null;
     const prefix = value ?
@@ -68,17 +197,6 @@ export default class boxTitle extends PureComponent {
       <span className={styles.searchIconP} />;
     return (
       <div className={`${styles.identity} ${formStyles.form}`}>
-        <BoxTitle
-          title="证件信息"
-        />
-        <div className={styles.selectDepart}>
-          {/* <SelectDepart
-            push={push}
-            replace={replace}
-            location={location}
-            // empInforData={empInforData}
-          /> */}
-        </div>
         <div className={styles.searchBar}>
           <div className={styles.searchForm}>
             <Input
@@ -90,18 +208,19 @@ export default class boxTitle extends PureComponent {
               ref={(node) => { (this.searchInput = node); }}
               onPressEnter={this.handleSearch}
               maxLength={20}
+              disbaled={tapDisabled}
             />
           </div>
         </div>
         <div className={`${styles.formArea} clearfix`}>
-          <Form onSubmit={this.handleSubmit}>
+          <Form>
             <FormItem
               {...formItemLayout}
               label="机构全称"
               colon={false}
             >
               {getFieldDecorator(
-                'KHXM',
+                'khqc',
                 {
                   // initialValue: 'xxx',
                   rules: [
@@ -109,7 +228,11 @@ export default class boxTitle extends PureComponent {
                   ],
                 },
               )(
-                <Input placeholder="请输入机构全称" />,
+                <Input
+                  placeholder="请输入机构全称"
+                  autoComplete="off"
+                  disbaled={tapDisabled}
+                />,
               )}
             </FormItem>
             <FormItem
@@ -117,14 +240,13 @@ export default class boxTitle extends PureComponent {
               label="证件类型"
               colon={false}
             >
-              {getFieldDecorator('select', {
+              {getFieldDecorator('zjlb', {
                 rules: [
-                  { required: true, message: 'Please select your country!' },
+                  { required: true, message: '请选择证件类型！' },
                 ],
               })(
-                <Select>
-                  <Option value="china">营业执照</Option>
-                  <Option value="use">U.S.A</Option>
+                <Select disbaled={tapDisabled}>
+                  {this.dicOptsCreate('GT_ZJLB')}
                 </Select>,
               )}
             </FormItem>
@@ -139,14 +261,18 @@ export default class boxTitle extends PureComponent {
               colon={false}
               className={styles.label}
             >
-              {getFieldDecorator('username', {
+              {getFieldDecorator('zjbh', {
                 rules: [{
                   pattern: /^\d*$/, message: '证件编号输入错误!',
                 }, {
                   required: true, message: '请输入证件编号!',
                 }],
               })(
-                <Input placeholder="请输入证件编号" />,
+                <Input
+                  placeholder="请输入证件编号"
+                  autoComplete="off"
+                  disbaled={tapDisabled}
+                />,
               )}
             </FormItem>
             <FormItem
@@ -155,18 +281,40 @@ export default class boxTitle extends PureComponent {
               colon={false}
               className={styles.label}
             >
-              {getFieldDecorator('password', {
+              {getFieldDecorator('zjbhCheck', {
                 rules: [{
                   pattern: /^\d*$/, message: '证件编号输入错误!',
                 }, {
                   required: true, message: '请输入证件编号!',
                 }],
               })(
-                <Input placeholder="请再次输入证件编号" />,
+                <Input
+                  placeholder="请再次输入证件编号"
+                  onPaste={this.handlePaste}
+                  autoComplete="off"
+                  disbaled={tapDisabled}
+                />,
               )}
             </FormItem>
+            <div className={styles.buttBox}>
+              <Button
+                type="primary"
+                className={`${styles.checkBut} ${isCheck}`}
+                onClick={this.handleSubmit}
+              >机构核查</Button>
+            </div>
           </Form>
         </div>
+        <NextPop
+          accessState={accessState}
+          push={push}
+          location={location}
+          stepValue={stepValue}
+          getBdidFunc={getBdidFunc}
+          saveStepFunc={saveStepFunc}
+          bdid={bdid}
+          cacheKey={cacheKey}
+        />
       </div>
     );
   }

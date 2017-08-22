@@ -161,7 +161,7 @@ export default class infor extends PureComponent {
                 <tr>
                   <th>电子邮箱</th>
                   <td>{inforData.email}</td>
-                  <th>固定号码</th>
+                  <th>固定电话</th>
                   <td>{inforData.dh}</td>
                 </tr>
               </tbody>

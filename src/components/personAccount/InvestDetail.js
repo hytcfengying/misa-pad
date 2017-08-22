@@ -15,10 +15,12 @@ export default class InvestList extends PureComponent {
     changeInvestList: PropTypes.func.isRequired,
     location: PropTypes.object.isRequired,
     readFlag: PropTypes.bool.isRequired,
+    type: PropTypes.string,
   }
 
   static defaultProps = {
     information: {},
+    type: 'personAccount',
   }
 
   constructor(props) {
@@ -64,8 +66,8 @@ export default class InvestList extends PureComponent {
     if (countdown > 0) {
       return;
     }
-    const { push } = this.props;
-    push('/personAccount/invest');
+    const { push, type } = this.props;
+    push(`/${type}/invest`);
   }
 
   @autobind

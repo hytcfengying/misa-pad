@@ -81,6 +81,7 @@ app.model(require('./models/search'));
 app.model(require('./models/personAccount'));
 app.model(require('./models/globalData'));
 app.model(require('./models/csdc'));
+app.model(require('./models/organizationAccount'));
 
 // 4. Router
 app.router(routerConfig);

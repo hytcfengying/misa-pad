@@ -53,6 +53,7 @@ export default class menuTab extends PureComponent {
     });
     const pathL = location.pathname.split('/');
     const pathIndex = pathL[2];
+    const pathFirst = pathL[1];
     if (stepObj && stepObj.value) {
       if (pathIndex === 'info') {
         this.props.changePopState({
@@ -62,7 +63,7 @@ export default class menuTab extends PureComponent {
         });
         return;
       }
-      push(`/personAccount/${item.key}`);
+      push(`/${pathFirst}/${item.key}`);
     } else {
       this.props.changePopState({
         popType: 'menuJump',
@@ -76,7 +77,9 @@ export default class menuTab extends PureComponent {
   changeMenu() {
     const { push } = this.props;
     const { value } = this.state;
-    push(`/personAccount/${value}`);
+    const pathL = location.pathname.split('/');
+    const pathIndex = pathL[1];
+    push(`/${pathIndex}/${value}`);
   }
 
   render() {

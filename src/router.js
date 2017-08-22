@@ -28,6 +28,8 @@ import videoSite from './routes/personAccount/VideoSite';
 import complete from './routes/personAccount/Complete';
 
 import openIndex from './routes/organizationAccount/openIndexHome';
+import investListOrg from './routes/organizationAccount/InvestList';
+import investDetailOrg from './routes/organizationAccount/InvestDetail';
 
 import csdcHome from './routes/csdc/CSDCHome';
 import csdcDetail from './routes/csdc/CSDCDetail';
@@ -63,7 +65,11 @@ const routes = ({ history }) => (// eslint-disable-line
       </Route>
       <Route path="organizationAccount">
         <IndexRoute component={openIndex} />
-        <Route path="openIndex" component={openIndex} />
+        <Route path="identity" component={openIndex} />
+        <Route path="invest">
+          <IndexRoute component={investListOrg} />
+          <Route path="detail" component={investDetailOrg} />
+        </Route>
       </Route>
       <Route path="histRecord">
         <IndexRoute component={histRecord} />
