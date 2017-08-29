@@ -1,14 +1,13 @@
 /**
- * @file identity/inforDetail.js
+ * @file identity/ConfirmForm.js
  * @author zzc
  */
 import React, { PureComponent, PropTypes } from 'react';
-import { autobind } from 'core-decorators';
+// import { autobind } from 'core-decorators';
 import _ from 'lodash';
-import { Button } from 'antd';
 import { onlyShowImgFile } from '../../utils/cordova';
-import ImgDetail from './inforImageDetatil';
-import styles from './inforDetail.less';
+
+import styles from '../personAccount/inforDetail.less';
 
 export default class infor extends PureComponent {
 
@@ -26,7 +25,6 @@ export default class infor extends PureComponent {
     super(props);
 
     this.state = {
-      isImgShow: false,
     };
   }
 
@@ -34,7 +32,6 @@ export default class infor extends PureComponent {
   }
 
   showImgBox = item => () => {
-    // this.setState({ isImgShow: true });
     const arg = [
       item.item.FILEPATH,
       item.item.YXLXMC,
@@ -44,11 +41,6 @@ export default class infor extends PureComponent {
       result => console.log(result),
       err => console.log(err),
     );
-  }
-
-  @autobind
-  hideImgbox() {
-    this.setState({ isImgShow: false });
   }
 
   khNote(e) {
@@ -72,8 +64,6 @@ export default class infor extends PureComponent {
 
   render() {
     const { stepCacheData, inforData = {}, accessState } = this.props;
-    const { isImgShow } = this.state;
-    const isShowClass = isImgShow ? styles.isShow : '';
     const seeNone = accessState ? '' : styles.none;
     const gdkhShNote = this.khNote(inforData.gdkh_sh);
     const gdkhSzNote = this.khNote(inforData.gdkh_sz);
@@ -82,115 +72,11 @@ export default class infor extends PureComponent {
     if (stepObj) {
       imageList = JSON.parse(stepObj.value).YXSTR;
     }
-    const khzp = inforData.khzpImg ?
-      `data:image/jpeg;base64,${inforData.khzpImg}` :
-      '../../../static/img/icon_user_m2.png';
     return (
       <div className={styles.tableBox}>
-        <p className={`${styles.boxTop} ${seeNone}`}><span>信息确认</span></p>
+        <p className={`${styles.boxTop} ${seeNone}`}><span>开户申请资料确认</span></p>
         <div className={styles.tableDeta}>
-          <h5>身份信息</h5>
-          <div className={styles.tableDetaBox}>
-            <table cellSpacing="0" className={styles.userInfor}>
-              <tbody>
-                <tr>
-                  <td rowSpan="3" className={styles.imgBox}>
-                    {
-                      inforData.khzpImg ?
-                        <span><img alt="头像" src={khzp} /></span> :
-                        <span className={styles.iconDefault} />
-                    }
-                  </td>
-                  <th>姓名</th>
-                  <td>{inforData.khqc}</td>
-                  <th>客户号</th>
-                  <td>{inforData.khh}</td>
-                </tr>
-                <tr>
-                  <th>证件类别</th>
-                  <td>{inforData.zjlb_note}</td>
-                  <th>证件编号</th>
-                  <td>{inforData.zjbh}</td>
-                </tr>
-                <tr>
-                  <th>性别</th>
-                  <td>{inforData.xb_note}</td>
-                  <th>出生日期</th>
-                  <td>{inforData.csrq}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div className={styles.tableDeta}>
-          <h5>证件信息</h5>
-          <div className={styles.tableDetaBox}>
-            <table cellSpacing="0">
-              <tbody>
-                <tr>
-                  <th>证件签发机关</th>
-                  <td>{inforData.zjfzjg}</td>
-                  <th>证件有效期</th>
-                  <td>{inforData.zjqsrq}至{inforData.zjjzrq}</td>
-                </tr>
-                <tr>
-                  <th>证件地址</th>
-                  <td colSpan="3">{inforData.zjdz}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div className={styles.tableDeta}>
-          <h5>联系方式</h5>
-          <div className={styles.tableDetaBox}>
-            <table cellSpacing="0">
-              <tbody>
-                <tr>
-                  <th>联系地址</th>
-                  <td colSpan="3">{inforData.province_note}-
-                    {inforData.city_note}-
-                    {inforData.dz}</td>
-                </tr>
-                <tr>
-                  <th>手机号码</th>
-                  <td>{inforData.sj}</td>
-                  <th>邮政编码</th>
-                  <td>{inforData.yzbm}</td>
-                </tr>
-                <tr>
-                  <th>电子邮箱</th>
-                  <td>{inforData.email}</td>
-                  <th>固定电话</th>
-                  <td>{inforData.dh}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div className={styles.tableDeta}>
-          <h5>基本信息</h5>
-          <div className={styles.tableDetaBox}>
-            <table cellSpacing="0">
-              <tbody>
-                <tr>
-                  <th>职业</th>
-                  <td>{inforData.zydm_note}</td>
-                  <th>学历</th>
-                  <td>{inforData.xl_note}</td>
-                </tr>
-                <tr>
-                  <th>国籍</th>
-                  <td>{inforData.gj_note}</td>
-                  <th>民族</th>
-                  <td>{inforData.zjlb === '18' ? '' : inforData.mzdm_note}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div className={styles.tableDeta}>
-          <h5>风险测评</h5>
+          <h5>风险测评结果</h5>
           <div className={styles.tableDetaBox}>
             <table cellSpacing="0">
               <tbody>
@@ -207,6 +93,229 @@ export default class infor extends PureComponent {
                 <tr>
                   <th>投资品种</th>
                   <td colSpan="3">{inforData.tzpz_note}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div className={styles.tableDeta}>
+          <h5>证件信息</h5>
+          <div className={styles.tableDetaBox}>
+            <table cellSpacing="0">
+              <tbody>
+                <tr>
+                  <th>证件类别</th>
+                  <td>{inforData.zjlb_note}</td>
+                  <th>证件编号</th>
+                  <td>{inforData.zjbh}</td>
+                </tr>
+                <tr>
+                  <th>机构全称</th>
+                  <td colSpan="3">{inforData.khqc}</td>
+                </tr>
+                <tr>
+                  <th>证件地址</th>
+                  <td colSpan="3">{inforData.zjdz}</td>
+                </tr>
+                <tr>
+                  <th>发证机关</th>
+                  <td>{inforData.zjfzjg}</td>
+                  <th>证件有效期</th>
+                  <td>{inforData.zjqsrq}~{inforData.zjjzrq}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div className={styles.tableDeta}>
+          <h5>开户代理人</h5>
+          <div className={styles.tableDetaBox}>
+            <table cellSpacing="0">
+              <tbody>
+                <tr>
+                  <th>姓名</th>
+                  <td>{inforData.jbrxm}</td>
+                  <th>性别</th>
+                  <td>{inforData.jbrxb_note}</td>
+                </tr>
+                <tr>
+                  <th>证件类别</th>
+                  <td>{inforData.jbrzjlb_note}</td>
+                  <th>证件编号</th>
+                  <td>{inforData.jbrzjbh}</td>
+                </tr>
+                <tr>
+                  <th>证件有效期</th>
+                  <td>{inforData.jbrzjqsrq}~{inforData.jbrzjjzrq}</td>
+                  <th>出生日期</th>
+                  <td>{inforData.csrq}</td>
+                </tr>
+                <tr>
+                  <th>手机号码</th>
+                  <td>{inforData.jbrsj}</td>
+                  <th>联系电话</th>
+                  <td>{inforData.jbrdh}</td>
+                </tr>
+                <tr>
+                  <th>国籍</th>
+                  <td>{inforData.gj_note}</td>
+                  <th>邮编</th>
+                  <td>{inforData.yzbm}</td>
+                </tr>
+                <tr>
+                  <th>联系地址</th>
+                  <td colSpan="3">{inforData.dz}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div className={styles.tableDeta}>
+          <h5>基本信息</h5>
+          <div className={styles.tableDetaBox}>
+            <table cellSpacing="0">
+              <tbody>
+                <tr>
+                  <th>机构简称</th>
+                  <td colSpan="3">{inforData.khxm}</td>
+                </tr>
+                <tr>
+                  <th>英文名称</th>
+                  <td>{inforData.ywmc}</td>
+                  <th>国籍</th>
+                  <td>{inforData.gj_note}</td>
+                </tr>
+                <tr>
+                  <th>企业类型</th>
+                  <td>{inforData.qyxz_sh_note}</td>
+                  <th>行业类型</th>
+                  <td>{inforData.hydm_sh_note}</td>
+                </tr>
+                <tr>
+                  <th>机构类别</th>
+                  <td>{inforData.jglb_note}</td>
+                  <th>私募基金管理人编码</th>
+                  <td>{inforData.cby1}</td>
+                </tr>
+                <tr>
+                  <th>特别说明</th>
+                  <td colSpan="3">{inforData.tbsm}</td>
+                </tr>
+                <tr>
+                  <th>国有属性</th>
+                  <td>{inforData.gysx_note}</td>
+                  <th>上市属性</th>
+                  <td>{inforData.sssx_note}</td>
+                </tr>
+                <tr>
+                  <th>资本属性</th>
+                  <td>{inforData.zbsx_note}</td>
+                  <th>注册日期</th>
+                  <td>{inforData.jgzcrq}</td>
+                </tr>
+                <tr>
+                  <th>注册地址</th>
+                  <td colSpan="3">{inforData.jgzcdz}</td>
+                </tr>
+                <tr>
+                  <th>经营范围</th>
+                  <td>{inforData.jgjyfw}</td>
+                  <th>注册资本币种</th>
+                  <td>{inforData.jgzcbz}</td>
+                </tr>
+                <tr>
+                  <th>注册资本（万）</th>
+                  <td>{inforData.jgzczb}</td>
+                  <th>联系地址</th>
+                  <td>{inforData.dz}</td>
+                </tr>
+                <tr>
+                  <th>邮政编码</th>
+                  <td>{inforData.yzbm}</td>
+                  <th>联系电话</th>
+                  <td>{inforData.jggsdh}</td>
+                </tr>
+                <tr>
+                  <th>传真</th>
+                  <td>{inforData.cz}</td>
+                  <th>电子邮箱</th>
+                  <td>{inforData.email}</td>
+                </tr>
+                <tr>
+                  <th>税务登记证</th>
+                  <td colSpan="3">{inforData.gsswdjz}</td>
+                </tr>
+                <tr>
+                  <th>组织机构代码证编号</th>
+                  <td>{inforData.zzjgdm}</td>
+                  <th>组织机构代码证有效期</th>
+                  <td>{inforData.zzjgdmqsrq}~{inforData.zzjgdmjzrq}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div className={styles.tableDeta}>
+          <h5>法定代理人</h5>
+          <div className={styles.tableDetaBox}>
+            <table cellSpacing="0">
+              <tbody>
+                <tr>
+                  <th>姓名</th>
+                  <td>{inforData.frdbxm}</td>
+                  <th>证件类别</th>
+                  <td>{inforData.frdbzjlb_note}</td>
+                </tr>
+                <tr>
+                  <th>证件编号</th>
+                  <td>{inforData.frdbzjbh}</td>
+                  <th>证件有效期</th>
+                  <td>{inforData.frdbzjqsrq}~{inforData.frdbzjjzrq}</td>
+                </tr>
+                <tr>
+                  <th>联系电话</th>
+                  <td colSpan="3">{inforData.frdbdh}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div className={styles.tableDeta}>
+          <h5>控股股东</h5>
+          <div className={styles.resuTable}>
+            <table cellSpacing="0" className={styles.numTable}>
+              <thead>
+                <tr>
+                  <th>股东名称</th>
+                  <th>证件类别</th>
+                  <th>证件编号</th>
+                  <th>证件有效期</th>
+                  <th>电子邮箱</th>
+                  <th>国籍</th>
+                  <th>股东类型</th>
+                  <th>责任承担方式</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>股东名称</td>
+                  <td>证件类别</td>
+                  <td>证件编号</td>
+                  <td>证件有效期</td>
+                  <td>电子邮箱</td>
+                  <td>国籍</td>
+                  <td>股东类型</td>
+                  <td>责任承担方式</td>
+                </tr>
+                <tr>
+                  <td>股东名称</td>
+                  <td>证件类别</td>
+                  <td>证件编号</td>
+                  <td>证件有效期</td>
+                  <td>电子邮箱</td>
+                  <td>国籍</td>
+                  <td>股东类型</td>
+                  <td>责任承担方式</td>
                 </tr>
               </tbody>
             </table>
@@ -321,6 +430,12 @@ export default class infor extends PureComponent {
                   <th>银行账号</th>
                   <td colSpan="3">{inforData.cgyhzh}</td>
                 </tr>
+                <tr>
+                  <th>证件类别</th>
+                  <td />
+                  <th>证件编号</th>
+                  <td />
+                </tr>
               </tbody>
             </table>
           </div>
@@ -353,12 +468,6 @@ export default class infor extends PureComponent {
               )
             }
           </div>
-        </div>
-        <div className={`${styles.imgBoxClass} ${isShowClass}`}>
-          <div className={styles.top}>
-            <Button type="primary" htmlType="submit" className={styles.returnBut} onClick={this.hideImgbox}>x</Button>
-          </div>
-          <ImgDetail />
         </div>
       </div>
     );

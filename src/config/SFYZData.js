@@ -19,7 +19,7 @@ const SFYZData = {
   ZJJZRQ: '',
   KHXZR: 0,
   JGBZ: 0,
-  KHFS: 4,
+  KHFS: 2,
   KHZD: 2,
   KHLY: 8,
   ZJYZLY: '1', // 1|身份证读卡器 2|公安网 3|人工核查

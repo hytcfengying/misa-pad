@@ -50,6 +50,10 @@ const mapDispatchToProps = {
     type: 'csdc/setShowState',
     payload: query || null,
   }),
+  clearCurentQuery: query => ({
+    type: 'csdc/clearCurentQuery',
+    payload: query || null,
+  }),
 };
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -70,6 +74,7 @@ export default class codePass extends PureComponent {
     searchObj: PropTypes.object.isRequired,
     setShowState: PropTypes.func.isRequired,
     showState: PropTypes.string.isRequired,
+    clearCurentQuery: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -165,6 +170,7 @@ export default class codePass extends PureComponent {
       searchObj,
       setShowState,
       showState,
+      clearCurentQuery,
     } = this.props;
     return (
       <div className={`${styles.codeHome} ${styles.homeGlobal}`}>
@@ -178,6 +184,7 @@ export default class codePass extends PureComponent {
           setSearchObj={setSearchObj}
           searchObj={searchObj}
           setShowState={setShowState}
+          clearCurentQuery={clearCurentQuery}
         />
         {
           csdcList === null ? '' :

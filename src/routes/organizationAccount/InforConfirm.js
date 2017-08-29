@@ -9,18 +9,17 @@ import { withRouter, routerRedux } from 'dva/router';
 import { Layout } from 'antd';
 import _ from 'lodash';
 // import { autobind } from 'core-decorators';
-// import classNames from 'classnames';
 import { setNavigatePageTitle, setmTabMainVisual } from '../../utils/cordova';
 import MenuLeft from '../../components/identity/menuLeft';
 import NextPop from '../../components/personAccount/nextPop';
 
-import Infor from '../../components/personAccount/inforDetail';
+import Infor from '../../components/organizationAccount/ConfirmForm';
 
-import styles from './homeGlobal.less';
+import styles from '../personAccount/homeGlobal.less';
 
 const { Sider, Content } = Layout;
 
-const actionType = 'personAccount/getInforQuery';
+const actionType = 'organizationAccount/getInforQuery';
 const getInforFunc = loading => query => ({
   type: actionType,
   payload: query || {},
@@ -28,30 +27,30 @@ const getInforFunc = loading => query => ({
 });
 
 const getBdid = loading => query => ({
-  type: 'personAccount/getBdid',
+  type: 'organizationAccount/getBdid',
   payload: query || {},
   loading,
 });
 const saveStep = loading => query => ({
-  type: 'personAccount/saveStepCache',
+  type: 'organizationAccount/saveStepCache',
   payload: query || {},
   loading,
 });
 const getStepCacheQueryFunc = loading => query => ({// 获得步骤缓存
-  type: 'personAccount/getStepCache',
+  type: 'organizationAccount/getStepCache',
   payload: query || {},
   loading,
 });
 
 const mapStateToProps = state => ({
-  inforData: state.personAccount.inforData,
+  inforData: state.organizationAccount.inforData,
   empInforData: state.globalData.empInforData,
-  bdid: state.personAccount.bdid,
-  imageList: state.personAccount.imageList,
-  menuState: state.personAccount.menuState,
-  stepCacheData: state.personAccount.stepCacheData,
+  bdid: state.organizationAccount.bdid,
+  imageList: state.organizationAccount.imageList,
+  menuState: state.organizationAccount.menuState,
+  stepCacheData: state.organizationAccount.stepCacheData,
   popState: state.globalData.popState,
-  returnOpinion: state.personAccount.returnOpinion,
+  returnOpinion: state.organizationAccount.returnOpinion,
 });
 
 const mapDispatchToProps = {
@@ -66,7 +65,7 @@ const mapDispatchToProps = {
     payload: query || null,
   }),
   clearStateFunc: query => ({// 清空state
-    type: 'personAccount/clearState',
+    type: 'organizationAccount/clearState',
     payload: query || null,
   }),
 };
@@ -116,7 +115,7 @@ export default class inforhHome extends PureComponent {
   }
 
   componentWillMount() {
-    const { location: { query }, returnOpinion, stepCacheData } = this.props;
+    const { location: { query }, returnOpinion } = this.props;
     if (query.see) {
       this.setState({
         accessState: false,
@@ -149,89 +148,14 @@ export default class inforhHome extends PureComponent {
         stepValue: 'sucess',
       });
     } else {
-      const value = {
-        YXSTR: [],
-      };
-      const stepObj = JSON.parse(_.find(stepCacheData, { key: 'ZLTX' }).value);
-      const yxObj = JSON.parse(_.find(stepCacheData, { key: 'YXSM' }).value);
-      _.forEach(yxObj.YXSTR, (item) => {
-        // 退回整改
-        if (item.ZT !== 1) {
-          value.YXSTR.push(item);
-        }
-      });
-      _.forEach(returnOpinion, (item) => {
-        // 退回整改
-        const zdKey = item.zd;
-        if (item.zd !== 'YX') {
-          switch (item.zd) {
-            case 'LXXX':
-              value.PROVINCE = stepObj.PROVINCE;
-              value.CITY = stepObj.CITY;
-              value.DZ = stepObj.DZ;
-              value.YZBM = stepObj.YZBM;
-              value.SJ = stepObj.SJ;
-              value.DH = stepObj.DH;
-              value.EMAIL = stepObj.EMAIL;
-              break;
-            case 'BJXX':
-              value.XB = stepObj.XB;
-              value.CSRQ = stepObj.CSRQ;
-              value.ZYDM = stepObj.ZYDM;
-              value.XL = stepObj.XL;
-              value.GJ = stepObj.GJ;
-              value.XB = stepObj.XB;
-              break;
-            case 'FXQXX':
-              value.XQFXDJ = stepObj.XQFXDJ;
-              break;
-            case 'ZJZH':
-              value.YJTC = stepObj.YJTC;
-              value.YXBZ = stepObj.YXBZ;
-              value.WTFS = stepObj.WTFS;
-              value.KHQX = stepObj.KHQX;
-              break;
-            case 'GDKH_SH':
-              value.GDKH_SH = stepObj.GDKH_SH;
-              value.GDDJ_SH = stepObj.GDDJ_SH;
-              break;
-            case 'GDKH_SZ':
-              value.GDKH_SZ = stepObj.GDKH_SZ;
-              value.GDDJ_SZ = stepObj.GDDJ_SZ;
-              break;
-            case 'JJKH':
-              value.SQJJZH = stepObj.SQJJZH;
-              break;
-            case 'YHZH':
-              value.CGYH = stepObj.CGYH;
-              value.CGYHZH = stepObj.CGYHZH;
-              break;
-            case 'JYSYRGX':
-              value.JYSYRGX = stepObj.JYSYRGX;
-              value.JYSYRXM = stepObj.JYSYRXM;
-              value.JYSYRZJLB = stepObj.JYSYRZJLB;
-              value.JYSYRZJBH = stepObj.JYSYRZJBH;
-              break;
-            default:
-              value[`${zdKey}`] = stepObj[`${zdKey}`] || '';
-          }
-        } else if (item.zd === 'YX' && item.yxlx === 9) {
-          value.KHZP = yxObj.KHZP;
-        }
-      });
-      if (value.YXSTR.length < 1) {
-        delete value.YXSTR;
-      }
-      // console.log(value)
       this.setState({
         cacheKey: 'THTJ',
         nextContent: '提交',
-        stepValue: JSON.stringify(value),
+        stepValue: '',
       });
     }
     this.props.getInfor({
       bdid: query.bdid ? query.bdid : this.props.bdid,
-      // bdid: '1195526',
     });
   }
 

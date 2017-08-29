@@ -343,9 +343,6 @@ export default {
       }
       // 退回整改
       if (returnOpinion.length > 0) {
-        _.map(resultData, (item) => {
-          _.assign(item, { returnChange: true, defaultFilepath: item.filepath });
-        });
         // 二次退回整改影像
         if (returnObject &&
           returnObject.value
@@ -361,6 +358,9 @@ export default {
             }
           });
         } else {
+          _.map(resultData, (item) => {
+            _.assign(item, { returnChange: true, defaultFilepath: item.filepath });
+          });
           returnOpinion.forEach((item) => {
             if (item.zd === 'YX') {
               const index = _.findIndex(resultData, { yxlx: item.yxlx });
@@ -820,18 +820,7 @@ export default {
     * getQuestion({ payload: query }, { call, put }) {
       const question = yield call(api.getQuestion, query.param);
       const inforQuery = yield call(api.getInforQuery, {
-        flag: 1,
-        sqid: query.bdidValue,
-        gyid: null,
-        sj: null,
-        zjbh: null,
-        zjlb: null,
-        step: null,
-        jgbz: null,
-        ksrq: null,
-        jsrq: null,
-        khfs: null,
-        cxnr: null,
+        bdid: query.bdidValue,
       });
       yield put({
         type: 'getQuestionSuccess',
@@ -993,7 +982,7 @@ export default {
         call(api.getCityInfo, { sjdm: '110000' }),
         call(api.getOpenAccountTemplate, {
           yyb: 1,
-          khfs: 4,
+          khfs: 2,
           jgbz: 0,
           zcsx: 0,
         }),

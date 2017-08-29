@@ -9,38 +9,38 @@ import { withRouter, routerRedux } from 'dva/router';
 import _ from 'lodash';
 import { setNavigatePageTitle } from '../../utils/cordova';
 
-import styles from './homeGlobal.less';
+import styles from '../personAccount/homeGlobal.less';
 import VideoSite from '../../components/personAccount/VideoSiteLogin';
 import PopUp from '../../components/globalCom/popup';
 
 const getBdid = loading => query => ({
-  type: 'personAccount/getBdid',
+  type: 'organizationAccount/getBdid',
   payload: query || {},
   loading,
 });
 const saveStep = loading => query => ({
-  type: 'personAccount/saveStepCache',
+  type: 'organizationAccount/saveStepCache',
   payload: query || {},
   loading,
 });
 const witnessLogin = loading => query => ({
-  type: 'personAccount/witnessLogin',
+  type: 'organizationAccount/witnessLogin',
   payload: query || {},
   loading,
 });
 const getInfoQuery = loading => query => ({
-  type: 'personAccount/getInfoQuery',
+  type: 'organizationAccount/getInfoQuery',
   payload: query || {},
   loading,
 });
 
 const mapStateToProps = state => ({
   globalLoading: state.activity.global,
-  stepCacheData: state.personAccount.stepCacheData,
-  bdid: state.personAccount.bdid,
+  stepCacheData: state.organizationAccount.stepCacheData,
+  bdid: state.organizationAccount.bdid,
   acceptorInfor: state.globalData.empInforData,
   acceptorPhoto: state.globalData.empPhoto,
-  witness: state.personAccount.witnessInfo,
+  witness: state.organizationAccount.witnessInfo,
   popState: state.globalData.popState,
   toUrl: state.globalData.toUrl,
 });
@@ -53,7 +53,7 @@ const mapDispatchToProps = {
   getInfoQueryFunc: getInfoQuery(true),
   witnessLoginFunc: witnessLogin(true),
   initializeWitnessFunc: query => ({
-    type: 'personAccount/initializeWitness',
+    type: 'organizationAccount/initializeWitness',
     payload: query || null,
   }),
   changePopState: query => ({

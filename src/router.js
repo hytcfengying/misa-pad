@@ -27,9 +27,16 @@ import infoWrite from './routes/personAccount/InfoWrite';
 import videoSite from './routes/personAccount/VideoSite';
 import complete from './routes/personAccount/Complete';
 
-import openIndex from './routes/organizationAccount/openIndexHome';
+import openIndex from './routes/organizationAccount/OpenIndexHomeOne';
+import agentHome from './routes/organizationAccount/AgentHome';
 import investListOrg from './routes/organizationAccount/InvestList';
 import investDetailOrg from './routes/organizationAccount/InvestDetail';
+import orgInfoWrite from './routes/organizationAccount/InfoWrite';
+import inforConfirmOrg from './routes/organizationAccount/InforConfirm';
+import questionHomeOrg from './routes/organizationAccount/Question';
+import videoHomeOrg from './routes/organizationAccount/VideoHome';
+import videoSiteOrg from './routes/organizationAccount/VideoSite';
+import imageHomeOrg from './routes/organizationAccount/ImageHome';
 
 import csdcHome from './routes/csdc/CSDCHome';
 import csdcDetail from './routes/csdc/CSDCDetail';
@@ -46,6 +53,7 @@ const routes = ({ history }) => (// eslint-disable-line
         <Route path="result" component={serchResult} />
       </Route>
       {/** 侧栏 */}
+      {/** 个人开户 */}
       <Route path="personAccount">
         <IndexRoute component={identityHome} />
         <Route path="identity" component={identityHome} />
@@ -63,12 +71,22 @@ const routes = ({ history }) => (// eslint-disable-line
         </Route>
         <Route path="complete" component={complete} />
       </Route>
+      {/** 机构开户 */}
       <Route path="organizationAccount">
         <IndexRoute component={openIndex} />
         <Route path="identity" component={openIndex} />
+        <Route path="info" component={orgInfoWrite} />
+        <Route path="openAgent" component={agentHome} />
+        <Route path="confirm" component={inforConfirmOrg} />
         <Route path="invest">
           <IndexRoute component={investListOrg} />
           <Route path="detail" component={investDetailOrg} />
+        </Route>
+        <Route path="question" component={questionHomeOrg} />
+        <Route path="image" component={imageHomeOrg} />
+        <Route path="video">
+          <IndexRoute component={videoHomeOrg} />
+          <Route path="site" component={videoSiteOrg} />
         </Route>
       </Route>
       <Route path="histRecord">

@@ -25,7 +25,7 @@ export default class VideoSiteInfor extends PureComponent {
   filterDate(date) {
     let str = '';
     if (date) {
-      str = `${date.toString().substring(0, 4)}-${date.toString().substring(4, 6)}-${date.toString().substring(6, 8)}`;
+      str = `${date.toString().substring(0, 4)}.${date.toString().substring(4, 6)}.${date.toString().substring(6, 8)}`;
     }
     return str;
   }
@@ -54,16 +54,10 @@ export default class VideoSiteInfor extends PureComponent {
                   }
                 </span>
               </td>
-              <td width="12%" className="label">姓名</td>
-              <td width="26%">{infor.xm}</td>
+              <td width="12%" className="label">姓名/性别</td>
+              <td width="26%">{infor.xm}{infor.xb_note ? `/${infor.xb_note}` : ''}</td>
               <td width="12%" className="label">执业机构</td>
               <td>{infor.zyjg}</td>
-            </tr>
-            <tr>
-              <td className="label">性别</td>
-              <td>{infor.xb_note}</td>
-              <td className="label">证书编号</td>
-              <td>{infor.zsbh}</td>
             </tr>
             <tr>
               <td className="label">学历</td>
@@ -72,10 +66,14 @@ export default class VideoSiteInfor extends PureComponent {
               <td>{infor.zygw}</td>
             </tr>
             <tr>
-              <td className="label">证书取得日期</td>
-              <td colSpan="2">{qdrq}</td>
-              <td className="label">证件有效日期</td>
-              <td>{yxrq}</td>
+              <td className="label">证书编号</td>
+              <td>{infor.zsbh}</td>
+              <td className="label">证书有效期</td>
+              <td colSpan="2">
+                {
+                  qdrq || yxrq ? `${qdrq}~${yxrq}` : ''
+                }
+              </td>
             </tr>
           </tbody>
         </table>

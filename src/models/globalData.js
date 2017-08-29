@@ -23,6 +23,7 @@ export default {
       callback: '',
       popTest: '',
     }, // 弹出框
+    toUrl: '',
   },
   reducers: {
     clearPopState(state) {
@@ -34,6 +35,7 @@ export default {
       return {
         ...state,
         popState,
+        toUrl: '',
       };
     },
     clearGlobalState(state) {
@@ -47,6 +49,14 @@ export default {
         popState,
         dicData: {},
         empInforData: {},
+        toUrl: '',
+      };
+    },
+    saveToUrl(state, action) {
+      const { payload: { toUrl } } = action;
+      return {
+        ...state,
+        toUrl,
       };
     },
     getInfoQuerySuccess(state, action) {
@@ -95,7 +105,8 @@ export default {
         if (str[1]) {
           codeIndex = str[1].indexOf('see');
         }
-        if (pathIndex === 'personAccount' && codeIndex === -1) {
+        if ((pathIndex === 'personAccount' || pathIndex === 'organizationAccount') &&
+          codeIndex === -1) {
           result.nativeUse = nativeUse;
         } else {
           result.nativeUse = '';

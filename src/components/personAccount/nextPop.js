@@ -7,7 +7,7 @@ import React, { PureComponent, PropTypes } from 'react';
 import { Button, Modal } from 'antd';
 import { autobind } from 'core-decorators';
 import _ from 'lodash';
-import { menus } from '../../config';
+import { menus, menusTwo } from '../../config';
 
 import styles from './nextPop.less';
 
@@ -45,6 +45,8 @@ export default class nextPopcom extends PureComponent {
 
   @autobind
   showModalBut() {
+    const pathL = location.pathname.split('/');
+    const pathFirst = pathL[1];
     const nextBtnClick = (props) => {
       const promise = new Promise((resolve, reject) => {
         try {
@@ -73,8 +75,8 @@ export default class nextPopcom extends PureComponent {
               zjlb: valueObjct.ZJLB,
               zjbh: valueObjct.ZJBH,
               khqc: valueObjct.KHQC,
-              jgbz: 0,
-              khfs: 4,
+              jgbz: pathFirst === 'personAccount' ? 0 : 1,
+              khfs: 2,
               yyb: valueObjct.YYB,
               key: cacheKey,
               value: stepValueN,
@@ -102,13 +104,14 @@ export default class nextPopcom extends PureComponent {
     };
     const { push, cacheKey } = this.props;
     nextBtnClick(this.props).then(() => {
-      const menuObj = _.find(menus, { cacheKey: this.props.cacheKey });
-      const thisIndex = _.findIndex(menus, menuObj);
-      let nextStep = menus[thisIndex + 1].key;
+      const leftMenu = pathFirst === 'personAccount' ? menus : menusTwo;
+      const menuObj = _.find(leftMenu, { cacheKey: this.props.cacheKey });
+      const thisIndex = _.findIndex(leftMenu, menuObj);
+      let nextStep = leftMenu[thisIndex + 1].key;
       if (cacheKey === 'KHTJ' || cacheKey === 'THTJ') {
         nextStep = 'complete';
       }
-      push(`/personAccount/${nextStep}`);
+      push(`/${pathFirst}/${nextStep}`);
     });
   }
   @autobind

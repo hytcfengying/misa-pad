@@ -67,7 +67,7 @@ export default class identity extends PureComponent {
                       <td>结果说明</td>
                       <td>回报时间</td>
                       <td>一码通号</td>
-                      <td>账户状态</td>
+                      <td>一码通状态</td>
                       <td colSpan="2" width="5%" />
                     </tr> : ''
                 }
@@ -145,9 +145,7 @@ export default class identity extends PureComponent {
                       <tr>
                         <td width="2%" />
                         <td>{item.clbz_note || item.clbz}</td>
-                        <td>
-                          <div>{item.hbjgsm || item.jgsm}</div>
-                        </td>
+                        <td>{item.hbjgsm || item.jgsm}</td>
                         <td>{`${item.hbrq} ${item.hbsj}`}</td>
                         <td>{item.ymth}</td>
                         <td>{item.ymtzt}</td>
@@ -164,9 +162,7 @@ export default class identity extends PureComponent {
                       <tr>
                         <td width="2%" />
                         <td>{item.clbz_note || item.clbz}</td>
-                        <td>
-                          <div>{item.hbjgsm || item.jgsm}</div>
-                        </td>
+                        <td>{item.hbjgsm || item.jgsm}</td>
                         <td>{`${item.hbrq} ${item.hbsj}`}</td>
                         <td>{item.khmc}</td>
                         <td>{item.zjlb_note || item.zjlb}</td>
@@ -184,9 +180,7 @@ export default class identity extends PureComponent {
                       <tr>
                         <td width="2%" />
                         <td>{item.clbz_note || item.clbz}</td>
-                        <td>
-                          <div>{item.hbjgsm || item.jgsm}</div>
-                        </td>
+                        <td>{item.hbjgsm || item.jgsm}</td>
                         <td>{`${item.hbrq} ${item.hbsj}`}</td>
                         <td>{item.zhlb_note || item.zhlb}</td>
                         <td>{item.zqzh}</td>
@@ -204,9 +198,7 @@ export default class identity extends PureComponent {
                       <tr>
                         <td width="2%" />
                         <td>{item.clbz_note || item.clbz}</td>
-                        <td>
-                          <div>{item.hbjgsm || item.jgsm}</div>
-                        </td>
+                        <td>{item.hbjgsm || item.jgsm}</td>
                         <td>{`${item.hbrq} ${item.hbsj}`}</td>
                         <td>{item.zhlb_note || item.zhlb}</td>
                         <td>{item.zqzh}</td>
@@ -224,9 +216,7 @@ export default class identity extends PureComponent {
                       <tr>
                         <td width="2%" />
                         <td>{item.clbz_note || item.clbz}</td>
-                        <td>
-                          <div>{item.hbjgsm || item.jgsm}</div>
-                        </td>
+                        <td>{item.hbjgsm || item.jgsm}</td>
                         <td>{`${item.hbrq} ${item.hbsj}`}</td>
                         <td>{item.zhlb_note || item.zhlb}</td>
                         <td>{item.zqzh}</td>
@@ -244,9 +234,7 @@ export default class identity extends PureComponent {
                       <tr>
                         <td width="2%" />
                         <td>{item.clbz_note || item.clbz}</td>
-                        <td>
-                          <div>{item.hbjgsm || item.jgsm}</div>
-                        </td>
+                        <td>{item.hbjgsm || item.jgsm}</td>
                         <td>{`${item.hbrq} ${item.hbsj}`}</td>
                         <td>{item.ymth}</td>
                         <td>{item.khmc}</td>

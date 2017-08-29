@@ -30,6 +30,35 @@ export default {
         showState: 'identity',
       };
     },
+    clearCurentQuery(state, action) {
+      const { payload: { show } } = action;
+      const { searchObj, identityQuery, shareholderQuery } = state;
+      let ideState = identityQuery;
+      let shaState = shareholderQuery;
+      switch (show) {
+        case 'identity':
+          searchObj.khxm = '';
+          searchObj.zjlb = '';
+          searchObj.zjbh = '';
+          searchObj.szjbh = '';
+          ideState = null;
+          break;
+        case 'shareholder':
+          searchObj.zjlb = '';
+          searchObj.gdh = '';
+          shaState = null;
+          break;
+        default:
+          break;
+      }
+      return {
+        ...state,
+        identityQuery: ideState,
+        shareholderQuery: shaState,
+        csdcQuery: null,
+        searchObj,
+      };
+    },
     setShowState(state, action) {
       const { payload: { show } } = action;
       const { csdcQuery, identityQuery, codeQuery, shareholderQuery } = state;
@@ -71,10 +100,12 @@ export default {
       const clbzArr = ['申请中', '申报中', '成功', '失败'];
       csdcQueryArr.forEach((item, index) => {
         csdcQueryArr[index].clbz_note = clbzArr[item.clbz - 1];
-        const date = item.hbrq.toString();
-        if (date) {
+        if (item.hbrq && item.hbrq.toString().length === 8) {
+          const date = item.hbrq.toString();
           csdcQueryArr[index].hbrq =
           `${date.substring(0, 4)}-${date.substring(4, 6)}-${date.substring(6, 8)}`;
+        } else {
+          csdcQueryArr[index].hbrq = '';
         }
       });
       const type = query.type;

@@ -7,6 +7,9 @@ export default {
   // 暴露api上的几个底层方法: get / post
   ...api,
 
+  // 开户列表
+  getOpenList: query => api.post('/groovynoauth/cif/OpenAcc/cifQueryOpenAccountSimpleInfo', query),
+
   // 获取开户申请ID
   getBdid: query => api.post('/groovynoauth/cif/OpenAcc/cifSaveOpenAccSerialNo', query),
 

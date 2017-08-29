@@ -140,6 +140,10 @@ const mapDispatchToProps = {
     type: 'personAccount/changeMenuState',
     payload: query || null,
   }),
+  saveToUrl: query => ({// 将返回URL保存下来
+    type: 'globalData/saveToUrl',
+    payload: query || null,
+  }),
 };
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -180,6 +184,7 @@ export default class SearchHome extends PureComponent {
     returnOpinion: PropTypes.array,
     setAccountPersonAge: PropTypes.func.isRequired,
     changeMenuState: PropTypes.func.isRequired,
+    saveToUrl: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -227,17 +232,6 @@ export default class SearchHome extends PureComponent {
       err => console.log(err),
     );
     const { location: { query }, stepCacheData, setInvestReadFlag, empInforData } = this.props;
-    if (query.bdid) {
-      let url = `/search/result?deviceId=${query.deviceId}&empId=${query.empId}&searchKey=${query.searchKey}&token=${query.token}&userId={query.userId}`;
-      if (query.source && query.source === 'record') {
-        url = `histRecord?current=${query.current}&deviceId=${query.deviceId}&empId=${query.empId}&jsrq=${query.jsrq}&ksrq=${query.ksrq}&searchKey=${query.searchKey}&step=${query.step}&jgbz=${query.jgbz}&token=${query.token}`;
-      }
-      setNavigatePageTitle( // 返回
-        ['', true, url],
-        result => console.log(result),
-        err => console.log(err),
-      );
-    }
     if (query.empId && query.deviceId && query.token) {
       this.props.clearStateFunc();// 首次开户清空state
       this.props.clearPopStateFunc();
@@ -380,14 +374,16 @@ export default class SearchHome extends PureComponent {
           const { location: { query }, getStepCacheFunc } = props;
           const load = false;
           const nowBdid = load ? '1196879' : (query.bdid || '');
-          getStepCacheFunc({
-            ...query,
-            bdid: nowBdid,
-            key: null,
-            stepCallback: () => {
-              resolve(true);
-            },
-          });
+          if (nowBdid) {
+            getStepCacheFunc({
+              ...query,
+              bdid: nowBdid,
+              key: null,
+              stepCallback: () => {
+                resolve(true);
+              },
+            });
+          }
         } catch (e) {
           reject(e);
         }
@@ -398,6 +394,20 @@ export default class SearchHome extends PureComponent {
     getStepCache(this.props).then(() => {
       const step = sessionStorage.getItem('step');
       sessionStorage.removeItem('step');
+      if (query.bdid) {
+        let url = `/search/result?deviceId=${query.deviceId}&empId=${query.empId}&searchKey=${query.searchKey}&token=${query.token}&userId={query.userId}`;
+        if (query.source && query.source === 'record') {
+          url = `histRecord?current=${query.current}&deviceId=${query.deviceId}&empId=${query.empId}&jsrq=${query.jsrq}&ksrq=${query.ksrq}&searchKey=${query.searchKey}&step=${query.step}&jgbz=${query.jgbz}&token=${query.token}`;
+        }
+        this.props.saveToUrl({
+          toUrl: url,
+        });
+        setNavigatePageTitle( // 返回
+          ['', true, url],
+          result => console.log(result),
+          err => console.log(err),
+        );
+      }
       if (step !== 'identity' ||
         (step === 'identity' && query.returnChange)) {
         push(`/personAccount/${step}`);
@@ -465,7 +475,7 @@ export default class SearchHome extends PureComponent {
           ZJJZRQ: resultObjct.EndDate,
           KHXZR: empInforData.id ? empInforData.id.toString() : '',
           JGBZ: '0',
-          KHFS: '4',
+          KHFS: '2',
           KHZD: '2',
           KHLY: '8',
           ZJYZLY: '1',
@@ -678,7 +688,7 @@ export default class SearchHome extends PureComponent {
                       />
                     </TabPane>
                   </Tabs>
-                  <div className={styles.nexPopBox}>
+                  <div className={styles.newnexPopBox}>
                     <Button type="primary" className={`${styles.nextBut} ${isNextBtnClass}`} onClick={this.netClick}>下一步</Button>
                   </div>
                 </div>

@@ -18,7 +18,7 @@ export default {
     menuState: menusTwo,
     investList: EMPTY_ARRAY, // 投资者教育列表
     investDetail: EMPTY_OBJECT, // 投资者教育详情
-    investListFlag: [false, false, false, false, false, false, false, false], // 投资者教育列表已读未读状态
+    investListFlag: [false, false, false, false, false, false, false], // 投资者教育列表已读未读状态
     imageList: EMPTY_ARRAY, // 开户影音列表
     witnessInfo: EMPTY_OBJECT, // 见证人信息
     videoType: 'double', // 开户见证方式
@@ -155,10 +155,17 @@ export default {
         stepCacheData: resultData,
       };
     },
+    clearQuestion(state) {
+      return {
+        ...state,
+        question: [],
+        questionResult: {},
+        questionState: '',
+      };
+    },
     getQuestionSuccess(state, action) {
       const { payload: {
         question: { resultData },
-        age,
         inforQuery,
       } } = action;
       const { stepCacheData } = state;
@@ -189,8 +196,6 @@ export default {
           arr[ind].selectState = true;
         });
       }
-      arr[16].selectState = true;
-      arr[16].choice = age;
       return {
         ...state,
         question: arr,
@@ -271,7 +276,7 @@ export default {
     setInvestReadFlag(state, action) {
       const { payload: { flag } } = action;
       const arr = [];
-      for (let i = 0; i < 8; i++) {
+      for (let i = 0; i < 7; i++) {
         arr.push(flag);
       }
       return {
@@ -319,10 +324,11 @@ export default {
     * */
     getImageListSuccess(state, action) {
       const { payload: {
-        imageList: { resultData = EMPTY_ARRAY },
-        imageArr,
-        returnOpinion,
+        imageList: { resultData = EMPTY_ARRAY }, // 接口里面影像列表
+        imageArr, // 步骤缓存里影像
+        returnObject, // 步骤缓存里退回整改的
       } } = action;
+      const { returnOpinion } = state;
       // 已保存步骤缓存的数据处理
       if (imageArr) {
         imageArr.forEach((item) => {
@@ -332,23 +338,36 @@ export default {
           }
         });
       }
-      // 退回整改数据的处理
-      if (returnOpinion &&
-        returnOpinion.value &&
-        JSON.parse(returnOpinion.value).key === 'YXSM') {
-        const returnArr = JSON.parse(returnOpinion.value).imageList;
-        _.map(resultData, (item) => {
-          _.assign(item, { returnChange: true, defaultFilepath: item.filepath });
-        });
-        returnArr.forEach((item) => {
-          if (item.zd === 'YX') {
-            const index = _.findIndex(resultData, { yxlx: item.yxlx });
-            if (index > -1) {
-              resultData[index].filepath = '';
-              resultData[index] = _.assign(resultData[index], item);
+      // 退回整改
+      if (returnOpinion.length > 0) {
+        // 二次退回整改影像
+        if (returnObject &&
+          returnObject.value
+          && JSON.parse(returnObject.value).key === 'YXSM') {
+          const returnArr = JSON.parse(returnObject.value).imageList;
+          returnArr.forEach((item) => {
+            if (item.zd === 'YX') {
+              const index = _.findIndex(resultData, { yxlx: item.yxlx });
+              if (index > -1) {
+                resultData[index].filepath = '';
+                resultData[index] = _.assign(resultData[index], item);
+              }
             }
-          }
-        });
+          });
+        } else {
+          _.map(resultData, (item) => {
+            _.assign(item, { returnChange: true, defaultFilepath: item.filepath });
+          });
+          returnOpinion.forEach((item) => {
+            if (item.zd === 'YX') {
+              const index = _.findIndex(resultData, { yxlx: item.yxlx });
+              if (index > -1) {
+                resultData[index].filepath = '';
+                resultData[index] = _.assign(resultData[index], item);
+              }
+            }
+          });
+        }
       }
       return {
         ...state,
@@ -397,28 +416,6 @@ export default {
         returnOpinion: resultData,
       };
     },
-    getVeriResultSuccess(state, action) {
-      const { payload: {
-        callStep,
-        veriResultQuery: { resultData: veriResult = EMPTY_ARRAY },
-        openAccCheckQuery: { resultData: openAccCheck = EMPTY_ARRAY },
-        photoQuery: { resultData: photo = EMPTY_ARRAY },
-      } } = action;
-      const { dataIndex } = state;
-      const newIndex = dataIndex + 1;
-      const checkObj = openAccCheck[0];
-      checkObj.index = newIndex;
-      const dataObj = veriResult[0];
-      dataObj.callStep = callStep;
-      dataObj.photo = photo[0].base64str;
-      dataObj.index = newIndex;
-      return {
-        ...state,
-        veriResultData: dataObj,
-        openAccCheckData: checkObj,
-        dataIndex: newIndex,
-      };
-    },
     openAccCheckSuccess(state, action) {
       const { payload: {
         openAccCheckQuery: { resultData = EMPTY_ARRAY },
@@ -453,21 +450,8 @@ export default {
         numQuery: numObj,
       };
     },
-    getNumQueryReturnSuccess(state, action) {
-      const { payload: { numQuery: { resultData = EMPTY_ARRAY } } } = action;
-      const checkObj = resultData[0];
-      const { dataIndex } = state;
-      const newIndex = dataIndex + 1;
-      checkObj.index = newIndex;
-      return {
-        ...state,
-        dataIndex: newIndex,
-        numQuery: checkObj,
-      };
-    },
     getInforQuerySuccess(state, action) {
       const { payload: {
-        photo,
         inforList: { resultData: inforData = EMPTY_ARRAY },
         jjCompanyList: { resultData: jjCompanyData = EMPTY_ARRAY },
       } } = action;
@@ -483,7 +467,6 @@ export default {
       }
       const sqjjzhNoteN = sqjjzhNote.join(';');
       inforData[0].sqjjzh = sqjjzhNoteN;
-      inforData[0].khzpImg = photo;
       return {
         ...state,
         inforData: inforData[0],
@@ -579,6 +562,15 @@ export default {
       return {
         ...state,
         imgBase64str: resultData[0].o_base64str,
+      };
+    },
+    getCountryListSuccess(state, action) {
+      const { payload: {
+        countryList: { resultData: countryInfo = EMPTY_ARRAY },
+      } } = action;
+      return {
+        ...state,
+        countryInfo,
       };
     },
   },
@@ -737,7 +729,7 @@ export default {
      * */
     * getInvestList({ payload: query }, { call, put }) {
       const status = query.status;
-      const investList = yield call(api.getInvestList, { jgbz: 0 });
+      const investList = yield call(api.getInvestList, query.query);
       if (status) {
         yield put({
           type: 'setInvestReadFlag',
@@ -798,24 +790,12 @@ export default {
     * getQuestion({ payload: query }, { call, put }) {
       const question = yield call(api.getQuestion, query.param);
       const inforQuery = yield call(api.getInforQuery, {
-        flag: 1,
-        sqid: query.bdidValue,
-        gyid: null,
-        sj: null,
-        zjbh: null,
-        zjlb: null,
-        step: null,
-        jgbz: null,
-        ksrq: null,
-        jsrq: null,
-        khfs: null,
-        cxnr: null,
+        bdid: query.bdidValue,
       });
       yield put({
         type: 'getQuestionSuccess',
         payload: {
           question,
-          age: query.age,
           inforQuery: inforQuery.resultData[0],
         },
       });
@@ -826,51 +806,6 @@ export default {
         type: 'getQuestionResultSuccess',
         payload: {
           result,
-        },
-      });
-    },
-    /*
-    * 公安网 身份核查
-    * */
-    * getVeriResult({ payload: query }, { call, put }) {
-      const response = yield call(api.getVeriResult, query);
-      const id = response.resultData[0].o_id;
-      const flag = response.resultData[0].o_flag;
-      const khqc = query.khxm;
-      const { yyb, zjbh, zjlb } = query;
-      let veriResultQuery;
-      let callStep;
-      let openAccCheckQuery = {
-        resultData: [{}],
-      };
-      if (flag === 1) {
-        veriResultQuery = response;
-        callStep = true;
-        openAccCheckQuery = yield call(api.openAccCheck, { zjlb, zjbh, khqc, yyb });
-      } else {
-        callStep = false;
-        veriResultQuery = yield call(api.getVeriResultData, { id });
-        for (let i = 0; i < 3; i++) {
-          if (veriResultQuery &&
-            veriResultQuery.resultData[0].cljg !== 0 &&
-            veriResultQuery.resultData[0].csrq) {
-            if (veriResultQuery && veriResultQuery.resultData[0].cljg === 1) {
-              openAccCheckQuery = yield call(api.openAccCheck, { zjlb, zjbh, khqc, yyb });
-            }
-            break;
-          } else {
-            veriResultQuery = yield call(api.getVeriResultData, { id });
-          }
-        }
-      }
-      const photoQuery = yield call(api.getShipPhoto, { id });
-      yield put({
-        type: 'getVeriResultSuccess',
-        payload: {
-          veriResultQuery,
-          openAccCheckQuery,
-          callStep,
-          photoQuery,
         },
       });
     },
@@ -910,23 +845,6 @@ export default {
         },
       });
     },
-    * getNumQueryReturn({ payload: query }, { call, put }) {
-      const sqbh = query.sqbh;
-      let numQuery = yield call(api.getNumQueryReturn, { sqbh });
-      for (let i = 0; i < 5; i++) {
-        if (numQuery.resultData[0].clbz === 3 || numQuery.resultData[0].clbz === 4) {
-          break;
-        } else {
-          numQuery = yield call(api.getNumQueryReturn, { sqbh });
-        }
-      }
-      yield put({
-        type: 'getNumQueryReturnSuccess',
-        payload: {
-          numQuery,
-        },
-      });
-    },
     /*
     * 查询开户申请
     * */
@@ -938,21 +856,11 @@ export default {
         yield call(api.getInforQuery, query),
         yield call(api.getFundCompany, query),
       ];
-      const filepath = inforList.resultData[0].khzp;
-      // const filepath = 'Aw4wMjI0MTEyNTIwMTc0MDkwMDAuMzYzMTgxMjI0MQ==';
-      let photo;
-      if (filepath) {
-        const photoQuery = yield call(api.getImgQuery, { filepath });
-        photo = photoQuery.resultData[0].o_base64str;
-      } else {
-        photo = '';
-      }
       yield put({
         type: 'getInforQuerySuccess',
         payload: {
           inforList,
           jjCompanyList,
-          photo,
         },
       });
     },
@@ -971,7 +879,7 @@ export default {
         call(api.getCityInfo, { sjdm: '110000' }),
         call(api.getOpenAccountTemplate, {
           yyb: 1,
-          khfs: 4,
+          khfs: 2,
           jgbz: 0,
           zcsx: 0,
         }),
@@ -1116,10 +1024,20 @@ export default {
       });
     },
     /*
-    * 退回重新提交
+    * 获取国家信息
     * */
-    * saveStopOpenAccount({ payload: query }, { call }) {
-      yield call(api.saveStopOpenAccount, query);
+    * getCountryList({ payload: query }, { call, put }) {
+      const [
+        countryList,
+      ] = yield [
+        call(api.getCountryInfo, { gjdm: null }),
+      ];
+      yield put({
+        type: 'getCountryListSuccess',
+        payload: {
+          countryList,
+        },
+      });
     },
   },
   subscriptions: {},

@@ -117,6 +117,9 @@ export default class investListRouter extends PureComponent {
     if (investList.length === 0) {
       getInvestFunc({
         status: stepStatus,
+        query: {
+          jgbz: 1,
+        },
       });
     }
     // 若是已进行过该步骤，回头看，则默认选中我同意

@@ -62,8 +62,9 @@ export default class SearchList extends PureComponent {
           ...query,
         };
     }
+    const pathFirst = item.item.jgbz === 0 ? 'personAccount' : 'organizationAccount';
     push({
-      pathname: '/personAccount',
+      pathname: `/${pathFirst}`,
       query: queryIndex,
     });
   }
@@ -111,8 +112,9 @@ export default class SearchList extends PureComponent {
   // 查看
   seeClick = item => () => {
     const { push, location: { query } } = this.props;
+    const pathFirst = item.item.jgbz === 0 ? 'personAccount' : 'organizationAccount';
     push({
-      pathname: '/personAccount/confirm',
+      pathname: `/${pathFirst}/confirm`,
       query: {
         ...query,
         bdid: item.item.id,

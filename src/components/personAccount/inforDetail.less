@@ -50,7 +50,7 @@
 	    			padding-right:20px;
 	    			border: 1PX solid #ddd;
 	    			height: 85px;
-	    			line-height: 85px;
+	    			line-height: 40px;
 	    			width:220px;
 	    			font-size:26px;
 	    			font-weight:normal;
@@ -91,9 +91,9 @@
 	    			}
 	    		}
 	    		.iconDefault{
-            background: url("../../../static/img/icon_user_m2.png") no-repeat center;
-            background-size: 220px 260px;
-          }
+					background: url("../../../static/img/icon_user_m2.png") no-repeat center;
+					background-size: 220px 260px;
+				}
 	    	}
 	    }
 	    .userInfor {
@@ -179,6 +179,54 @@
 		    height: 0;
 			}
    	}
+	}
+	table.numTable {
+		width: 100%;
+		border: 1PX solid #ddd;
+		thead {
+			tr {
+				border-width: 0 0 1PX 0;
+				th {
+					padding-left:30px;
+	    			border: none;
+	    			border-bottom: 1PX solid #ddd;
+	    			height: 80px;
+	    			font-size:24px;
+	    			font-weight:normal;
+	    			color:#333;
+	    			text-align:left;
+	    			background-color:#f8f8f8;
+	    			&:nth-child(3) {
+				    	width:320px;
+				    }
+				}
+			}
+		}
+		tbody {
+			tr {
+				border-bottom: 1PX dashed #ddd;
+				td {
+					padding-left:30px;
+					position: relative;
+				    height: 108px;
+				    line-height: 40px;
+				    text-align: left;
+				    text-indent:0;
+				    font-size: 24px;
+				    color: #666;
+				    overflow: hidden;
+				    border: none;
+				    word-break: break-all;
+				    &:first-child {
+				    	padding-left:0;
+				    	text-align: center;
+				    }
+				    &:nth-child(2) {
+				    	width:auto;
+				    }
+				}
+			}
+		}
 	}
 }
 .imgBoxClass {

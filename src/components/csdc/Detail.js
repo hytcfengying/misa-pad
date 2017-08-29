@@ -33,7 +33,7 @@ export default class identity extends PureComponent {
       obj = _.find(csdcQuery, { id: _.parseInt(query.id) });
     }
     return {
-      detail: obj,
+      detail: obj || {},
       pathname: query.path,
     };
   }
@@ -41,6 +41,12 @@ export default class identity extends PureComponent {
   render() {
     const obj = this.getDetail();
     const { detail, pathname } = obj;
+    let date = '';
+    if (detail.hbrq && detail.hbsj) {
+      date = `${detail.hbrq} ${detail.hbsj}`;
+    } else if (detail.hbrq || detail.hbsj) {
+      date = detail.hbrq || detail.hbsj;
+    }
     return (
       <div className={styles.detail}>
         <table className={styles.tableArea}>
@@ -57,7 +63,7 @@ export default class identity extends PureComponent {
                 </tr>
                 <tr>
                   <td>回报时间</td>
-                  <td>{`${detail.hbrq} ${detail.hbsj}`}</td>
+                  <td>{date}</td>
                   <td>回报结果说明</td>
                   <td>{detail.hbjgsm}</td>
                 </tr>
@@ -106,7 +112,7 @@ export default class identity extends PureComponent {
                 </tr>
                 <tr>
                   <td>回报时间</td>
-                  <td>{`${detail.hbrq} ${detail.hbsj}`}</td>
+                  <td>{date}</td>
                   <td>回报结果说明</td>
                   <td>{detail.hbjgsm}</td>
                 </tr>
@@ -179,7 +185,7 @@ export default class identity extends PureComponent {
                 </tr>
                 <tr>
                   <td>回报时间</td>
-                  <td>{`${detail.hbrq} ${detail.hbsj}`}</td>
+                  <td>{date}</td>
                   <td>回报结果说明</td>
                   <td>{detail.hbjgsm}</td>
                 </tr>
@@ -208,7 +214,7 @@ export default class identity extends PureComponent {
                 </tr>
                 <tr>
                   <td>回报时间</td>
-                  <td>{`${detail.hbrq} ${detail.hbsj}`}</td>
+                  <td>{date}</td>
                   <td>回报结果说明</td>
                   <td>{detail.hbjgsm}</td>
                 </tr>
@@ -273,7 +279,7 @@ export default class identity extends PureComponent {
                 </tr>
                 <tr>
                   <td>回报时间</td>
-                  <td>{`${detail.hbrq} ${detail.hbsj}`}</td>
+                  <td>{date}</td>
                   <td>回报结果说明</td>
                   <td>{detail.hbjgsm}</td>
                 </tr>

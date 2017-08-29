@@ -92,9 +92,8 @@ export default {
       if (!customerQuery.resultData[0]) {
         customerQuery = yield call(api.getsearchList, { khh: null, zjbh: searchKey });
       }
-      const registerQuery = yield call(api.getInforQuery, {
+      const registerQuery = yield call(api.getOpenList, {
         flag: 5,
-        sqid: null,
         gyid: empId,
         sj: null,
         zjbh: null,
@@ -103,7 +102,7 @@ export default {
         jgbz: null,
         ksrq: null,
         jsrq: null,
-        khfs: 4,
+        khfs: 2,
         cxnr: searchKey,
       });
       yield put({
@@ -133,9 +132,8 @@ export default {
     * 历史记录
     * */
     * getRecordList({ payload: query }, { call, put }) {
-      const registerQuery = yield call(api.getInforQuery, {
+      const registerQuery = yield call(api.getOpenList, {
         flag: 2,
-        sqid: null,
         gyid: query.empId,
         sj: null,
         zjbh: null,
@@ -144,7 +142,7 @@ export default {
         jgbz: query.jgbz,
         ksrq: query.ksrq,
         jsrq: query.jsrq,
-        khfs: 4,
+        khfs: 2,
         cxnr: query.searchKey,
       });
       yield put({

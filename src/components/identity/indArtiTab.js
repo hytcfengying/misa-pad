@@ -297,7 +297,7 @@ export default class indTab extends PureComponent {
           ZJJZRQ: '',
           KHXZR: empInforData.id ? empInforData.id.toString() : '',
           JGBZ: '0',
-          KHFS: '4',
+          KHFS: '2',
           KHZD: '2',
           KHLY: '8',
           ZJYZLY: '3',

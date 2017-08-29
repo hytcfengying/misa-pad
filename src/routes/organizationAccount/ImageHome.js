@@ -22,36 +22,36 @@ const { Sider, Content } = Layout;
 
 
 const getListFunction = loading => query => ({
-  type: 'personAccount/getImageList',
+  type: 'organizationAccount/getImageList',
   payload: query || {},
   loading,
 });
 
 const changeImageFilepath = loading => query => ({
-  type: 'personAccount/changeImageFilepath',
+  type: 'organizationAccount/changeImageFilepath',
   payload: query || {},
   loading,
 });
 
 const getBdid = loading => query => ({
-  type: 'personAccount/getBdid',
+  type: 'organizationAccount/getBdid',
   payload: query || {},
   loading,
 });
 const saveStep = loading => query => ({
-  type: 'personAccount/saveStepCache',
+  type: 'organizationAccount/saveStepCache',
   payload: query || {},
   loading,
 });
 
 const mapStateToProps = state => ({
-  imageList: state.personAccount.imageList,
+  imageList: state.organizationAccount.imageList,
   globalLoading: state.activity.global,
-  bdid: state.personAccount.bdid,
-  menuState: state.personAccount.menuState,
-  stepCacheData: state.personAccount.stepCacheData,
+  bdid: state.organizationAccount.bdid,
+  menuState: state.organizationAccount.menuState,
+  stepCacheData: state.organizationAccount.stepCacheData,
   popState: state.globalData.popState,
-  returnOpinion: state.personAccount.returnOpinion,
+  returnOpinion: state.organizationAccount.returnOpinion,
 });
 
 const mapDispatchToProps = {

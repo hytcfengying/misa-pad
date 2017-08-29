@@ -54,8 +54,8 @@ export default class numResult extends PureComponent {
             <th>证件类别</th>
             <th>证件编号</th>
             <th>账户类别</th>
-            <th>股东号</th>
-            <th>股东号状态</th>
+            <th>证券账户</th>
+            <th>账户状态</th>
           </tr>
         </thead>
         <tbody>

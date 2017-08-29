@@ -37,6 +37,7 @@ export default class codePass extends PureComponent {
     searchObj: PropTypes.object.isRequired,
     setShowState: PropTypes.func.isRequired,
     setSearchObj: PropTypes.func.isRequired,
+    clearCurentQuery: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -140,6 +141,8 @@ export default class codePass extends PureComponent {
   @autobind
   handleChangeID(value) {
     const { showState, scanIconShow } = this.state;
+    const { clearCurentQuery } = this.props;
+    clearCurentQuery({ show: showState });
     switch (showState) {
       case 'identity':
         if (scanIconShow) {
@@ -323,7 +326,7 @@ export default class codePass extends PureComponent {
                             {getFieldDecorator(
                               'szjbh',
                               {
-                                initialValue: searchObj.zjbh,
+                                initialValue: searchObj.szjbh,
                                 rules: [
                                   { required: true, message: '证件号码不能为空!', whitespace: true },
                                   { max: 40, message: '证件号码不能超过40个字符！' },

@@ -26,7 +26,8 @@
       .ant-input,
       .ant-select-selection{
         border:none;
-        border-bottom: 2PX solid #dde1e6;
+        border-bottom: 2PX solid;
+        border-color: #dde1e6;
         height:60px;
         line-height:60px;
         font-size:28px;
@@ -42,6 +43,12 @@
       .ant-form-explain{
         position: absolute;
         font-size:22px;
+      }
+      .has-error {
+        .ant-input,
+        .ant-select-selection{
+          border-color: #f04134;
+        }
       }
     }
 

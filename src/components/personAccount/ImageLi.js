@@ -30,12 +30,27 @@ export default class imageLi extends PureComponent {
   @autobind
   handleClick() {
     const { information } = this.props;
+    // 退回整改已经审核通过的不能更改，只能查看
     if (information.returnChange && information.defaultFilepath && !information.shr) { // 退回整改
       const arg = [
         information.filepath,
         information.yxlxmc,
       ];
       onlyShowImgFile(
+        arg,
+        result => console.log(result),
+        err => console.log(err),
+      );
+      return;
+    }
+    // 退回整改修改退回的影像资料
+    if (information.returnChange && information.shr && information.defaultFilepath) {
+      const arg = [
+        information.filepath,
+        information.yxlxmc,
+        information.yxlx,
+      ];
+      showImgFile(
         arg,
         result => console.log(result),
         err => console.log(err),
